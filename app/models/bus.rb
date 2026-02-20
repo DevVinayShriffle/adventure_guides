@@ -1,4 +1,6 @@
 class Bus < ApplicationRecord
+  has_many_attached :image
+
   enum :type, {sitter: 0, sleeper: 1, ac: 2}
 
   validates :name, null:false

@@ -1,5 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
+  has_one_attached :avatar
+
+  enum :role, {tourist: 0, guide: 1, admin: 2}
 
   validates :name,
   presence: true,

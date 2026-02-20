@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[8.1]
       t.string :email, null:false
       t.string :password_digest, null:false
       t.string :phone, limit: 15
+      t.integer :role, default:0
 
       t.timestamps
     end

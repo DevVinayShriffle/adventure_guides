@@ -1,4 +1,6 @@
 class Destination < ApplicationRecord
+  has_many_attached :image
+
   validates :name, null:false
   validates :location, null:false
 
