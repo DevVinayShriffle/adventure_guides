@@ -1,20 +1,20 @@
 class Destination < ApplicationRecord
-  has_many_attached :image
+  has_many_attached :images
 
-  validates :name, null:false
-  validates :location, null:false
+  validates :name, presence: true
+  validates :location, presence: true
 
-  has_many :schedules
+  has_many :schedules, dependent: :destroy
   
-  before_validation :normalize_name, :normalize_descryption, :normalize_location
+  before_validation :normalize_name, :normalize_description, :normalize_location
 
   private
   def normalize_name
     self.name = name.strip if name.present?
   end
 
-  def normalize_descryption
-    self.descryption = descryption.strip if descryption.present?
+  def normalize_description
+    self.description = description.strip if description.present?
   end
 
   def normalize_location

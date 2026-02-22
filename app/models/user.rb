@@ -1,12 +1,9 @@
 class User < ApplicationRecord
-  has_secure_password
   has_one_attached :avatar
 
   enum :role, {tourist: 0, guide: 1, admin: 2}
 
-  validates :name,
-  presence: true,
-  length: { maximum: 20 }
+  validates :name, presence: true, length: { maximum: 20 }
 
   validates :email,
   presence: true,
@@ -16,16 +13,9 @@ class User < ApplicationRecord
     message: "must be a valid email address"
   }
 
-  validates :password,
-  presence: true,
-  format: {
-    with: /\A(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9])\S{6,8}\z/,
-    message: "must include 1 uppercase, 1 lowercase, 1 special character, 1 number, has length between 6 to 8 characters and does not contain any spaces."
-  }
-
   has_many :bookings, dependent: :destroy
 
-  before_validation :normalize_name, :normalize_email, :normalize_password
+  before_validation :normalize_name, :normalize_email
 
   private
 
@@ -35,9 +25,5 @@ class User < ApplicationRecord
 
   def normalize_email
     self.email = email.strip.downcase if email.present?
-  end
-
-  def normalize_password
-    self.password = password.strip if password.present?
   end
 end
