@@ -1,9 +1,26 @@
 Rails.application.routes.draw do
-  resources :users
-  resources :destination
-  resources :buses
-  resources :bookings do
-    delete :cancel, on: :member
+  devise_for :users
+
+  # resources :users
+  # post "/login", to: "users#login"
+  # delete "/logout", to: "users#logout"
+
+  resources :destinations, only: [:index, :show]
+
+  resources :buses, only: [:index, :show]
+
+  resources :schedules, only: [:index, :show]
+
+  resources :bookings, only: [:create, :index, :show] do
+    patch :cancel, on: :member
   end
-  resource :admin
+
+  namespace :admin do
+    resources :destinations
+  end
+
+  namespace :guide do
+    resources :buses
+  end
+
 end
