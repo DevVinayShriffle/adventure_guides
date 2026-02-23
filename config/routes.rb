@@ -27,7 +27,9 @@ Rails.application.routes.draw do
   end
 
   namespace :guide do
-    resources :buses
+    resources :buses do
+      resources :bus_stops
+    end
   end
 
 end
