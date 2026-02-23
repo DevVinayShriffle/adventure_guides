@@ -8,7 +8,7 @@ class BusesController < ApplicationController
       format.html
       format.json do
         if @buses.present?
-          render json: { buses: @buses }, status: :ok
+          render json: @buses, status: :ok
         else
           render json: { message: "No buses found." }, status: :ok
         end
@@ -19,7 +19,7 @@ class BusesController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json { render json: { bus: @bus }, status: :ok }
+      format.json { render json: @bus, status: :ok }
     end
   end
 

@@ -34,7 +34,7 @@ module Admin
 
       respond_to do |format|
         format.html { redirect_to admin_destinations_path, notice: "Destination updated." }
-        format.json { render json: { destination: @destination, message: "Destination updated." }, status: :ok }
+        format.json { render json: @destination, message: "Destination updated.", status: :ok }
       end
     end
 

@@ -9,14 +9,14 @@ module Guide
 
       respond_to do |format|
         format.html
-        format.json { render json: { buses: @buses }, status: :ok }
+        format.json { render json: @buses, status: :ok }
       end
     end
 
     def show
       respond_to do |format|
         format.html
-        format.json { render json: { bus: @bus }, status: :ok }
+        format.json { render json: @bus, status: :ok }
       end
     end
 
@@ -25,16 +25,19 @@ module Guide
 
       respond_to do |format|
         format.html { redirect_to guide_buses_path, notice: "Bus created." }
-        format.json { render json: { bus: @bus, message: "Bus created." }, status: :created }
+        format.json { render json: @bus, message: "Bus created.", status: :created }
       end
     end
 
     def update
+      if bus_params[:images].present?
+        @bus.images.purge
+      end
       @bus.update!(bus_params)
 
       respond_to do |format|
         format.html { redirect_to guide_buses_path, notice: "Bus updated." }
-        format.json { render json: { bus: @bus, message: "Bus updated." }, status: :ok }
+        format.json { render json: @bus, message: "Bus updated.", status: :ok }
       end
     end
 
