@@ -1,22 +1,22 @@
 module Admin
   class DestinationsController < ApplicationController
-    before_action :authorize_request
+    before_action :authenticate_user!
     before_action :require_admin
     before_action :set_destination, only: [:show, :update, :destroy]
 
     def index
-      @destinations = Destination.all.order(created_at: :desc)
+      destinations = Destination.all.order(created_at: :desc)
 
       respond_to do |format|
         format.html
-        format.json { render json: { destinations: @destinations }, status: :ok }
+        format.json { render json: destinations, status: :ok }
       end
     end
 
     def show
       respond_to do |format|
         format.html
-        format.json { render json: { destination: @destination }, status: :ok }
+        format.json { render json: @destination, status: :ok }
       end
     end
 
@@ -25,7 +25,7 @@ module Admin
 
       respond_to do |format|
         format.html { redirect_to admin_destinations_path, notice: "Destination created." }
-        format.json { render json: { destination: @destination, message: "Destination created." }, status: :created }
+        format.json { render json: @destination, message: "Destination created." , status: :created }
       end
     end
 
@@ -50,7 +50,8 @@ module Admin
     private
 
     def set_destination
-      @destination = Destination.find(params[:id])
+      @destination = Destination.find_by(id: params[:id])
+      render json: {message: "Destination not found."} unless @destination.present?
     end
 
     def destination_params
@@ -58,7 +59,8 @@ module Admin
     end
 
     def require_admin
-      render json: { message: "Access denied." }, status: :forbidden unless @current_user&.admin?
+      # byebug
+      render json: { message: "Access denied." }, status: :forbidden unless current_user&.admin?
     end
   end
 end
