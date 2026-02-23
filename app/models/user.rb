@@ -1,12 +1,22 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :jwt_authenticatable,
-         jwt_revocation_strategy: Devise::JWT::RevocationStrategies::Null
+  :recoverable, :rememberable, :validatable,
+  :jwt_authenticatable,
+  jwt_revocation_strategy: self
 
   has_one_attached :avatar
+
+  include Rails.application.routes.url_helpers
+
+  def avatar_url
+    if avatar.attached?
+      rails_blob_url(avatar, only_path: false)
+    else
+      "default_avatar.png"
+    end
+  end
 
   enum :role, {tourist: 0, guide: 1, admin: 2}
 

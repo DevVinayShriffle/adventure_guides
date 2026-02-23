@@ -1,14 +1,21 @@
-class ApplicationController < ActionController::API
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  # allow_browser versions: :modern
+class ApplicationController < ActionController::Base
+  protect_from_forgery with: :null_session, if: -> { request.format.json? }
 
-  # Changes to the importmap will invalidate the etag for HTML responses
-  # stale_when_importmap_changes
-  # protect_from_forgery with: :null_session
-  # skip_before_action :verify_authenticity_token ,if: :json_request?
+  before_action :set_active_storage_current_host
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  protected
+
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :phone, :role])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name phone role avatar])
+
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[name phone role avatar])
+  end
+
+  private
+
+  def set_active_storage_current_host
+    ActiveStorage::Current
   end
 end

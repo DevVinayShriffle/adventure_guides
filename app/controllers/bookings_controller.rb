@@ -4,8 +4,8 @@ class BookingsController < ApplicationController
 
   def index
     @bookings = @current_user.bookings
-                             .includes(:schedule)
-                             .order(created_at: :desc)
+    .includes(:schedule)
+    .order(created_at: :desc)
 
     respond_to do |format|
       format.html
@@ -50,11 +50,11 @@ class BookingsController < ApplicationController
         schedule_id: @schedule.id,
         seats: seats_requested,
         total_price: total_price
-      )
+        )
 
       @schedule.update!(
         available_seats: @schedule.available_seats - seats_requested
-      )
+        )
     end
 
     respond_to do |format|
@@ -81,7 +81,7 @@ class BookingsController < ApplicationController
       # refund seats
       schedule.update!(
         available_seats: schedule.available_seats + @booking.seats
-      )
+        )
 
       # update booking status
       @booking.update!(status: :cancelled)

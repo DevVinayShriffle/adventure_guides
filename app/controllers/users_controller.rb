@@ -13,14 +13,14 @@ class UsersController < ApplicationController
     end
   end
 
-  def create
-    user = User.create!(user_params)
+  # def create
+  #   user = User.create!(user_params)
 
-    respond_to do |format|
-      format.html { redirect_to root_path, notice: "User registered successfully." }
-      format.json { render json: { user: user, message: "User registered successfully." }, status: :created }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { redirect_to root_path, notice: "User registered successfully." }
+  #     format.json { render json: { user: user, message: "User registered successfully." }, status: :created }
+  #   end
+  # end
 
   def show
     respond_to do |format|
