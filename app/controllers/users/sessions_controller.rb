@@ -1,3 +1,4 @@
+require_dependency 'user_serializer'
 class Users::SessionsController < Devise::SessionsController
   respond_to :json
 
@@ -6,13 +7,13 @@ class Users::SessionsController < Devise::SessionsController
   def respond_with(resource, _opt = {})
     @token = request.env['warden-jwt_auth.token']
     headers['Authorization'] = @token
-
+    
     render json: {
       status: {
         code: 200, message: 'Logged in successfully.',
         token: @token,
         data: {
-          user: resource
+          user: UserSerializer.new(current_user)
         }
       }
     }, status: :ok

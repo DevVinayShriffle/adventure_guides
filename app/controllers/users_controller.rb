@@ -29,60 +29,33 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
-    if @user.update!(update_params)
-      respond_to do |format|
-        format.html { redirect_to @user, notice: "User updated successfully." }
-        format.json { render json: { user: @user, message: "User updated successfully." }, status: :ok }
-      end
-    end
-  end
-
-  def destroy
-    if @user.destroy
-      respond_to do |format|
-        format.html { redirect_to root_path, notice: "User deleted successfully." }
-        format.json { render json: { message: "User deleted successfully." }, status: :ok }
-      end
-    end
-  end
-
-  # def login
-  #   user = User.find_by(email: params[:email]&.strip&.downcase)
-
-  #   if user && user.authenticate(params[:password])
-  #     session[:user_id] = user.id
-
+  # def update
+  #   if current_user.update!(update_params)
   #     respond_to do |format|
-  #       format.html { redirect_to destinations_path, notice: "Logged in successfully." }
-  #       format.json { render json: { message: "Logged in successfully." }, status: :ok }
-  #     end
-  #   else
-  #     respond_to do |format|
-  #       format.html { redirect_to root_path, alert: "Invalid email or password." }
-  #       format.json { render json: { message: "Invalid email or password." }, status: :unauthorized }
+  #       # format.html { redirect_to @user, notice: "User updated successfully." }
+  #       format.json { render json: { user: current_user, message: "User updated successfully." }, status: :ok }
   #     end
   #   end
   # end
 
-  # def logout
-  #   session.delete(:user_id)
-
-  #   respond_to do |format|
-  #     format.html { redirect_to root_path, notice: "Logged out successfully." }
-  #     format.json { render json: { message: "Logged out successfully." }, status: :ok }
+  # def destroy
+  #   if @user.destroy
+  #     respond_to do |format|
+  #       format.html { redirect_to root_path, notice: "User deleted successfully." }
+  #       format.json { render json: { message: "User deleted successfully." }, status: :ok }
+  #     end
   #   end
   # end
 
   private
 
-  def user_params
-    params.require(:user).permit(:name, :email, :password, :phone, :role)
-  end
+  # def user_params
+  #   params.require(:user).permit(:name, :email, :password, :phone, :role)
+  # end
 
-  def update_params
-    params.require(:user).permit(:name, :phone, :password)
-  end
+  # def update_params
+  #   params.require(:user).permit(:name, :phone, :password, :avatar)
+  # end
 
   # def set_user
   #   @user = User.find(params[:id])
