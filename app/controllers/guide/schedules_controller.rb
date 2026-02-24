@@ -46,11 +46,11 @@ class Guide::SchedulesController < ApplicationController
   end
 
   def update
-    @bus_stop.update!(bus_stop_params)
+    @schedule.update!(schedules_params)
 
     respond_to do |format|
       format.html
-      format.json { render json: @bus_stop, message: "Bus stop updated.", status: :ok }
+      format.json { render json: @schedule, message: "Schedule updated.", status: :ok }
     end
   end
 

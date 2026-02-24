@@ -8,10 +8,6 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  # resources :users
-  # post "/login", to: "users#login"
-  # delete "/logout", to: "users#logout"
-
   resources :destinations, only: [:index, :show]
 
   resources :buses, only: [:index, :show]
@@ -31,7 +27,6 @@ Rails.application.routes.draw do
       resources :bus_stops
       resources :schedules
     end
-    # resources :schedules, only: [:index, :show]
   end
 
 end
