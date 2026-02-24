@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
-  resources :destinations, only: [:index, :show]
+  resources :destinations, only: [:index, :show] do
+    resources :buses, only: [:index]
+  end
 
   resources :buses, only: [:index, :show]
 

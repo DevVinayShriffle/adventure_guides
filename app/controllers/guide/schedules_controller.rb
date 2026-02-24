@@ -5,7 +5,11 @@ class Guide::SchedulesController < ApplicationController
   before_action :set_schedule, only: [:show, :update, :destroy]
 
   def index
-    @schedules = Schedule.includes(:bus, :destination).order(departure: :asc)
+    # @schedules = Schedule.includes(:bus, :destination).order(departure: :asc)
+    @schedules = Schedule.joins(:bus)
+                     .where(buses: { user_id: current_user.id })
+                     .includes(:bus, :destination)
+                     .order(departure: :asc)
 
     respond_to do |format|
       format.html
@@ -33,15 +37,41 @@ class Guide::SchedulesController < ApplicationController
     end
   end
 
-  def create
-    @schedule = schedules_params
-    target = @bus.bus_stops.select(:name).where(stop_type: "drop")
-    @schedule[:destination_id] = Destination.where("? ILIKE CONCAT('%', name, '%')", target.first.name).select(:id).first.id
-    schedule = @bus.schedules.create!(@schedule)
+  # def create
+  #   @schedule = schedules_params
+  #   target = @bus.bus_stops.select(:name).where(stop_type: "drop")
+  #   @schedule[:destination_id] = Destination.where("? ILIKE CONCAT('%', name, '%')", target.first.name).select(:id).first.id
+  #   schedule = @bus.schedules.create!(@schedule)
 
-    respond_to do |format|
-      format.html
-      format.json { render json: schedule, message: "Bus schedule created.", status: :created }
+  #   respond_to do |format|
+  #     format.html
+  #     format.json { render json: schedule, message: "Bus schedule created.", status: :created }
+  #   end
+  # end
+
+  def create
+    drop_stop = @bus.bus_stops.find_by(stop_type: "drop")
+
+    unless drop_stop
+      return render json: { message: "Drop stop not found." }, status: :unprocessable_entity
+    end
+
+    destination = Destination.find_by("name ILIKE ?", "%#{drop_stop.name}%")
+
+    unless destination
+      return render json: { message: "Matching destination not found." }, status: :unprocessable_entity
+    end
+
+    schedule = @bus.schedules.new(schedules_params)
+    schedule.destination_id = destination.id
+
+    if schedule.save
+      render json: {
+        schedule: ScheduleSerializer.new(schedule),
+        message: "Bus schedule created."
+      }, status: :created
+    else
+      render json: { errors: schedule.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -65,12 +95,30 @@ class Guide::SchedulesController < ApplicationController
 
   private
 
+  # def set_bus
+  #   @bus = Bus.find(params[:bus_id])
+  # end
+
   def set_bus
-    @bus = Bus.find(params[:bus_id])
+    @bus = current_user.buses.find_by(id: params[:bus_id])
+
+    unless @bus
+      render json: { message: "Bus not found." }, status: :not_found
+    end
   end
 
+  # def set_schedule
+  #   @schedule = Schedule.find_by(id: params[:id])
+  # end
+
   def set_schedule
-    @schedule = Schedule.find_by(id: params[:id])
+    @schedule = Schedule.joins(:bus)
+                        .where(buses: { user_id: current_user.id })
+                        .find_by(id: params[:id])
+
+    unless @schedule
+      render json: { message: "Schedule not found." }, status: :not_found
+    end
   end
 
   def schedules_params
