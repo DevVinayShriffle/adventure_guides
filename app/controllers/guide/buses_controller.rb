@@ -1,6 +1,6 @@
 module Guide
   class BusesController < ApplicationController
-    before_action :authorize_request
+    before_action :authenticate_user!
     before_action :require_guide
     before_action :set_bus, only: [:show, :update, :destroy]
 
@@ -9,7 +9,14 @@ module Guide
 
       respond_to do |format|
         format.html
-        format.json { render json: @buses, status: :ok }
+        # format.json { render json: @buses, status: :ok }
+        format.json do
+        if @buses.present?
+          render json: @buses, status: :ok
+        else
+          render json: { message: "No buses found." }, status: :ok
+        end
+      end
       end
     end
 
@@ -21,7 +28,10 @@ module Guide
     end
 
     def create
-      @bus = Bus.create!(bus_params)
+      # byebug
+      @bus = bus_params
+      @bus[:user_id] = current_user.id
+      @bus = Bus.create!(@bus)
 
       respond_to do |format|
         format.html { redirect_to guide_buses_path, notice: "Bus created." }
@@ -53,7 +63,8 @@ module Guide
     private
 
     def set_bus
-      @bus = Bus.find(params[:id])
+      # byebug
+      @bus = current_user.buses.find(params[:id])
     end
 
     def bus_params
@@ -61,7 +72,7 @@ module Guide
     end
 
     def require_guide
-      render json: { message: "Access denied." }, status: :forbidden unless @current_user&.guide?
+      render json: { message: "Access denied." }, status: :forbidden unless current_user&.guide?
     end
   end
 end

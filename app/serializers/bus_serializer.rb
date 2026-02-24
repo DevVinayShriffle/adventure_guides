@@ -3,6 +3,8 @@ class BusSerializer < ActiveModel::Serializer
 
   attributes :id, :name, :bus_type, :capacity, :price, :images_urls
 
+  has_many :bus_stops
+  
   def images_urls
     return [] unless object.images.attached?
 

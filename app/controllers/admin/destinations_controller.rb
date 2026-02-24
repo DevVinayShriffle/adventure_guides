@@ -9,7 +9,13 @@ module Admin
 
       respond_to do |format|
         format.html
-        format.json { render json: destinations, status: :ok }
+        format.json do
+          if destinations.present?
+            render json: destinations, status: :ok
+          else
+            render json: { message: "No destinations found." }, status: :ok
+          end
+        end
       end
     end
 

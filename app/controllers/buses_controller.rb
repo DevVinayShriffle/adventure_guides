@@ -19,13 +19,20 @@ class BusesController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json { render json: @bus, status: :ok }
+      # format.json { render json: @bus, status: :ok }
+      format.json do
+        if @bus.present?
+          render json: @bus, status: :ok
+        else
+          render json: { message: "No bus found." }, status: :ok
+        end
+      end
     end
   end
 
   private
 
   def set_bus
-    @bus = Bus.find(params[:id])
+    @bus = Bus.find_by(id: params[:id])
   end
 end

@@ -29,7 +29,7 @@ class User < ApplicationRecord
     with: URI::MailTo::EMAIL_REGEXP,
     message: "must be a valid email address"
   }
-
+  has_many :buses
   has_many :bookings, dependent: :destroy
 
   before_validation :normalize_name, :normalize_email
