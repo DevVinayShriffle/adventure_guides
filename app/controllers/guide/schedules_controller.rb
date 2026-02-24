@@ -1,33 +1,42 @@
 class Guide::SchedulesController < ApplicationController
   before_action :authenticate_user!
   before_action :require_guide
-  before_action :set_bus
+  before_action :set_bus, except: [:show]
   before_action :set_schedule, only: [:show, :update, :destroy]
 
   def index
-    bus_stops = @bus.bus_stops.order(created_at: :asc)
+    @schedules = Schedule.includes(:bus, :destination).order(departure: :asc)
 
     respond_to do |format|
       format.html
       format.json do
-        if bus_stops.present?
-          render json: bus_stops, status: :ok
+        if @schedules.present?
+          render json: @schedules, status: :ok
         else
-          render json: { message: "No bus_stops found." }, status: :ok
+          render json: { message: "No schedules found." }, status: :ok
         end
       end
     end
   end
 
   def show
-    render json: @bus_stop, status: :ok
+    respond_to do |format|
+      format.html
+      
+      format.json do
+        if @schedule.present?
+          render json: @schedule, status: :ok
+        else
+          render json: { message: "No schedules found." }, status: :ok
+        end
+      end
+    end
   end
 
   def create
-    byebug
     @schedule = schedules_params
     target = @bus.bus_stops.select(:name).where(stop_type: "drop")
-    @schedule[:destination_id] = Destination.where("name ILIKE ?", "%#{target.first.name}%").select(:id)
+    @schedule[:destination_id] = Destination.where("? ILIKE CONCAT('%', name, '%')", target.first.name).select(:id).first.id
     schedule = @bus.schedules.create!(@schedule)
 
     respond_to do |format|
@@ -46,11 +55,11 @@ class Guide::SchedulesController < ApplicationController
   end
 
   def destroy
-    @bus_stop.destroy
+    @schedule.destroy
 
     respond_to do |format|
       format.html
-      format.json { render json: { message: "Bus stop deleted." }, status: :ok }
+      format.json { render json: { message: "Schedule deleted." }, status: :ok }
     end
   end
 

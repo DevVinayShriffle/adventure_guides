@@ -29,9 +29,9 @@ Rails.application.routes.draw do
   namespace :guide do
     resources :buses do
       resources :bus_stops
-      resources :schedules, only: [:new, :create, :edit, :update, :destroy]
+      resources :schedules
     end
-    resources :schedules, only: [:index, :show]
+    # resources :schedules, only: [:index, :show]
   end
 
 end

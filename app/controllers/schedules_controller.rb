@@ -8,7 +8,7 @@ class SchedulesController < ApplicationController
       format.html
       format.json do
         if @schedules.present?
-          render json: { schedules: @schedules }, status: :ok
+          render json: @schedules, status: :ok
         else
           render json: { message: "No schedules found." }, status: :ok
         end
@@ -22,7 +22,7 @@ class SchedulesController < ApplicationController
       
       format.json do
         if @schedule.present?
-          render json: { schedule: @schedule }, status: :ok
+          render json: @schedule, status: :ok
         else
           render json: { message: "No schedules found." }, status: :ok
         end
