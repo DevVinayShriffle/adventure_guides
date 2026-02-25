@@ -1,5 +1,16 @@
-<div class="border rounded bg-blue-500 ">Hello everyone what are you doing.</div>
+<div  class="flex justify-between">
+  <div>
+    <p>Start Your Adventure</p>
+    <p>Here’s Our Recommended Travel Destinations</p>
+  </div>
+  <span></span>
+</div>
 
-<button class="bg-cyan-500">Button B</button>
-
-<div class="bg-red-200 w-full px-4 py-5 text-bold border rounded mt-4">hi this is again i am testing it's design working with tailwind.</div>
+<%# <% Destination card %>
+<div id="destinations">
+  <% if @destinations.present? %>
+    <%= render @destinations %>
+  <% else %>
+    No Destinations available
+  <% end %>
+</div>

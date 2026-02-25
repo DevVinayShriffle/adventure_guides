@@ -28,7 +28,6 @@ module Guide
     end
 
     def create
-      # byebug
       @bus = bus_params
       @bus[:user_id] = current_user.id
       @bus = Bus.create!(@bus)
@@ -63,7 +62,6 @@ module Guide
     private
 
     def set_bus
-      # byebug
       @bus = current_user.buses.find(params[:id])
     end
 

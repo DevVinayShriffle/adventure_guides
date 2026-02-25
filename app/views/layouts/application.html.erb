@@ -19,14 +19,21 @@
     <%# <link rel="apple-touch-icon" href="/icon.png"> %>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
   </head>
 
   <body>
-    <h1 class="bg-red-500">hello application</h1>
+    <%# <% hero section %>
+    <%= render "shared/hero" %>
+     
     <%= yield %>
+
+    <%= render "shared/home_footer" %>
   </body>
 </html>

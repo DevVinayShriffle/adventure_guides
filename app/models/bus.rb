@@ -12,6 +12,7 @@ class Bus < ApplicationRecord
   has_many :bus_stops, dependent: :destroy
 
   before_validation :normalize_name
+  broadcasts_to ->(bus) { "buses" }
 
   private
 

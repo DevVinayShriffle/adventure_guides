@@ -1,0 +1,16 @@
+<div  class="flex justify-between">
+  <div>
+    <p>Start Your Adventure</p>
+    <p>Here’s Our Recommended Buses for Traveling Destinations</p>
+  </div>
+  <span></span>
+</div>
+
+<%# <% Destination card %>
+<div id="buses">
+  <% if @buses.present? %>
+    <%= render @buses %>
+  <% else %>
+    No Buses available
+  <% end %>
+</div>

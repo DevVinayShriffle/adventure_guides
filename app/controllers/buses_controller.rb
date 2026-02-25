@@ -17,13 +17,18 @@ class BusesController < ApplicationController
   # end
 
   def index
+    # byebug
     if params[:destination_id].present?
       @destination = Destination.find_by(id: params[:destination_id])
 
       if @destination.present?
+        # @buses = Bus.joins(:bus_stops)
+        # .where(bus_stops: { stop_type: "drop", name: @destination.name })
+        # .distinct
+
         @buses = Bus.joins(:bus_stops)
-                    .where(bus_stops: { stop_type: "drop", name: @destination.name })
-                    .distinct
+        .where(bus_stops: { stop_type: "drop" })
+        .distinct
       else
         @buses = []
       end

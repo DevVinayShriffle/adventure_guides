@@ -1,0 +1,21 @@
+<div class="flex flex-col" id="<%= dom_id bus %>">
+  <div>images</div>
+  <% if bus.images.attached? %>
+    <div class="image-gallery">
+      <% bus.images.each do |image| %>
+        <%= image_tag(image, class: "product-image") %>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No images attached.</p>
+  <% end %>
+
+  <%= bus.name %>
+  <%= bus.bus_type %>
+  <%= bus.capacity %>
+  <%= bus.price %>
+  <%= bus.capacity %>
+  <%= link_to 'see bus details', bus_path(bus.id), class: 'table-action edit' %>
+
+    
+</div>
