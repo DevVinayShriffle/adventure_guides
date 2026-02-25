@@ -9,7 +9,7 @@ class BookingsController < ApplicationController
       format.html
       format.json do
         if @bookings.present?
-          render json: @bookings.map { |booking| BookingSerializer.new(booking) }, status: :ok
+          render json: { bookings: @bookings.map { |booking| BookingSerializer.new(booking) }}, status: :ok
         else
           render json: { message: "No bookings found." }, status: :ok
         end
@@ -22,7 +22,7 @@ class BookingsController < ApplicationController
       format.html
       format.json do
         if @booking.present?
-          render json: BookingSerializer.new(@booking), status: :ok
+          render json: @booking, status: :ok
         else
           render json: { message: "Booking not found." }, status: :not_found
         end
@@ -66,6 +66,7 @@ class BookingsController < ApplicationController
   end
 
   def cancel
+    byebug
     if @booking.cancelled?
       return render json: { message: "Booking already cancelled." }, status: :unprocessable_entity
     end
@@ -95,6 +96,6 @@ class BookingsController < ApplicationController
   end
 
   def set_booking
-    @booking = current_user.bookings.find_by(id: params[:id])
+    @booking = current_user.bookings.find(params[:id])
   end
 end

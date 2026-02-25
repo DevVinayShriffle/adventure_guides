@@ -5,6 +5,7 @@ module ExceptionHandler
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
     rescue_from ActiveRecord::RecordNotUnique, with: :record_not_unique
+    rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
     rescue_from CustomError, with: :custom_error
     # rescue_from StandardError, with: :internal_server_error
   end
@@ -46,5 +47,17 @@ module ExceptionHandler
     render json: {
       error: exception.message
     }, status: exception.status
+  end
+
+  def handle_parameter_missing(exception)
+    # Log the exception (optional)
+    Rails.logger.info "Missing parameter: #{exception.param}"
+
+    # Customize the response (e.g., for JSON API or HTML)
+    respond_to do |format|
+      format.html { redirect_to root_url, alert: "Required parameter missing: #{exception.param}" }
+      format.json { render json: { error: "Required parameter missing: #{exception.param}" }, status: :bad_request }
+      format.all { head :bad_request }
+    end
   end
 end

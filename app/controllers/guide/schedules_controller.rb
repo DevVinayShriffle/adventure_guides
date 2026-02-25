@@ -7,9 +7,9 @@ class Guide::SchedulesController < ApplicationController
   def index
     # @schedules = Schedule.includes(:bus, :destination).order(departure: :asc)
     @schedules = Schedule.joins(:bus)
-                     .where(buses: { user_id: current_user.id })
-                     .includes(:bus, :destination)
-                     .order(departure: :asc)
+    .where(buses: { user_id: current_user.id })
+    .includes(:bus, :destination)
+    .order(departure: :asc)
 
     respond_to do |format|
       format.html
@@ -113,8 +113,8 @@ class Guide::SchedulesController < ApplicationController
 
   def set_schedule
     @schedule = Schedule.joins(:bus)
-                        .where(buses: { user_id: current_user.id })
-                        .find_by(id: params[:id])
+    .where(buses: { user_id: current_user.id })
+    .find_by(id: params[:id])
 
     unless @schedule
       render json: { message: "Schedule not found." }, status: :not_found
