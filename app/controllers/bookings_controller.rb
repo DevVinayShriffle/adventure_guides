@@ -17,6 +17,16 @@ class BookingsController < ApplicationController
     end
   end
 
+  def new
+    @schedule = Schedule.find_by(id: params[:schedule_id])
+
+    unless @schedule
+      redirect_to root_path, alert: "Schedule not found"
+    end
+
+    @booking = Booking.new
+  end
+
   def show
     respond_to do |format|
       format.html

@@ -1,0 +1,143 @@
+<div class="px-20 py-10">
+
+  <h1 class="text-2xl font-semibold mb-6">
+    <%= @bus.name %>
+  </h1>
+
+  <div class="grid grid-cols-2 gap-10">
+
+    <div>
+      <% if @bus.images.attached? %>
+        <%= image_tag @bus.images.first,
+              class: "w-full h-64 object-cover rounded" %>
+      <% else %>
+        <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
+          No Image
+        </div>
+      <% end %>
+    </div>
+
+    <div>
+      <p>Type: <%= @bus.bus_type %></p>
+      <p>Capacity: <%= @bus.capacity %></p>
+      <p>Price: ₹ <%= @bus.price %></p>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="px-20 py-10">
+
+  <div class="grid grid-cols-2 gap-10">
+
+    <div>
+      <% if @bus.images.attached? %>
+        <%= image_tag @bus.images.first, class: "w-full rounded" %>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <h2 class="text-2xl font-semibold"><%= @bus.name %></h2>
+
+      <p>Type: <%= @bus.bus_type %></p>
+      <p>Capacity: <%= @bus.capacity %></p>
+      <p class="text-green-600 font-medium">₹ <%= @bus.price %></p>
+
+      <h3 class="text-xl mt-6">Schedules</h3>
+
+      <% @bus.schedules.each do |schedule| %>
+        <div class="border p-3 rounded mt-2">
+          <p>Departure: <%= schedule.departure %></p>
+          <p>Arrival: <%= schedule.arrival %></p>
+          <p>Available Seats: <%= schedule.available_seats %></p>
+
+          <%= link_to "Book Now",
+              bookings_path(booking: {
+                schedule_id: schedule.id,
+                seats: 1,
+                pickup: "Default",
+                drop: schedule.destination.name
+              }),
+              method: :post,
+              class: "inline-block mt-2 bg-black text-white px-4 py-1 rounded" %>
+        </div>
+      <% end %>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="px-20 py-10">
+
+  <div class="grid grid-cols-2 gap-10">
+
+    <!-- LEFT SIDE IMAGE -->
+    <div>
+      <% if @bus.images.attached? %>
+        <%= image_tag @bus.images.first, class: "w-full rounded" %>
+      <% else %>
+        <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
+          No Image
+        </div>
+      <% end %>
+    </div>
+
+    <!-- RIGHT SIDE DETAILS -->
+    <div class="flex flex-col gap-4">
+
+      <h2 class="text-2xl font-semibold"><%= @bus.name %></h2>
+
+      <p>Type: <%= @bus.bus_type %></p>
+      <p>Capacity: <%= @bus.capacity %></p>
+      <p class="text-green-600 font-medium">₹ <%= @bus.price %></p>
+
+      <!-- Pickup Points -->
+      <div class="mt-6">
+        <h3 class="font-semibold">Pickup Points</h3>
+        <% @bus.bus_stops.where(stop_type: "pickup").each do |stop| %>
+          <p class="text-gray-600">• <%= stop.name %></p>
+        <% end %>
+      </div>
+
+      <!-- Drop Points -->
+      <div class="mt-4">
+        <h3 class="font-semibold">Drop Points</h3>
+        <% @bus.bus_stops.where(stop_type: "drop").each do |stop| %>
+          <p class="text-gray-600">• <%= stop.name %></p>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCHEDULES SECTION -->
+  <div class="mt-16">
+    <h2 class="text-xl font-semibold mb-6">Available Schedules</h2>
+
+    <% if @bus.schedules.present? %>
+      <% @bus.schedules.each do |schedule| %>
+
+        <div class="border p-5 rounded mb-6">
+
+          <p>Destination: <%= schedule.destination.name %></p>
+          <p>Departure: <%= schedule.departure %></p>
+          <p>Arrival: <%= schedule.arrival %></p>
+          <p>Available Seats: <%= schedule.available_seats %></p>
+
+          <%= link_to "Book This Schedule",
+              new_booking_path(schedule_id: schedule.id),
+              class: "inline-block mt-3 bg-black text-white px-4 py-2 rounded" %>
+
+        </div>
+
+      <% end %>
+    <% else %>
+      <p>No schedules available.</p>
+    <% end %>
+
+  </div>
+
+</div>

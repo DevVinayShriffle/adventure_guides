@@ -26,9 +26,13 @@ class BusesController < ApplicationController
         # .where(bus_stops: { stop_type: "drop", name: @destination.name })
         # .distinct
 
-        @buses = Bus.joins(:bus_stops)
-        .where(bus_stops: { stop_type: "drop" })
-        .distinct
+        # @buses = Bus.joins(:bus_stops)
+        # .where(bus_stops: { stop_type: "drop" })
+        # .distinct
+
+        @buses = Bus.joins(:schedules)
+                  .where(schedules: { destination_id: @destination.id })
+                  .distinct
       else
         @buses = []
       end
@@ -45,6 +49,12 @@ class BusesController < ApplicationController
   end
 
   def show
+    @bus = Bus.includes(:bus_stops, schedules: :destination).find_by(id: params[:id])
+
+    unless @bus
+      redirect_to buses_path, alert: "Bus not found"
+    end
+    
     respond_to do |format|
       format.html
       # format.json { render json: @bus, status: :ok }

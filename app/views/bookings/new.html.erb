@@ -1,0 +1,45 @@
+<div class="px-20 py-10">
+
+  <h2 class="text-2xl font-semibold mb-6">Book Your Seat</h2>
+
+  <div class="border p-6 rounded w-1/2">
+
+    <p><strong>Bus:</strong> <%= @schedule.bus.name %></p>
+    <p><strong>Destination:</strong> <%= @schedule.destination.name %></p>
+    <p><strong>Available Seats:</strong> <%= @schedule.available_seats %></p>
+
+    <%= form_with model: @booking, local: true do |f| %>
+
+      <%= f.hidden_field :schedule_id, value: @schedule.id %>
+
+      <div class="mt-4">
+        <%= f.label :seats %>
+        <%= f.number_field :seats, min: 1, class: "border p-2 w-full" %>
+      </div>
+
+      <div class="mt-4">
+        <%= f.label :pickup %>
+        <%= f.select :pickup,
+            @schedule.bus.bus_stops.where(stop_type: "pickup").pluck(:name),
+            {},
+            class: "border p-2 w-full" %>
+      </div>
+
+      <div class="mt-4">
+        <%= f.label :drop %>
+        <%= f.select :drop,
+            @schedule.bus.bus_stops.where(stop_type: "drop").pluck(:name),
+            {},
+            class: "border p-2 w-full" %>
+      </div>
+
+      <div class="mt-6">
+        <%= f.submit "Confirm Booking",
+            class: "bg-black text-white px-4 py-2 rounded w-full" %>
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

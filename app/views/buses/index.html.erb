@@ -14,3 +14,36 @@
     No Buses available
   <% end %>
 </div>
+
+<div class="px-20 py-10">
+  <h1 class="text-2xl font-semibold mb-6">
+    Available Buses
+  </h1>
+
+  <div id="buses" class="grid grid-cols-3 gap-6">
+    <% if @buses.present? %>
+      <%= render @buses %>
+    <% else %>
+      <p>No buses available</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="px-20 py-10">
+
+  <div class="mb-8">
+    <p class="text-2xl font-semibold">Available Buses</p>
+    <% if @destination.present? %>
+      <p class="text-gray-500">Destination: <%= @destination.name %></p>
+    <% end %>
+  </div>
+
+  <div id="buses" class="grid grid-cols-3 gap-6">
+    <% if @buses.present? %>
+      <%= render @buses %>
+    <% else %>
+      <p>No Buses Available</p>
+    <% end %>
+  </div>
+
+</div>

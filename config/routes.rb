@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :schedules, only: [:index, :show]
 
-  resources :bookings, only: [:create, :index, :show] do
+  resources :bookings, only: [:create, :index, :show, :new] do
     patch :cancel, on: :member
   end
 
