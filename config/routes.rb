@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "dashboards/index"
   root "destinations#index"
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
@@ -31,5 +32,8 @@ Rails.application.routes.draw do
       resources :schedules
     end
   end
+
+  # config/routes.rb
+  get '/dashboard', to: 'dashboards#index', as: 'dashboard'
 
 end

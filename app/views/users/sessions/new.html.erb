@@ -4,20 +4,20 @@
 
     <h2 class="text-xl font-semibold mb-4">Login</h2>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: user_session_path) do |f| %>
 
-      <div class="mb-4">
-        <%= f.label :email %>
-        <%= f.email_field :email, class: "w-full border p-2 rounded" %>
-      </div>
+    <div class="mb-4">
+      <%= f.label :email %>
+      <%= f.email_field :email, class: "w-full border p-2 rounded" %>
+    </div>
 
-      <div class="mb-4">
-        <%= f.label :password %>
-        <%= f.password_field :password, class: "w-full border p-2 rounded" %>
-      </div>
+    <div class="mb-4">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: "w-full border p-2 rounded" %>
+    </div>
 
-      <%= f.submit "Login",
-            class: "w-full bg-black text-white py-2 rounded" %>
+    <%= f.submit "Login",
+    class: "w-full bg-black text-white py-2 rounded" %>
 
     <% end %>
 

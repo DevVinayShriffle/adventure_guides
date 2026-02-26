@@ -5,39 +5,36 @@ class Users::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opt = {})
+    return if request.get?
     @token = request.env['warden-jwt_auth.token']
     headers['Authorization'] = @token
     
-    render json: {
-      status: {
-        code: 200, message: 'Logged in successfully.',
-        token: @token,
-        data: {
-          user: UserSerializer.new(current_user)
-        }
-      }
-    }, status: :ok
+    respond_to do |format|
+      format.html { redirect_to dashboard_path, notice: 'User Logged in successfully.' }
+      format.json { render json: {status: { code: 200, message: 'Logged in successfully.', token: "Bearer #{@token}", data: {user: UserSerializer.new(resource)} }}, status: :ok }
+    end  
   end
 
   def respond_to_on_destroy(resource=nil)
+    return if request.get?
     if request.headers['Authorization'].present?
       jwt_payload = JWT.decode(request.headers['Authorization'].split.last,
        Rails.application.credentials.devise_jwt_secret_key!).first
 
       # current_user = User.find(jwt_payload['sub'])
-       user_to_log_out = current_user || resource
+      user_to_log_out = current_user || resource
     end
 
     if user_to_log_out
-      render json: {
-        status: 200,
-        message: 'Logged out successfully.'
-      }, status: :ok
+      respond_to do |format|
+        format.html { redirect_to user_session_path, notice: 'User Logged out successfully.' }
+        format.json { render json: { status: 200, message: 'Logged out successfully.' }, status: :ok}
+      end
     else
-      render json: {
-        status: 401,
-        message: "Couldn't find an active session."
-      }, status: :unauthorized
+      respond_to do |format|
+        format.html { redirect_to user_session_path, notice: "Couldn't find an active session." }
+        format.json { render json: { status: 401, message: "Couldn't find an active session." }, status: :unauthorized }
+      end
     end
   end
 end

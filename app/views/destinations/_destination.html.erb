@@ -1,32 +1,16 @@
-<div class="flex flex-col" id="<%= dom_id destination %>">
-  <div>images</div>
-  <% if destination.images.attached? %>
-    <div class="image-gallery">
-      <% destination.images.each do |image| %>
-        <%= image_tag(image, class: "product-image") %>
-      <% end %>
-    </div>
-  <% else %>
-    <p>No images attached.</p>
-  <% end %>
-
-  <%= destination.name %>
-  <%= destination.description %>
-  <%= destination.location %>
-  <%= link_to 'Check Buses', destination_buses_path(destination.id), class: 'table-action edit' %>
-
-    
-</div>
-
 <div class="border p-4 rounded shadow bg-white">
 
   <% if destination.images.attached? %>
-    <%= image_tag destination.images.first,
-          class: "w-full h-40 object-cover rounded mb-3" %>
-  <% else %>
-    <div class="w-full h-40 bg-gray-200 flex items-center justify-center mb-3">
-      No Image
+    <!-- Controller definition, target container, and scroll action -->
+    <div data-controller="auto-scroll" class="w-full ">
+      <div data-auto-scroll-target="container" class="flex overflow-x-hidden snap-x snap-mandatory scroll-smooth gap-2">
+        <% destination.images.each do |image| %>
+          <%= image_tag(image, class: "rounded-lg") %>
+        <% end %>
+      </div>
     </div>
+  <% else %>
+    <p>No images attached.</p>
   <% end %>
 
   <h2 class="text-lg font-medium"><%= destination.name %></h2>
@@ -48,11 +32,16 @@
 <div class="border p-5 rounded-lg shadow-sm flex flex-col gap-3">
 
   <% if destination.images.attached? %>
-    <%= image_tag destination.images.first, class: "w-full h-40 object-cover rounded" %>
-  <% else %>
-    <div class="w-full h-40 bg-gray-200 flex items-center justify-center">
-      No Image
+    <!-- Controller definition, target container, and scroll action -->
+    <div data-controller="auto-scroll" class="w-full ">
+      <div data-auto-scroll-target="container" class="flex overflow-x-hidden snap-x snap-mandatory scroll-smooth gap-2">
+        <% destination.images.each do |image| %>
+          <%= image_tag(image, class: "rounded-lg") %>
+        <% end %>
+      </div>
     </div>
+  <% else %>
+    <p>No images attached.</p>
   <% end %>
 
   <p class="text-lg font-semibold"><%= destination.name %></p>

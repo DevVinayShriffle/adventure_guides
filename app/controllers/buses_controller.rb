@@ -17,7 +17,6 @@ class BusesController < ApplicationController
   # end
 
   def index
-    # byebug
     if params[:destination_id].present?
       @destination = Destination.find_by(id: params[:destination_id])
 
@@ -31,8 +30,8 @@ class BusesController < ApplicationController
         # .distinct
 
         @buses = Bus.joins(:schedules)
-                  .where(schedules: { destination_id: @destination.id })
-                  .distinct
+        .where(schedules: { destination_id: @destination.id })
+
       else
         @buses = []
       end

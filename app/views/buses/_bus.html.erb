@@ -1,56 +1,11 @@
-<div class="flex flex-col" id="<%= dom_id bus %>">
-  <div>images</div>
-  <% if bus.images.attached? %>
-    <div class="image-gallery">
-      <% bus.images.each do |image| %>
-        <%= image_tag(image, class: "product-image") %>
-      <% end %>
-    </div>
-  <% else %>
-    <p>No images attached.</p>
-  <% end %>
-
-  <%= bus.name %>
-  <%= bus.bus_type %>
-  <%= bus.capacity %>
-  <%= bus.price %>
-  <%= bus.capacity %>
-  <%= link_to 'see bus details', bus_path(bus.id), class: 'table-action edit' %>
-
-    
-</div>
-
-<div class="border p-4 rounded shadow bg-white">
-
-  <% if bus.images.attached? %>
-    <%= image_tag bus.images.first,
-          class: "w-full h-40 object-cover rounded mb-3" %>
-  <% else %>
-    <div class="w-full h-40 bg-gray-200 flex items-center justify-center mb-3">
-      No Image
-    </div>
-  <% end %>
-
-  <h2 class="text-lg font-medium"><%= bus.name %></h2>
-
-  <p class="text-sm">Type: <%= bus.bus_type %></p>
-  <p class="text-sm">Capacity: <%= bus.capacity %></p>
-  <p class="text-sm font-semibold">₹ <%= bus.price %></p>
-
-  <%= link_to "View Details",
-      bus_path(bus),
-      class: "inline-block mt-2 px-4 py-2 bg-black text-white rounded" %>
-
-</div>
-
 <div class="border p-5 rounded-lg shadow-sm flex flex-col gap-3">
 
   <% if bus.images.attached? %>
-    <%= image_tag bus.images.first, class: "w-full h-40 object-cover rounded" %>
+  <%= image_tag bus.images.first, class: "w-full h-40 object-cover rounded" %>
   <% else %>
-    <div class="w-full h-40 bg-gray-200 flex items-center justify-center">
-      No Image
-    </div>
+  <div class="w-full h-40 bg-gray-200 flex items-center justify-center">
+    No Image
+  </div>
   <% end %>
 
   <p class="text-lg font-semibold"><%= bus.name %></p>
@@ -60,7 +15,7 @@
   <p class="font-medium text-green-600">₹ <%= bus.price %></p>
 
   <%= link_to "See Details",
-      bus_path(bus),
-      class: "mt-3 bg-black text-white text-center py-2 rounded" %>
+  bus_path(bus),
+  class: "mt-3 bg-black text-white text-center py-2 rounded" %>
 
 </div>

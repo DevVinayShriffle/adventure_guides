@@ -3,5 +3,10 @@
     <div class="border p-2 rounded-full"><p class="font-bold text-2xl">AG</p></div>
     <div class="flex gap-2"><span class="font-medium font-xl">ADVENTURE</span> <p class="font-light">Guides</p></div>
   </div>
+  <div>
+    <%= link_to "Sign Up", new_user_registration_path %>
+    <%= link_to "Login", user_session_path %>
+    <%# <%= link_to "Logout", destroy_user_session_path %>
+  </div>
   <div><i class="ri-menu-fill font-bold text-lg"></i></div>
 </div>
