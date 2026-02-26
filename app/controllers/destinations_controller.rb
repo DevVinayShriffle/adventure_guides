@@ -2,13 +2,13 @@ class DestinationsController < ApplicationController
   before_action :set_destination, only: [:show]
 
   def index
-    destinations = Destination.all.order(created_at: :desc)
+    @destinations = Destination.all.order(created_at: :desc)
     
     respond_to do |format|
       format.html
       format.json do
         if destinations.present?
-          render json: destinations, status: :ok
+          render json: @destinations, status: :ok
         else
           render json: { message: "No destinations found." }, status: :ok
         end

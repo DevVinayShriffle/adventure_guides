@@ -1,0 +1,18 @@
+<div class="max-w-4xl mx-auto px-6 py-12">
+  <div class="bg-white shadow-xl rounded-2xl p-8">
+    <h1 class="text-3xl font-bold mb-4"><%= @bus.name %></h1>
+
+    <p class="mb-2">Price: ₹<%= @bus.price %></p>
+    <p class="mb-6">Capacity: <%= @bus.capacity %></p>
+
+    <% if user_signed_in? %>
+      <%= link_to "Book Now",
+            new_booking_path(bus_id: @bus.id),
+            class: "bg-indigo-600 text-white px-6 py-3 rounded-lg" %>
+    <% else %>
+      <%= link_to "Login to Book",
+            user_session_path_path(return_to: request.fullpath),
+            class: "bg-indigo-600 text-white px-6 py-3 rounded-lg" %>
+    <% end %>
+  </div>
+</div>

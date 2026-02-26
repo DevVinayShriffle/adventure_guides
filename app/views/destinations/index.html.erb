@@ -1,0 +1,18 @@
+<div class="max-w-7xl mx-auto px-6 py-12">
+  <h1 class="text-4xl font-bold mb-10 text-center">Explore Destinations</h1>
+
+  <div class="grid md:grid-cols-3 gap-8">
+    <% @destinations.each do |destination| %>
+      <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
+        <div class="p-6">
+          <h2 class="text-xl font-semibold mb-2"><%= destination.name %></h2>
+          <p class="text-gray-500 mb-4"><%= destination.location %></p>
+
+          <%= link_to "View Trips",
+              destination_buses_path(destination),
+              class: "inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

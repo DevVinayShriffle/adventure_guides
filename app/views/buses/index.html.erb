@@ -1,0 +1,17 @@
+<div class="max-w-7xl mx-auto px-6 py-12">
+  <h1 class="text-3xl font-bold mb-8">Available Buses</h1>
+
+  <div class="grid md:grid-cols-3 gap-8">
+    <% @buses.each do |bus| %>
+      <div class="bg-white shadow rounded-xl p-6">
+        <h2 class="text-xl font-semibold"><%= bus.name %></h2>
+        <p class="text-gray-500">Price: ₹<%= bus.price %></p>
+        <p class="text-gray-500">Capacity: <%= bus.capacity %></p>
+
+        <%= link_to "View Details",
+              bus_path(bus),
+              class: "mt-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg" %>
+      </div>
+    <% end %>
+  </div>
+</div>

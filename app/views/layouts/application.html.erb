@@ -23,7 +23,26 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-gray-50 text-gray-800">
+    <nav class="bg-white shadow-md">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <%= link_to "Tripzi", root_path, class: "text-2xl font-bold text-indigo-600" %>
+
+        <div class="space-x-6">
+          <%= link_to "Destinations", destinations_path, class: "hover:text-indigo-600" %>
+
+          <% if user_signed_in? %>
+            <%= link_to "My Bookings", bookings_path, class: "hover:text-indigo-600" %>
+            <%= link_to "Profile", edit_user_registration_path, class: "hover:text-indigo-600" %>
+            <%= link_to "Logout",  destroy_user_session_path, method: :delete, class: "text-red-500" %>
+          <% else %>
+            <%= link_to "Login", user_session_path, class: "hover:text-indigo-600" %>
+            <%= link_to "Sign Up", user_registration_path, class: "bg-indigo-600 text-white px-4 py-2 rounded-lg" %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
     <%= yield %>
   </body>
 </html>

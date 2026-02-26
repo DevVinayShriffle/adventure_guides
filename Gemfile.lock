@@ -356,6 +356,10 @@ GEM
       net-ssh (>= 2.8.0)
       ostruct
     stringio (3.2.0)
+    tailwindcss-rails (4.4.0)
+      railties (>= 7.0.0)
+      tailwindcss-ruby (~> 4.0)
+    tailwindcss-ruby (4.2.0-x86_64-linux-gnu)
     thor (1.5.0)
     thruster (0.1.18-x86_64-linux)
     timeout (0.6.0)
@@ -415,6 +419,7 @@ DEPENDENCIES
   solid_cable
   solid_cache
   solid_queue
+  tailwindcss-rails (~> 4.4)
   thruster
   tzinfo-data
   web-console
