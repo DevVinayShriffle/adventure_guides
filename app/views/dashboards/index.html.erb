@@ -1,15 +1,31 @@
-<div>
-  <h1 class="font-bold text-4xl">Dashboards#index</h1>
-  <p>Find me in app/views/dashboards/index.html.erb</p>
-  <p><%= @user.role %></p>
-  <p><%= @user.name %></p>
-  <p><%= @user.id %></p>
+<div class="flex h-[90vh]">
 
-  <ul>
-    <% @options.each do |option| %>
-      <li>
-        <%= link_to "#{option}", user_session_path %>
-      </li>
-    <% end %>
-  </ul>
+  <!-- LEFT SIDEBAR -->
+  <div class="w-1/5 bg-gray-100 border-r p-6">
+    <h2 class="text-xl font-bold mb-6">Dashboard</h2>
+
+    <ul class="space-y-4">
+      <% @options.each do |option| %>
+        <li>
+          <%= link_to option[:name],
+                      option[:path],
+                      data: { turbo_frame: "dashboard_content" },
+                      class: "block px-4 py-2 rounded hover:bg-gray-200 transition" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <!-- RIGHT CONTENT AREA -->
+  <div class="w-4/5 p-8 overflow-y-auto">
+    <turbo-frame id="dashboard_content">
+      <h2 class="text-2xl font-semibold text-gray-600">
+        Welcome <%= @user.name %>
+      </h2>
+      <p class="mt-2 text-gray-500">
+        Select an option from the left panel.
+      </p>
+    </turbo-frame>
+  </div>
+
 </div>

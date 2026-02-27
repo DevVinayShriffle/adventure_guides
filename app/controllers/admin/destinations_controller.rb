@@ -5,18 +5,25 @@ module Admin
     before_action :set_destination, only: [:show, :update, :destroy]
 
     def index
-      destinations = Destination.all.with_attached_images.order(created_at: :desc)
-
+      # @destinations = Destination.all.with_attached_images.order(created_at: :desc)
+      @destinations = Destination.order(created_at: :desc)
       respond_to do |format|
         format.html
         format.json do
-          if destinations.present?
-            render json: destinations, status: :ok
+          if @destinations.present?
+            render json: @destinations, status: :ok
           else
             render json: { message: "No destinations found." }, status: :ok
           end
         end
       end
+    end
+
+    def new
+      @destination = Destination.new
+    end
+
+    def edit
     end
 
     def show

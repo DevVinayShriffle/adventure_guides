@@ -1,0 +1,10 @@
+<turbo-frame id="dashboard_content">
+  <h1 class="text-2xl font-bold mb-4">Your Buses</h1>
+
+  <% @buses.each do |bus| %>
+    <div class="p-4 border rounded mb-3">
+      <p><strong>Name:</strong> <%= bus.name %></p>
+      <p><strong>Type:</strong> <%= bus.bus_type %></p>
+    </div>
+  <% end %>
+</turbo-frame>
