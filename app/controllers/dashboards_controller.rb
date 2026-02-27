@@ -33,7 +33,7 @@ class DashboardsController < ApplicationController
     when "admin"
       [
         { name: "Destinations", path: admin_destinations_path },
-        { name: "Users", path: "#" }
+        { name: "Users", path: admin_users_path }
       ]
     else
       []

@@ -2,9 +2,12 @@
   <h1 class="text-2xl font-bold mb-4">Your Buses</h1>
 
   <% @buses.each do |bus| %>
-    <div class="p-4 border rounded mb-3">
-      <p><strong>Name:</strong> <%= bus.name %></p>
-      <p><strong>Type:</strong> <%= bus.bus_type %></p>
-    </div>
+  <div class="p-4 border rounded mb-3">
+    <p><strong>id:</strong> <%= bus.id %></p>
+    <p><strong>Name:</strong> <%= bus.name %></p>
+    <p><strong>Type:</strong> <%= bus.bus_type %></p>
+    <p><strong>Capacity:</strong> <%= bus.capacity %></p>
+    <p><strong>Price:</strong> <%= bus.price %></p>
+  </div>
   <% end %>
 </turbo-frame>

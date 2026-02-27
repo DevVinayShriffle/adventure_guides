@@ -6,12 +6,12 @@
 
     <ul class="space-y-4">
       <% @options.each do |option| %>
-        <li>
-          <%= link_to option[:name],
-                      option[:path],
-                      data: { turbo_frame: "dashboard_content" },
-                      class: "block px-4 py-2 rounded hover:bg-gray-200 transition" %>
-        </li>
+      <li>
+        <%= link_to option[:name],
+        option[:path],
+        data: { turbo_frame: "dashboard_content" },
+        class: "block px-4 py-2 rounded hover:bg-gray-200 transition" %>
+      </li>
       <% end %>
     </ul>
   </div>

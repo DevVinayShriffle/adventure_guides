@@ -1,0 +1,20 @@
+<turbo-frame id="dashboard_content">
+  <h1 class="text-2xl font-bold mb-4">Your Bookings</h1>
+
+  <% @bookings.each do |bookings| %>
+  <div class="p-4 border rounded mb-3">
+    <p><strong>Booking id:</strong> <%= bookings.id %></p>
+    <p><strong>Seats:</strong> <%= bookings.seats %></p>
+    <p><strong>Pickup:</strong> <%= bookings.pickup %></p>
+    <p><strong>Departure:</strong> <%= bookings.schedule.departure %></p>
+    <p><strong>Drop:</strong> <%= bookings.drop %></p>
+    <p><strong>Arrival:</strong> <%= bookings.schedule.arrival %></p>
+    <p><strong>Total price:</strong> ₹<%= bookings.total_price %></p>
+    <p><strong>Status:</strong> <%= bookings.status %></p>
+    <p><strong>Name:</strong> <%= bookings.user.name %></p>
+    <p><strong>Phone:</strong> <%= bookings.user.phone %></p>
+    <p><strong>Name:</strong> <%= bookings.user.email %></p>
+    <p><strong>Destination:</strong> <%= bookings.schedule.destination %></p>
+  </div>
+  <% end %>
+</turbo-frame>
