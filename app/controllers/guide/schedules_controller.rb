@@ -2,7 +2,11 @@ class Guide::SchedulesController < ApplicationController
   before_action :authenticate_user!
   before_action :require_guide
   before_action :set_bus, except: [:show]
-  before_action :set_schedule, only: [:show, :update, :destroy]
+  before_action :set_schedule, only: [:show, :update, :destroy, :edit]
+
+  def new
+    @schedule = Schedule.new
+  end
 
   def index
     # @schedules = Schedule.includes(:bus, :destination).order(departure: :asc)
@@ -38,13 +42,14 @@ class Guide::SchedulesController < ApplicationController
   end
 
   def create
+    params[:schedule][:available_seats]=@bus.capacity
     @schedule = schedules_params
     target = @bus.bus_stops.select(:name).where(stop_type: "drop")
     @schedule[:destination_id] = Destination.where("? ILIKE CONCAT('%', name, '%')", target.first.name).select(:id).first.id
     schedule = @bus.schedules.create!(@schedule)
 
     respond_to do |format|
-      format.html
+      format.html { redirect_to guide_bus_path(@bus) }
       format.json { render json: schedule, message: "Bus schedule created.", status: :created }
     end
   end
@@ -76,11 +81,15 @@ class Guide::SchedulesController < ApplicationController
   #   end
   # end
 
+  def edit
+    @schedule
+  end
+
   def update
     @schedule.update!(schedules_params)
 
     respond_to do |format|
-      format.html
+      format.html { redirect_to guide_bus_path(@bus) }
       format.json { render json: @schedule, message: "Schedule updated.", status: :ok }
     end
   end
@@ -89,7 +98,7 @@ class Guide::SchedulesController < ApplicationController
     @schedule.destroy
 
     respond_to do |format|
-      format.html
+      format.html { redirect_to guide_bus_path(@bus) }
       format.json { render json: { message: "Schedule deleted." }, status: :ok }
     end
   end

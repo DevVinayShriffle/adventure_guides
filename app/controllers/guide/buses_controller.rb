@@ -2,7 +2,7 @@ module Guide
   class BusesController < ApplicationController
     before_action :authenticate_user!
     before_action :require_guide
-    before_action :set_bus, only: [:show, :update, :destroy]
+    before_action :set_bus, only: [:show, :update, :destroy, :edit]
 
     def index
       @buses = Bus.all.order(created_at: :desc)
@@ -21,10 +21,15 @@ module Guide
     end
 
     def show
+      @bus
       respond_to do |format|
         format.html
         format.json { render json: @bus, status: :ok }
       end
+    end
+
+    def new
+      @bus = Bus.new
     end
 
     def create
@@ -38,10 +43,13 @@ module Guide
       end
     end
 
+    def edit
+      @bus
+    end
+
     def update
-      if bus_params[:images].present?
-        @bus.images.purge
-      end
+      params[:bus].delete("images") if params[:bus][:images]==[""]
+      
       @bus.update!(bus_params)
 
       respond_to do |format|

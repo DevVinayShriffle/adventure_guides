@@ -1,0 +1,33 @@
+<div class="border p-5 rounded-lg shadow-sm flex flex-col gap-3">
+
+  <% if bus.images.attached? %>
+  <%= image_tag bus.images.first, class: "w-full h-40 object-cover rounded" %>
+  <% else %>
+  <div class="w-full h-40 bg-gray-200 flex items-center justify-center">
+    No Image
+  </div>
+  <% end %>
+
+  <p class="text-lg font-semibold"><%= bus.name %></p>
+
+  <p>Type: <%= bus.bus_type %></p>
+  <p>Capacity: <%= bus.capacity %></p>
+  <p class="font-medium text-green-600">₹ <%= bus.price %></p>
+
+  <%= link_to "See Details",
+  guide_bus_path(bus),
+  class: "mt-3 bg-black text-white text-center py-2 rounded" %>
+  
+  <div class="flex justify-between">
+  <%= link_to "Edit",
+  edit_guide_bus_path(bus),
+  data: { turbo_frame: "dashboard_content" },
+  class: "px-3 py-1.5 rounded-md text-sm font-medium bg-amber-50 text-amber-700 hover:bg-amber-100" %>
+
+  <%= link_to "Delete",
+  guide_bus_path(bus),
+  data: { confirm: "Are you sure?", turbo_method: :delete },
+  class: "px-3 py-1.5 rounded-md text-sm font-medium bg-rose-50 text-rose-700 hover:bg-rose-100" %>
+  </div>
+
+</div>

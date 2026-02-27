@@ -1,0 +1,31 @@
+<div>
+  <%= form_with(model: [:guide, @bus, @schedule],
+    data: { turbo_frame: "dashboard_content" },
+    class: "space-y-4") do |f| %>
+
+    <div class="flex items-center gap-2">
+      <%= f.label :departure, class: "block font-medium" %>
+      <%= f.datetime_field :departure, 
+      class: "mt-1 block w-40% pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm" 
+      %>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <%= f.label :arrival, class: "block font-medium" %>
+      <%= f.datetime_field :arrival, 
+      class: "mt-1 block w-40% pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm" 
+      %>
+    </div>
+
+    <div class="flex gap-5">
+      <%= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
+
+      <%= link_to "Back",
+      guide_bus_path(@bus),
+      data: { turbo_frame: "dashboard_content" },
+      class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
+
+    </div>
+
+    <% end %>
+  </div>

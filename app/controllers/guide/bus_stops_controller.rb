@@ -20,6 +20,10 @@ module Guide
       end
     end
 
+    def new
+      @bus_stop = BusStop.new
+    end
+
     def show
       render json: @bus_stop, status: :ok
     end
@@ -28,7 +32,7 @@ module Guide
       bus_stop = @bus.bus_stops.create!(bus_stop_params)
       
       respond_to do |format|
-        format.html
+        format.html { redirect_to guide_bus(@bus) }
         format.json { render json: bus_stop, message: "Bus stop created.", status: :created }
       end
     end
