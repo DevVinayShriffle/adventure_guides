@@ -32,7 +32,7 @@ module Guide
       bus_stop = @bus.bus_stops.create!(bus_stop_params)
       
       respond_to do |format|
-        format.html { redirect_to guide_bus(@bus) }
+        format.html { redirect_to guide_bus_path(@bus) }
         format.json { render json: bus_stop, message: "Bus stop created.", status: :created }
       end
     end
@@ -41,7 +41,7 @@ module Guide
       @bus_stop.update!(bus_stop_params)
       
       respond_to do |format|
-        format.html
+        format.html { redirect_to guide_bus_path(@bus) }
         format.json { render json: @bus_stop, message: "Bus stop updated.", status: :ok }
       end
     end
@@ -50,7 +50,7 @@ module Guide
       @bus_stop.destroy
       
       respond_to do |format|
-        format.html
+        format.html { redirect_to guide_bus_path(@bus) }
         format.json { render json: { message: "Bus stop deleted." }, status: :ok }
       end
     end

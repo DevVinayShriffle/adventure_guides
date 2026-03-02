@@ -23,7 +23,10 @@ class DashboardsController < ApplicationController
     case role
     when "tourist"
       [
-        { name: "My Bookings", path: bookings_path }
+        { name: "My Bookings", path: bookings_path },
+        { name: "Upcoming Bookings", path: upcoming_bookings_path },
+        { name: "Cancelled Bookings", path: cancelled_bookings_path },
+        { name: "My Profile", path: edit_user_registration_path }
       ]
     when "guide"
       [

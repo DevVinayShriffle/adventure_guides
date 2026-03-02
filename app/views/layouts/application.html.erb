@@ -35,5 +35,12 @@
     <%= yield %>
 
     <%= render "shared/home_footer" %>
+
+    <% if false %>
+    <% unless content_for?(:hide_footer) %>
+      <%= render "shared/home_footer" %>
+    <% end %>
+    <% end %>
+
   </body>
 </html>

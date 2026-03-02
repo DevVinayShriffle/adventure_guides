@@ -20,6 +20,11 @@ Rails.application.routes.draw do
 
   resources :bookings, only: [:create, :index, :show, :new] do
     patch :cancel, on: :member
+
+    collection do
+      get :upcoming
+      get :cancelled
+    end
   end
 
   namespace :admin do
@@ -34,7 +39,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # config/routes.rb
   get '/dashboard', to: 'dashboards#index', as: 'dashboard'
 
 end

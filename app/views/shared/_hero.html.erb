@@ -10,3 +10,53 @@
   </div>
   <div><i class="ri-menu-fill font-bold text-lg"></i></div>
 </div>
+
+<% if false %>
+<div class="w-full flex justify-between items-center px-20 py-3 border-b-2 border-gray-300">
+  
+  <!-- LOGO -->
+  <div class="flex justify-center items-center gap-2">
+    <div class="border p-2 rounded-full">
+      <p class="font-bold text-2xl">AG</p>
+    </div>
+    <div class="flex gap-2">
+      <span class="font-medium font-xl">ADVENTURE</span>
+      <p class="font-light">Guides</p>
+    </div>
+  </div>
+
+  <!-- AUTH LINKS -->
+  <div class="flex gap-4 items-center">
+
+    <% if user_signed_in? %>
+
+      <!-- When User Logged In -->
+      <%= link_to "Dashboard", dashboards_path, class: "font-medium hover:text-blue-500" %>
+
+      <%= link_to "Logout",
+            destroy_user_session_path,
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+            class: "font-medium text-red-500 hover:text-red-700" %>
+
+    <% else %>
+
+      <!-- When User NOT Logged In -->
+      <%= link_to "Sign Up",
+            new_user_registration_path,
+            class: "font-medium hover:text-blue-500" %>
+
+      <%= link_to "Login",
+            user_session_path,
+            class: "font-medium hover:text-blue-500" %>
+
+    <% end %>
+
+  </div>
+
+  <!-- MENU ICON -->
+  <div>
+    <i class="ri-menu-fill font-bold text-lg"></i>
+  </div>
+
+</div>
+<% end %>

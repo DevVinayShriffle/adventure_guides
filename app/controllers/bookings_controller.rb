@@ -99,6 +99,26 @@ class BookingsController < ApplicationController
     end
   end
 
+  def upcoming
+    @bookings = current_user.bookings
+                            .where.not(status: :cancelled)
+                            .includes(schedule: [:bus, :destination])
+                            .order(created_at: :desc)
+
+    #   .where("schedules.departure_time > ?", Time.current)
+
+    render :upcoming
+  end
+
+  def cancelled
+    @bookings = current_user.bookings
+                            .where(status: :cancelled)
+                            .includes(schedule: [:bus, :destination])
+                            .order(created_at: :desc)
+
+    render :cancelled
+  end
+
   private
 
   def booking_params
