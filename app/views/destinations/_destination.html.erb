@@ -1,3 +1,4 @@
+<% if false %>
 <div class="border p-4 rounded shadow bg-white">
 
   <% if destination.images.attached? %>
@@ -28,6 +29,7 @@
   class: "inline-block mt-2 px-4 py-2 bg-black text-white rounded" %>
 
 </div>
+<% end %>
 
 <!--
 
@@ -57,71 +59,58 @@
 
 -->
 
-<% if false %>
-<div class="border p-4 rounded shadow bg-white w-72 h-[420px] flex flex-col justify-between">
+<%# <% if false %> 
+<div class="border p-3 rounded shadow bg-white w-65 h-[420px] flex flex-col justify-between">
 
   <!-- IMAGE SECTION -->
   <div>
     <% if destination.images.attached? %>
-      <div data-controller="auto-scroll" class="w-full">
-        <div data-auto-scroll-target="container"
-             class="flex overflow-x-hidden snap-x snap-mandatory scroll-smooth gap-2 h-40">
-          <% destination.images.each do |image| %>
-            <%= image_tag(image, class: "rounded-lg h-40 w-full object-cover") %>
-          <% end %>
-        </div>
-      </div>
-    <% else %>
-      <div class="h-40 flex items-center justify-center bg-gray-100 rounded">
-        <p>No images attached.</p>
-      </div>
-    <% end %>
+    <div data-controller="auto-scroll" class="w-full">
+      <div data-auto-scroll-target="container"
+      class="flex overflow-x-hidden snap-x snap-mandatory scroll-smooth gap-2 h-40">
+      <% destination.images.each do |image| %>
+      <%= image_tag(image, class: "rounded-lg h-40 w-full object-cover") %>
+      <% end %>
+    </div>
   </div>
+  <% else %>
+  <div class="h-40 flex items-center justify-center bg-gray-100 rounded">
+    <p>No images attached.</p>
+  </div>
+  <% end %>
+</div>
 
-  <!-- CONTENT SECTION -->
-  <div class="flex flex-col gap-2 mt-3 flex-grow">
+<!-- CONTENT SECTION -->
+<div class="flex flex-col gap-1 mt-3 flex-grow">
 
-    <h2 class="text-lg font-medium truncate">
-      <%= destination.name %>
-    </h2>
+  <h2 class="text-lg font-medium truncate">
+    <%= destination.name %>
+  </h2>
 
-    <p class="text-sm text-gray-600 truncate">
-      <%= destination.location %>
+  <p class="text-sm text-gray-600 truncate">
+    <%= destination.location %>
+  </p>
+
+  <!-- DESCRIPTION WITH FIXED HEIGHT -->
+  <div class="relative group">
+    <p class="text-sm line-clamp-2 overflow-hidden">
+      <%= destination.description.presence || "" %>
     </p>
 
-    <!-- DESCRIPTION WITH FIXED HEIGHT -->
-    <div class="relative group">
-      <p class="text-sm line-clamp-2 overflow-hidden">
-        <%= destination.description.presence || "" %>
-      </p>
-
-      <!-- HOVER FULL TEXT -->
-      <div class="absolute hidden group-hover:block bg-white border p-2 rounded shadow-lg text-sm z-10 w-64">
-        <%= destination.description %>
-      </div>
+    <!-- HOVER FULL TEXT -->
+    <div class="absolute hidden group-hover:block bg-white border p-1 rounded shadow-lg text-sm z-10 w-58 break-words">
+      <%= destination.description %>
     </div>
-
-    <% if false %>
-    <div class="relative group">
-      <p class="text-sm line-clamp-2">
-        <%= destination.description %>
-      </p>
-
-      <!-- Hover Full Description -->
-      <div class="absolute hidden group-hover:block bg-white border p-2 rounded shadow-lg text-sm z-10 w-64">
-        <%= destination.description %>
-      </div>
-    </div>
-    <% end %>
-
-  </div>
-
-  <!-- BUTTON SECTION -->
-  <div class="mt-3">
-    <%= link_to "Check Buses",
-      destination_buses_path(destination),
-      class: "block text-center px-4 py-2 bg-black text-white rounded" %>
   </div>
 
 </div>
-<% end %>
+
+<!-- BUTTON SECTION -->
+<div class="mt-3">
+  <%= link_to "Check Buses",
+  destination_buses_path(destination),
+  class: "block text-center px-4 py-2 bg-black text-white rounded" %>
+</div>
+
+</div>
+<%# <% end %>

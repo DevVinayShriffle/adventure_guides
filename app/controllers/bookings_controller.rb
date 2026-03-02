@@ -76,7 +76,7 @@ class BookingsController < ApplicationController
   end
 
   def cancel
-    byebug
+    # byebug
     if @booking.cancelled?
       return render json: { message: "Booking already cancelled." }, status: :unprocessable_entity
     end
@@ -84,7 +84,7 @@ class BookingsController < ApplicationController
     ActiveRecord::Base.transaction do
       @booking.schedule.update!(
         available_seats: @booking.schedule.available_seats + @booking.seats
-      )
+        )
       @booking.update!(status: :cancelled)
     end
 
@@ -101,22 +101,45 @@ class BookingsController < ApplicationController
 
   def upcoming
     @bookings = current_user.bookings
-                            .where.not(status: :cancelled)
-                            .includes(schedule: [:bus, :destination])
-                            .order(created_at: :desc)
+    .where.not(status: :cancelled)
+    .includes(schedule: [:bus, :destination])
+    .order(created_at: :desc)
 
-    #   .where("schedules.departure_time > ?", Time.current)
+    @bookings = current_user.bookings
+    .where.not(status: :cancelled)
+    .includes(schedule: [:bus, :destination])
+    .references(:schedules)
+    .where("schedules.departure > ?", Time.current)
+    .order(created_at: :desc)
 
-    render :upcoming
+    respond_to do |format|
+      format.html { render :upcoming }
+      format.json do
+        if @bookings.present?
+          render json: { message: "Upcomming Bookings", bookings: @bookings.map { |booking| BookingSerializer.new(booking) }}, status: :ok
+        else
+          render json: { message: "No bookings found." }, status: :ok
+        end
+      end
+    end
   end
 
   def cancelled
     @bookings = current_user.bookings
-                            .where(status: :cancelled)
-                            .includes(schedule: [:bus, :destination])
-                            .order(created_at: :desc)
+    .where(status: :cancelled)
+    .includes(schedule: [:bus, :destination])
+    .order(created_at: :desc)
 
-    render :cancelled
+    respond_to do |format|
+      format.html { render :cancelled }
+      format.json do
+        if @bookings.present?
+          render json: { message: "Cancelled Bookings", bookings: @bookings.map { |booking| BookingSerializer.new(booking) }}, status: :ok
+        else
+          render json: { message: "No cancelled bookings found." }, status: :ok
+        end
+      end
+    end
   end
 
   private

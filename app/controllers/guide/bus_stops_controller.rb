@@ -37,6 +37,10 @@ module Guide
       end
     end
 
+    def edit
+      @bus_stop = @bus.bus_stops.find_by(id: params[:id])
+    end
+
     def update
       @bus_stop.update!(bus_stop_params)
       

@@ -1,17 +1,6 @@
 class DashboardsController < ApplicationController
   before_action :authenticate_user!
 
-  # def index
-  #   @user = current_user
-  #   if(@user.role == "tourist")
-  #     @options = ["Bookings", "a", "b", "c"]
-  #   elsif(@user.role == "guide")
-  #     @options = ["Bus", "Schedule", "Bus stop"]
-  #   elsif(@user.role == "admin")
-  #     @options = ["Destinations", "Users"]
-  #   end
-  # end
-
   def index
     @user = current_user
     @options = dashboard_options(@user.role)
@@ -31,7 +20,7 @@ class DashboardsController < ApplicationController
     when "guide"
       [
         { name: "Buses", path: guide_buses_path },
-        { name: "Schedules", path: guide_buses_path }, # can adjust later
+        { name: "Schedules", path: guide_buses_path }
       ]
     when "admin"
       [

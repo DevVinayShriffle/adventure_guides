@@ -2,15 +2,6 @@ require_dependency 'user_serializer'
 class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
 
-  def update
-    if current_user.update!(update_params)
-      respond_to do |format|
-        format.html { redirect_to @user, notice: "User updated successfully." }
-        format.json { render json: { user: UserSerializer.new(current_user), message: "User updated successfully." }, status: :ok }
-      end
-    end
-  end
-
   def destroy
     if current_user.destroy
       respond_to do |format|
@@ -39,7 +30,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  def update_params
-    params.require(:user).permit(:name, :phone, :password, :avatar)
+  def update_resource(resource, params)
+    if params[:password].blank? && params[:password_confirmation].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation)
+      resource.update_without_password(params.except(:current_password))
+    else
+      resource.update_with_password(params)
+    end
   end
 end

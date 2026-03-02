@@ -50,10 +50,8 @@ module ExceptionHandler
   end
 
   def handle_parameter_missing(exception)
-    # Log the exception (optional)
     Rails.logger.info "Missing parameter: #{exception.param}"
 
-    # Customize the response (e.g., for JSON API or HTML)
     respond_to do |format|
       format.html { redirect_to root_url, alert: "Required parameter missing: #{exception.param}" }
       format.json { render json: { error: "Required parameter missing: #{exception.param}" }, status: :bad_request }

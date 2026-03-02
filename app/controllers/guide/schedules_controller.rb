@@ -54,33 +54,6 @@ class Guide::SchedulesController < ApplicationController
     end
   end
 
-  # def create
-  #   byebug
-  #   drop_stop = @bus.bus_stops.find_by(stop_type: "drop")
-
-  #   unless drop_stop
-  #     return render json: { message: "Drop stop not found." }, status: :unprocessable_entity
-  #   end
-
-  #   destination = Destination.find_by("name ILIKE ?", "%#{drop_stop.name}%")
-
-  #   unless destination
-  #     return render json: { message: "Matching destination not found." }, status: :unprocessable_entity
-  #   end
-
-  #   schedule = @bus.schedules.new(schedules_params)
-  #   schedule.destination_id = destination.id
-
-  #   if schedule.save
-  #     render json: {
-  #       schedule: ScheduleSerializer.new(schedule),
-  #       message: "Bus schedule created."
-  #     }, status: :created
-  #   else
-  #     render json: { errors: schedule.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # end
-
   def edit
     @schedule
   end
@@ -104,10 +77,6 @@ class Guide::SchedulesController < ApplicationController
   end
 
   private
-
-  # def set_bus
-  #   @bus = Bus.find(params[:bus_id])
-  # end
 
   def set_bus
     @bus = current_user.buses.find_by(id: params[:bus_id])
