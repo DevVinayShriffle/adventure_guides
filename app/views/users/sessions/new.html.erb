@@ -4,16 +4,28 @@
 
     <h2 class="text-xl font-semibold mb-4">Login</h2>
 
-    <%= form_for(resource, as: resource_name, url: user_session_path) do |f| %>
+    <%= form_for(resource, as: resource_name, 
+      url: user_session_path,
+      html: { data: { controller: "form-validation", action: "submit->form-validation#validate" } }) do |f| %>
 
     <div class="mb-4">
       <%= f.label :email %>
-      <%= f.email_field :email, class: "w-full border p-2 rounded" %>
+      <%= f.email_field :email,
+            class: "w-full border p-2 rounded",
+            data: { form_validation_target: "input", field: "email" } %>
+      <p class="text-red-500 text-sm mt-1"
+        data-form-validation-target="error"
+        data-field="email"></p>
     </div>
 
     <div class="mb-4">
       <%= f.label :password %>
-      <%= f.password_field :password, class: "w-full border p-2 rounded" %>
+      <%= f.password_field :password,
+            class: "w-full border p-2 rounded",
+            data: { form_validation_target: "input", field: "password" } %>
+      <p class="text-red-500 text-sm mt-1"
+        data-form-validation-target="error"
+        data-field="password"></p>
     </div>
 
     <%= f.submit "Login",

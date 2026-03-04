@@ -229,4 +229,149 @@
     </div>
 
   </div>
+<#/turbo-frame>
+
+<#turbo-frame id="dashboard_content">
+  <div class="px-24 py-12">
+
+    <!-- Modern Back Button -->
+    <div class="flex justify-end mb-6">
+      <%= link_to guide_buses_path,
+          data: { turbo_frame: "dashboard_content" },
+          class: "flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full shadow-sm transition" do %>
+        ← Back
+      <% end %>
+    </div>
+
+    <!-- BUS HEADER SECTION -->
+    <div class="bg-white shadow-lg rounded-2xl p-8 flex gap-10">
+
+      <!-- Image -->
+      <div class="w-1/2">
+        <% if @bus.images.attached? %>
+          <%= image_tag @bus.images.first, class: "w-full h-[320px] object-cover rounded-xl" %>
+        <% else %>
+          <div class="w-full h-[320px] bg-gray-200 flex items-center justify-center rounded-xl">
+            No Image
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Bus Info -->
+      <div class="w-1/2 flex flex-col justify-between">
+        <div>
+          <h2 class="text-3xl font-bold mb-4"><%= @bus.name %></h2>
+
+          <div class="space-y-2 text-gray-600">
+            <p><span class="font-semibold text-black">Type:</span> <%= @bus.bus_type %></p>
+            <p><span class="font-semibold text-black">Capacity:</span> <%= @bus.capacity %></p>
+            <p class="text-xl font-semibold text-green-600">₹ <%= @bus.price %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUS STOPS TABLE -->
+    <div class="mt-12 bg-white shadow-lg rounded-2xl p-8">
+
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-semibold">Bus Stops</h3>
+
+        <%= link_to "Add Stop",
+            new_guide_bus_bus_stop_path(@bus),
+            data: { turbo_frame: "dashboard_content" },
+            class: "px-5 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition" %>
+      </div>
+
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="border-b">
+            <th class="text-left py-3">Stop Name</th>
+            <th class="text-left py-3">Type</th>
+            <th class="text-right py-3">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @bus.bus_stops.each do |stop| %>
+            <tr class="border-b hover:bg-gray-50 transition">
+              <td class="py-4"><%= stop.name %></td>
+              <td class="py-4">
+                <span class="<%= stop.stop_type == 'pickup' ? 'text-green-600' : 'text-red-600' %> font-medium">
+                  <%= stop.stop_type.capitalize %>
+                </span>
+              </td>
+              <td class="py-4 text-right space-x-4">
+                <%= link_to "Edit",
+                    edit_guide_bus_bus_stop_path(@bus, stop),
+                    data: { turbo_frame: "dashboard_content" },
+                    class: "text-blue-600 hover:underline" %>
+
+                <%= link_to "Delete",
+                    guide_bus_bus_stop_path(@bus, stop),
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    class: "text-red-600 hover:underline" %>
+              </td>
+            </tr>
+          <% end %>
+
+          <% if @bus.bus_stops.empty? %>
+            <tr>
+              <td colspan="3" class="py-6 text-center text-gray-500">
+                No bus stops added yet.
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SCHEDULES SECTION -->
+    <div class="mt-12 bg-white shadow-lg rounded-2xl p-8">
+
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-semibold">Schedules</h3>
+
+        <%#= link_to "Create Schedule",
+            new_guide_bus_schedule_path(@bus),
+            data: { turbo_frame: "dashboard_content" },
+            class: "px-5 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition" %>
+      </div>
+
+      <% if @bus.schedules.present? %>
+        <div class="grid grid-cols-2 gap-6">
+          <% @bus.schedules.each do |schedule| %>
+            <div class="border rounded-xl p-6 hover:shadow-md transition">
+
+              <p class="font-semibold text-lg mb-2">
+                <%= schedule.destination.name %>
+              </p>
+
+              <div class="text-gray-600 space-y-1 text-sm">
+                <p>Departure: <%= schedule.departure %></p>
+                <p>Arrival: <%= schedule.arrival %></p>
+                <p>Available Seats: <%= schedule.available_seats %></p>
+              </div>
+
+              <div class="mt-4 flex gap-4">
+                <%#= link_to "Edit",
+                    edit_guide_bus_schedule_path(@bus, schedule),
+                    data: { turbo_frame: "dashboard_content" },
+                    class: "px-3 py-1.5 rounded-md bg-amber-50 text-amber-700 hover:bg-amber-100 text-sm" %>
+
+                <%#= link_to "Delete",
+                    guide_bus_schedule_path(@bus, schedule),
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+                    class: "px-3 py-1.5 rounded-md bg-rose-50 text-rose-700 hover:bg-rose-100 text-sm" %>
+              </div>
+
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-gray-500">No schedules available.</p>
+      <% end %>
+    </div>
+
+  </div>
 </turbo-frame>

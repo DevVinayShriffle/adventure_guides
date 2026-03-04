@@ -1,26 +1,54 @@
 <%= form_with(model: [:guide, @bus],
-  data: { turbo_frame: "dashboard_content" },
+  data: {
+    controller: "bus-validation",
+    action: "submit->bus-validation#validate",
+    turbo_frame: "dashboard_content"
+  },
   class: "space-y-4") do |f| %>
 
   <div>
     <%= f.label :name, class: "block font-medium" %>
-    <%= f.text_field :name, class: "w-full border p-2 rounded" %>
+    <%= f.text_field :name,
+          class: "w-full border p-2 rounded",
+          data: { bus_validation_target: "input", field: "name" } %>
+    <p class="error-message"
+      data-bus-validation-target="error"
+      data-field="name"></p>
   </div>
 
-  <%= f.select :bus_type, 
-  options_for_select(['sitter', 'sleeper', 'ac'], f.object.bus_type), 
-  { include_blank: 'Select Bus stype' }, 
-  class: 'w-full border p-2 rounded' %>
+  <div>
+    <%= f.label :bus_type, class: "block font-medium" %>
+    <%= f.select :bus_type,
+          options_for_select(['sitter', 'sleeper', 'ac'], f.object.bus_type),
+          { include_blank: "Select Bus Type" },
+          class: "w-full border p-2 rounded",
+          data: { bus_validation_target: "input", field: "bus_type" } %>
+    <p class="error-message"
+      data-bus-validation-target="error"
+      data-field="bus_type"></p>
+  </div>
 
 
   <div>
     <%= f.label :capacity, class: "block font-medium" %>
-    <%= f.number_field :capacity, class: "w-full border p-2 rounded", step: 1 %>
+    <%= f.number_field :capacity,
+          class: "w-full border p-2 rounded",
+          step: 1,
+          data: { bus_validation_target: "input", field: "capacity" } %>
+    <p class="error-message"
+      data-bus-validation-target="error"
+      data-field="capacity"></p>
   </div>
 
   <div>
     <%= f.label :price, class: "block font-medium" %>
-    <%= f.number_field :price, class: "w-full border p-2 rounded", step: 1 %>
+    <%= f.number_field :price,
+          class: "w-full border p-2 rounded",
+          step: 1,
+          data: { bus_validation_target: "input", field: "price" } %>
+    <p class="error-message"
+      data-bus-validation-target="error"
+      data-field="price"></p>
   </div>
 
   <div>

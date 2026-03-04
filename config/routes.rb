@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  # get "dashboards/index"
+  
   root "destinations#index"
   devise_for :users, path: '', path_names: {
     sign_in: 'login',

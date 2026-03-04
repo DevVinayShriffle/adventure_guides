@@ -1,15 +1,29 @@
 <%= form_with(model: [:admin, @destination],
-  data: { turbo_frame: "dashboard_content" },
+  data: { 
+    controller: "destination-validation",
+    action: "submit->destination-validation#validate",
+    turbo_frame: "dashboard_content"
+  },
   class: "space-y-4") do |f| %>
 
   <div>
     <%= f.label :name, class: "block font-medium" %>
-    <%= f.text_field :name, class: "w-full border p-2 rounded" %>
+    <%= f.text_field :name,
+          class: "w-full border p-2 rounded",
+          data: { destination_validation_target: "input", field: "name" } %>
+    <p class="error-message"
+      data-destination-validation-target="error"
+      data-field="name"></p>
   </div>
 
   <div>
     <%= f.label :location, class: "block font-medium" %>
-    <%= f.text_field :location, class: "w-full border p-2 rounded" %>
+    <%= f.text_field :location,
+          class: "w-full border p-2 rounded",
+          data: { destination_validation_target: "input", field: "location" } %>
+    <p class="error-message"
+      data-destination-validation-target="error"
+      data-field="location"></p>
   </div>
 
   <div>
@@ -21,6 +35,19 @@
     <%= f.label :images, class: "block font-medium" %>
     <%= f.file_field :images, multiple: true, class: "w-full border p-2 rounded" %>
   </div>
+
+  <% if false %>
+  <div>
+    <%= f.label :images, class: "block font-medium" %>
+    <%= f.file_field :images,
+          multiple: true,
+          class: "w-full border p-2 rounded",
+          data: { destination_validation_target: "input", field: "images" } %>
+    <p class="error-message"
+      data-destination-validation-target="error"
+      data-field="images"></p>
+  </div>
+  <% end %>
 
   <div class="flex gap-5">
     <%= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
