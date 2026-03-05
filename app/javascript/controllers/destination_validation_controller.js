@@ -39,14 +39,7 @@ export default class extends Controller {
         input.classList.add("border-red")
         errorElement.textContent = "Location must be at least 3 characters"
       }
-
-      // Description min length
-      // if (field === "description" && value.length < 10) {
-      //   hasError = true
-      //   input.classList.add("border-red")
-      //   errorElement.textContent = "Description must be at least 10 characters"
-      // }
-
+      
       //images
       // if (field === "images" && input.files.length === 0) {
       //   hasError = true

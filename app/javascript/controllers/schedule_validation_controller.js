@@ -4,6 +4,8 @@ export default class extends Controller {
   static targets = [
     "departure",
     "arrival",
+    "bus",
+    "busError",
     "departureError",
     "arrivalError"
   ]
@@ -15,6 +17,7 @@ export default class extends Controller {
 
     const departureValue = this.departureTarget.value
     const arrivalValue = this.arrivalTarget.value
+    const busValue = this.busTarget.value
 
     // Presence validation
     if (!departureValue) {
@@ -24,6 +27,11 @@ export default class extends Controller {
 
     if (!arrivalValue) {
       this.showError(this.arrivalTarget, this.arrivalErrorTarget, "Arrival is required")
+      valid = false
+    }
+
+    if (!busValue) {
+      this.showError(this.busTarget, this.busErrorTarget, "Bus is required")
       valid = false
     }
 
@@ -55,8 +63,10 @@ export default class extends Controller {
   clearErrors() {
     this.departureTarget.classList.remove("border-red")
     this.arrivalTarget.classList.remove("border-red")
+    this.busTarget.classList.remove("border-red")
 
     this.departureErrorTarget.textContent = ""
     this.arrivalErrorTarget.textContent = ""
+    this.busErrorTarget.textContent = ""
   }
 }

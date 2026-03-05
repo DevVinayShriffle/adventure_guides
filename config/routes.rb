@@ -35,8 +35,9 @@ Rails.application.routes.draw do
   namespace :guide do
     resources :buses do
       resources :bus_stops
-      resources :schedules
+      # resources :schedules
     end
+    resources :schedules
   end
 
   get '/dashboard', to: 'dashboards#index', as: 'dashboard'

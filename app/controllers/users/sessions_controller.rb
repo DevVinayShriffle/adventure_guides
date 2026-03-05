@@ -24,15 +24,26 @@ class Users::SessionsController < Devise::SessionsController
       user_to_log_out = current_user || resource
     end
 
-    if user_to_log_out
-      respond_to do |format|
-        format.html { redirect_to user_session_path, notice: 'User Logged out successfully.' }
-        format.json { render json: { status: 200, message: 'Logged out successfully.' }, status: :ok}
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to user_session_path, notice: "Couldn't find an active session." }
-        format.json { render json: { status: 401, message: "Couldn't find an active session." }, status: :unauthorized }
+    # if user_to_log_out
+    #   respond_to do |format|
+    #     format.html { redirect_to user_session_path, notice: 'User Logged out successfully.' }
+    #     format.json { render json: { status: 200, message: 'Logged out successfully.' }, status: :ok}
+    #   end
+    # else
+    #   respond_to do |format|
+    #     format.html { redirect_to user_session_path }
+    #     format.json { render json: { status: 401, message: "Couldn't find an active session." }, status: :unauthorized }
+    #   end
+    # end
+
+    respond_to do |format|
+      format.html { redirect_to user_session_path, notice: 'User Logged out successfully.' }
+      format.json do
+        if user_to_log_out
+          render json: { status: 200, message: 'Logged out successfully.' }, status: :ok
+        else
+          render json: { status: 401, message: "Couldn't find an active session." }, status: :unauthorized
+        end
       end
     end
   end

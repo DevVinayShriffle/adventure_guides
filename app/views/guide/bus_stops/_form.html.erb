@@ -1,131 +1,67 @@
-<% if false %>
-<%= form_with(model: [:guide, @bus, @bus_stop],
-  data: { turbo_frame: "dashboard_content" },
-  class: "space-y-4") do |f| %>
-
-  <div>
-    <%= f.label :name, class: "block font-medium" %>
-    <%= f.text_field :name, class: "w-full border p-2 rounded" %>
-  </div>
-
-  <%= f.select :stop_type, 
-  options_for_select(['pickup', 'drop'], f.object.stop_type), 
-  { include_blank: 'Select Bus stop type' }, 
-  class: 'w-full border p-2 rounded' %>
-
-  <div class="flex gap-5">
-    <%= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
-
-    <%= link_to "Back",
-    guide_buses_path,
-    data: { turbo_frame: "dashboard_content" },
-    class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
-  </div>
-
-<% end %>
-<% end %>
-
-<%# <% if false %>
-  <turbo-frame id="dashboard_content">
-    <div class="bg-white p-6 rounded shadow w-1/2">
-
-      <h2 class="text-xl font-semibold mb-4">
-        <%= @bus_stop.new_record? ? "Add Bus Stop" : "Edit Bus Stop" %>
-      </h2>
-
-      <%= form_with(model: [:guide, @bus, @bus_stop]) do |f| %>
-
-      <div class="mb-4">
-        <%= f.label :name, class: "block mb-1 font-medium" %>
-        <%= f.text_field :name, class: "w-full border p-2 rounded" %>
-      </div>
-
-      <div class="mb-4">
-        <%= f.label :stop_type, class: "block mb-1 font-medium" %>
-        <%= f.select :stop_type,
-        [["Pickup", "pickup"], ["Drop", "drop"]],
-        {},
-        class: "w-full border p-2 rounded" %>
-      </div>
-
-      <div class="flex gap-4">
-        <%= f.submit class: "px-4 py-2 bg-purple-600 text-white rounded" %>
-
-        <%= link_to "Back",
-        guide_bus_path(@bus),
-        class: "px-4 py-2 bg-gray-300 rounded" %>
-      </div>
-
-      <% end %>
-
-    </div>
-  </turbo-frame>
-<%# <% end %>
-
 <turbo-frame id="dashboard_content">
   <div class="bg-white p-6 rounded shadow w-1/2"
-       data-controller="bus-stop-validation">
+  data-controller="bus-stop-validation">
 
-    <h2 class="text-xl font-semibold mb-4">
-      <%= @bus_stop.new_record? ? "Add Bus Stop" : "Edit Bus Stop" %>
-    </h2>
+  <h2 class="text-xl font-semibold mb-4">
+    <%= @bus_stop.new_record? ? "Add Bus Stop" : "Edit Bus Stop" %>
+  </h2>
 
-    <%= form_with(model: [:guide, @bus, @bus_stop],
-          data: { action: "submit->bus-stop-validation#validateForm" }) do |f| %>
+  <%= form_with(model: [:guide, @bus, @bus_stop],
+  data: { action: "submit->bus-stop-validation#validateForm" }) do |f| %>
 
-      <!-- STOP TYPE -->
-      <div class="mb-4">
-        <%= f.label :stop_type, class: "block mb-1 font-medium" %>
+  <!-- STOP TYPE -->
+  <div class="mb-4">
+    <%= f.label :stop_type, class: "block mb-1 font-medium" %>
 
-        <%= f.select :stop_type,
-            [["Pickup", "pickup"], ["Drop", "drop"]],
-            {},
-            class: "w-full border p-2 rounded",
-            data: {
-              action: "change->bus-stop-validation#toggleFields",
-              bus_stop_validation_target: "stopType"
-            } %>
+    <%= f.select :stop_type,
+    [["Pickup", "pickup"], ["Drop", "drop"]],
+    {},
+    class: "w-full border p-2 rounded",
+      data: {
+        action: "change->bus-stop-validation#toggleFields",
+        bus_stop_validation_target: "stopType"
+      } %>
 
-        <p class="text-red-500 text-sm mt-1"
-           data-bus-stop-validation-target="typeError"></p>
-      </div>
+      <p class="text-red-500 text-sm mt-1"
+      data-bus-stop-validation-target="typeError"></p>
+    </div>
 
-      <!-- PICKUP NAME INPUT -->
-      <div class="mb-4"
-           data-bus-stop-validation-target="pickupField">
-        <%= f.label :name, class: "block mb-1 font-medium" %>
-        <%= f.text_field :name,
-            class: "w-full border p-2 rounded",
-            data: { bus_stop_validation_target: "pickupInput" } %>
+    <!-- PICKUP NAME INPUT -->
+    <div class="mb-4"
+    data-bus-stop-validation-target="pickupField">
+    <%= f.label :name, class: "block mb-1 font-medium" %>
+    <%= f.text_field :name,
+    class: "w-full border p-2 rounded",
+      data: { bus_stop_validation_target: "pickupInput" } %>
 
-        <p class="text-red-500 text-sm mt-1"
-           data-bus-stop-validation-target="pickupError"></p>
-      </div>
+      <p class="text-red-500 text-sm mt-1"
+      data-bus-stop-validation-target="pickupError"></p>
+    </div>
 
-      <!-- DROP SELECT -->
-      <div class="mb-4 hidden"
-        data-bus-stop-validation-target="dropField">
+    <!-- DROP SELECT -->
+    <div class="mb-4 hidden"
+    data-bus-stop-validation-target="dropField">
 
-        <%= f.label :name, "Select Destination", class: "block mb-1 font-medium" %>
+    <%= f.label :name, "Select Destination", class: "block mb-1 font-medium" %>
 
-        <%= f.select :name,
-            Destination.pluck(:name),
-            { include_blank: "Select Destination" },
-            class: "w-full border p-2 rounded",
-            data: { bus_stop_validation_target: "dropSelect" } %>
+    <%= f.select :name,
+    Destination.pluck(:name),
+    { include_blank: "Select Destination" },
+    class: "w-full border p-2 rounded",
+      data: { bus_stop_validation_target: "dropSelect" } %>
 
-        <p class="text-red-500 text-sm mt-1"
-          data-bus-stop-validation-target="dropError"></p>
-      </div>
+      <p class="text-red-500 text-sm mt-1"
+      data-bus-stop-validation-target="dropError"></p>
+    </div>
 
-      <div class="flex gap-4">
-        <%= f.submit "Save",
-            class: "px-4 py-2 bg-purple-600 text-white rounded" %>
+    <div class="flex gap-4">
+      <%= f.submit "Save",
+      class: "px-4 py-2 bg-purple-600 text-white rounded" %>
 
-        <%= link_to "Back",
-            guide_bus_path(@bus),
-            class: "px-4 py-2 bg-gray-300 rounded" %>
-      </div>
+      <%= link_to "Back",
+      guide_bus_path(@bus),
+      class: "px-4 py-2 bg-gray-300 rounded" %>
+    </div>
 
     <% end %>
   </div>

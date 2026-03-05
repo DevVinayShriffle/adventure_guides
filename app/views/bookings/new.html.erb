@@ -2,6 +2,15 @@
 
   <h2 class="text-2xl font-semibold mb-6">Book Your Seat</h2>
 
+  <!-- Modern Back Button -->
+    <div class="fixed top-25 right-[5%]">
+      <%= link_to :back,
+      data: { turbo_frame: "dashboard_content" },
+      class: "flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full shadow-sm transition" do %>
+      ← Back
+      <% end %>
+    </div>
+
   <div class="border p-6 rounded w-1/2">
 
     <p><strong>Bus:</strong> <%= @schedule.bus.name %></p>

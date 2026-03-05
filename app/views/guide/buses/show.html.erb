@@ -1,245 +1,12 @@
 <turbo-frame id="dashboard_content">
-  <div class="px-20 py-10">
-
-    <%= link_to "Back",
-    guide_buses_path,
-    data: { turbo_frame: "dashboard_content" },
-    class: "bg-blue-200 text-black px-4 py-2 rounded hover:bg-blue-400 hover:text-white fixed top-20 right-5" %>
-
-    <div class="grid grid-cols-2 gap-10">
-
-      <div>
-        <% if @bus.images.attached? %>
-        <%= image_tag @bus.images.first, class: "w-full rounded" %>
-        <% else %>
-        <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
-          No Image
-        </div>
-        <% end %>
-      </div>
-
-      <div class="flex flex-col gap-3">
-
-        <h2 class="text-2xl font-semibold"><%= @bus.name %></h2>
-
-        <p>Type: <%= @bus.bus_type %></p>
-        <p>Capacity: <%= @bus.capacity %></p>
-        <p class="text-green-600 font-medium">₹ <%= @bus.price %></p>
-        
-        <%# <% if false %> 
-        <div class="mt-6 flex items-center ">
-          <h3 class="font-semibold">Bus stops</h3>
-          <%= link_to "Create",
-          new_guide_bus_bus_stop_path(@bus),
-          data: { turbo_frame: "dashboard_content" },
-          class: "px-4 py-2 rounded hover:text-purple-800" %>
-        </div>
-        <div>
-          <h3 class="font-semibold">Pickup Points</h3>
-          <% @bus.bus_stops.where(stop_type: "pickup").each do |stop| %>
-          <p class="text-gray-600">• <%= stop.name %></p>
-          <% end %>
-        </div>
-
-        <div class="mt-4">
-          <h3 class="font-semibold">Drop Points</h3>
-          <% @bus.bus_stops.where(stop_type: "drop").each do |stop| %>
-          <p class="text-gray-600">• <%= stop.name %></p>
-          <% end %>
-        </div>
-        <%# <% end %> 
-        
-        <%# <% if false %> 
-        <div class="mt-8 bg-white p-6 rounded-xl shadow">
-
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-xl font-semibold">Bus Stops</h3>
-
-            <%= link_to "Add Stop",
-            new_guide_bus_bus_stop_path(@bus),
-            data: { turbo_frame: "dashboard_content" },
-            class: "px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700" %>
-          </div>
-
-          <!-- PICKUP SECTION -->
-          <div class="mb-6">
-            <h4 class="font-semibold text-green-600 mb-2">Pickup Points</h4>
-
-            <% @bus.bus_stops.where(stop_type: "pickup").each do |stop| %>
-            <div class="flex justify-between items-center border p-3 rounded mb-2">
-              <span>• <%= stop.name %></span>
-
-              <div class="flex gap-3 text-sm">
-                <%= link_to "Edit",
-                edit_guide_bus_bus_stop_path(@bus, stop),
-                data: { turbo_frame: "dashboard_content" },
-                class: "text-blue-600 hover:underline" %>
-
-                <%= link_to "Delete",
-                guide_bus_bus_stop_path(@bus, stop),
-                data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                class: "text-red-600 hover:underline" %>
-              </div>
-            </div>
-            <% end %>
-          </div>
-
-          <!-- DROP SECTION -->
-          <div>
-            <h4 class="font-semibold text-red-600 mb-2">Drop Points</h4>
-
-            <% @bus.bus_stops.where(stop_type: "drop").each do |stop| %>
-            <div class="flex justify-between items-center border p-3 rounded mb-2">
-              <span>• <%= stop.name %></span>
-
-              <div class="flex gap-3 text-sm">
-                <%= link_to "Edit",
-                edit_guide_bus_bus_stop_path(@bus, stop),
-                data: { turbo_frame: "dashboard_content" },
-                class: "text-blue-600 hover:underline" %>
-
-                <%= link_to "Delete",
-                guide_bus_bus_stop_path(@bus, stop),
-                data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                class: "text-red-600 hover:underline" %>
-              </div>
-            </div>
-            <% end %>
-          </div>
-
-        </div>
-        <%# <% end %> 
-      </div>
-    </div>
-
-    <!-- New Bus Stop design -->
-    <div class="w-120 m-auto mt-4">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-xl font-semibold">Bus Stops</h3>
-
-        <div class="w-[30%]">
-        <%= link_to "Add Stop",
-        new_guide_bus_bus_stop_path(@bus),
-        data: { turbo_frame: "dashboard_content" },
-        class: "px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700" %>
-        </div>
-      </div>
-
-      <table class="modern-table w-full">
-        <thead>
-          <tr>
-            <th class="text-left font-semibold text-green-600 w-[60%]">Pickup Points</th>
-            <%# <th></th> %>
-            <th class="actions-col w-[40%]" style="text-align: center;">Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @bus.bus_stops.where(stop_type: "pickup").each do |stop| %>
-          <tr>
-            <td class="h-10">
-              <div><%= stop.name %></div>
-            </td>
-
-            <td class="text-center">
-              <%= link_to "Edit",
-              edit_guide_bus_bus_stop_path(@bus, stop),
-              data: { turbo_frame: "dashboard_content" },class: "text-blue-600 hover:underline" %>
-
-              <%= link_to "Delete",
-              guide_bus_bus_stop_path(@bus, stop),
-              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-              class: "text-red-600 hover:underline ml-20" %>
-            </td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-      <table class="modern-table w-full mt-2">
-        <thead>
-          <tr>
-            <th class="text-left font-semibold text-red-600 w-[60%]">Drop Points</th>
-
-            <th class="w-[40%]"></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @bus.bus_stops.where(stop_type: "drop").each do |stop| %>
-          <tr>
-            <td class="h-10 w-[60%]">
-              <div><%= stop.name %></div>
-            </td>
-
-            <td class="text-start w-[40%]">
-              <div class="flex justify-between pr-6">
-              <%= link_to "Edit",
-              edit_guide_bus_bus_stop_path(@bus, stop),
-              data: { turbo_frame: "dashboard_content" },class: "text-blue-600 hover:underline" %>
-
-              <%= link_to "Delete",
-              guide_bus_bus_stop_path(@bus, stop),
-              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-              class: "text-red-600 hover:underline" %>
-              </div>
-            </td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-    </div>
-
-    <div class="mt-16">
-      <div class="flex justify-between items-center mb-3">
-        <h2 class="text-xl font-semibold">Schedules</h2>
-
-        <%= link_to "Create",
-        new_guide_bus_schedule_path(@bus),
-        data: { turbo_frame: "dashboard_content" },
-        class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
-      </div>
-
-      <% if @bus.schedules.present? %>
-      <% @bus.schedules.each do |schedule| %>
-
-      <div class="border p-5 rounded mb-6">
-
-        <p>Destination: <%= schedule.destination.name %></p>
-        <p>Departure: <%= schedule.departure %></p>
-        <p>Arrival: <%= schedule.arrival %></p>
-        <p>Available Seats: <%= schedule.available_seats %></p>
-        <%= link_to "Edit",
-        edit_guide_bus_schedule_path(@bus, schedule),
-        data: { turbo_frame: "dashboard_content" },
-        class: "px-3 py-1.5 rounded-md text-sm font-medium bg-amber-50 text-amber-700 hover:bg-amber-100" %>
-
-        <%= link_to "Delete",
-        guide_bus_schedule_path(@bus, schedule),
-        data: { confirm: "Are you sure?", turbo_method: :delete },
-        class: "px-3 py-1.5 rounded-md text-sm font-medium bg-rose-50 text-rose-700 hover:bg-rose-100" %>
-      </div>
-
-      <% end %>
-      <% else %>
-      <p>No schedules available.</p>
-      <% end %>
-
-    </div>
-
-  </div>
-<#/turbo-frame>
-
-<#turbo-frame id="dashboard_content">
   <div class="px-24 py-12">
 
     <!-- Modern Back Button -->
-    <div class="flex justify-end mb-6">
+    <div class="fixed top-25 right-[5%]">
       <%= link_to guide_buses_path,
-          data: { turbo_frame: "dashboard_content" },
-          class: "flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full shadow-sm transition" do %>
-        ← Back
+      data: { turbo_frame: "dashboard_content" },
+      class: "flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full shadow-sm transition" do %>
+      ← Back
       <% end %>
     </div>
 
@@ -249,11 +16,11 @@
       <!-- Image -->
       <div class="w-1/2">
         <% if @bus.images.attached? %>
-          <%= image_tag @bus.images.first, class: "w-full h-[320px] object-cover rounded-xl" %>
+        <%= image_tag @bus.images.first, class: "w-full h-[320px] object-cover rounded-xl" %>
         <% else %>
-          <div class="w-full h-[320px] bg-gray-200 flex items-center justify-center rounded-xl">
-            No Image
-          </div>
+        <div class="w-full h-[320px] bg-gray-200 flex items-center justify-center rounded-xl">
+          No Image
+        </div>
         <% end %>
       </div>
 
@@ -278,9 +45,9 @@
         <h3 class="text-2xl font-semibold">Bus Stops</h3>
 
         <%= link_to "Add Stop",
-            new_guide_bus_bus_stop_path(@bus),
-            data: { turbo_frame: "dashboard_content" },
-            class: "px-5 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition" %>
+        new_guide_bus_bus_stop_path(@bus),
+        data: { turbo_frame: "dashboard_content" },
+        class: "px-5 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition" %>
       </div>
 
       <table class="w-full border-collapse">
@@ -294,33 +61,33 @@
 
         <tbody>
           <% @bus.bus_stops.each do |stop| %>
-            <tr class="border-b hover:bg-gray-50 transition">
-              <td class="py-4"><%= stop.name %></td>
-              <td class="py-4">
-                <span class="<%= stop.stop_type == 'pickup' ? 'text-green-600' : 'text-red-600' %> font-medium">
-                  <%= stop.stop_type.capitalize %>
-                </span>
-              </td>
-              <td class="py-4 text-right space-x-4">
-                <%= link_to "Edit",
-                    edit_guide_bus_bus_stop_path(@bus, stop),
-                    data: { turbo_frame: "dashboard_content" },
-                    class: "text-blue-600 hover:underline" %>
+          <tr class="border-b hover:bg-gray-50 transition">
+            <td class="py-4"><%= stop.name %></td>
+            <td class="py-4">
+              <span class="<%= stop.stop_type == 'pickup' ? 'text-green-600' : 'text-red-600' %> font-medium">
+                <%= stop.stop_type.capitalize %>
+              </span>
+            </td>
+            <td class="py-4 text-right space-x-4">
+              <%= link_to "Edit",
+              edit_guide_bus_bus_stop_path(@bus, stop),
+              data: { turbo_frame: "dashboard_content" },
+              class: "text-blue-600 hover:underline" %>
 
-                <%= link_to "Delete",
-                    guide_bus_bus_stop_path(@bus, stop),
-                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                    class: "text-red-600 hover:underline" %>
-              </td>
-            </tr>
+              <%= link_to "Delete",
+              guide_bus_bus_stop_path(@bus, stop),
+              data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+              class: "text-red-600 hover:underline" %>
+            </td>
+          </tr>
           <% end %>
 
           <% if @bus.bus_stops.empty? %>
-            <tr>
-              <td colspan="3" class="py-6 text-center text-gray-500">
-                No bus stops added yet.
-              </td>
-            </tr>
+          <tr>
+            <td colspan="3" class="py-6 text-center text-gray-500">
+              No bus stops added yet.
+            </td>
+          </tr>
           <% end %>
         </tbody>
       </table>
@@ -331,45 +98,28 @@
 
       <div class="flex justify-between items-center mb-6">
         <h3 class="text-2xl font-semibold">Schedules</h3>
-
-        <%#= link_to "Create Schedule",
-            new_guide_bus_schedule_path(@bus),
-            data: { turbo_frame: "dashboard_content" },
-            class: "px-5 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition" %>
       </div>
 
       <% if @bus.schedules.present? %>
-        <div class="grid grid-cols-2 gap-6">
-          <% @bus.schedules.each do |schedule| %>
-            <div class="border rounded-xl p-6 hover:shadow-md transition">
+      <div class="grid grid-cols-2 gap-6">
+        <% @bus.schedules.each do |schedule| %>
+        <div class="border rounded-xl p-6 hover:shadow-md transition">
 
-              <p class="font-semibold text-lg mb-2">
-                <%= schedule.destination.name %>
-              </p>
+          <p class="font-semibold text-lg mb-2">
+            <%= schedule.destination.name %>
+          </p>
 
-              <div class="text-gray-600 space-y-1 text-sm">
-                <p>Departure: <%= schedule.departure %></p>
-                <p>Arrival: <%= schedule.arrival %></p>
-                <p>Available Seats: <%= schedule.available_seats %></p>
-              </div>
+          <div class="text-gray-600 space-y-1 text-sm">
+            <p>Departure: <%= schedule.departure.strftime('%Y-%m-%d %H:%M:%S') %></p>
+            <p>Arrival: <%= schedule.arrival.strftime('%Y-%m-%d %H:%M:%S') %></p>
+            <p>Available Seats: <%= schedule.available_seats %></p>
+          </div>
 
-              <div class="mt-4 flex gap-4">
-                <%#= link_to "Edit",
-                    edit_guide_bus_schedule_path(@bus, schedule),
-                    data: { turbo_frame: "dashboard_content" },
-                    class: "px-3 py-1.5 rounded-md bg-amber-50 text-amber-700 hover:bg-amber-100 text-sm" %>
-
-                <%#= link_to "Delete",
-                    guide_bus_schedule_path(@bus, schedule),
-                    data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
-                    class: "px-3 py-1.5 rounded-md bg-rose-50 text-rose-700 hover:bg-rose-100 text-sm" %>
-              </div>
-
-            </div>
-          <% end %>
         </div>
+        <% end %>
+      </div>
       <% else %>
-        <p class="text-gray-500">No schedules available.</p>
+      <p class="text-gray-500">No schedules available.</p>
       <% end %>
     </div>
 

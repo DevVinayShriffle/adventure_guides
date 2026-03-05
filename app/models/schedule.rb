@@ -4,7 +4,6 @@ class Schedule < ApplicationRecord
   validates :departure,
   presence: true,
   comparison: { less_than: :arrival, message: "must be before arrival." }
-  # comparison: { greater_than: :arrival, message: "must be after the arrival." }
 
   validates :available_seats, presence: true, numericality: { greater_than_or_equal_to: 0 }
 

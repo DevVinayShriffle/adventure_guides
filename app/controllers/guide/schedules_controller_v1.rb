@@ -1,9 +1,12 @@
 class Guide::SchedulesController < ApplicationController
   before_action :authenticate_user!
   before_action :require_guide
-  before_action :set_schedule, only: [:update, :destroy, :edit]
+  before_action :set_bus, except: [:show]
+  before_action :set_schedule, only: [:show, :update, :destroy, :edit]
+
 
   def index
+    # @schedules = Schedule.includes(:bus, :destination).order(departure: :asc)
     @schedules = Schedule.joins(:bus)
     .where(buses: { user_id: current_user.id })
     .includes(:bus, :destination)
@@ -21,13 +24,25 @@ class Guide::SchedulesController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |format|
+      format.html
+      
+      format.json do
+        if @schedule.present?
+          render json: @schedule, status: :ok
+        else
+          render json: { message: "No schedules found." }, status: :ok
+        end
+      end
+    end
+  end
+
   def new
     @schedule = Schedule.new
-    @buses = Bus.where(user_id: current_user.id)
   end
   
   def create
-    @bus = Bus.find_by(id: params[:schedule][:bus_id])
     params[:schedule][:available_seats]=@bus.capacity
     @schedule = schedules_params
     target = @bus.bus_stops.select(:name).where(stop_type: "drop")
@@ -35,7 +50,7 @@ class Guide::SchedulesController < ApplicationController
     schedule = @bus.schedules.create!(@schedule)
 
     respond_to do |format|
-      format.html { redirect_to guide_schedules_path }
+      format.html { redirect_to guide_bus_path(@bus) }
       format.json { render json: schedule, message: "Bus schedule created.", status: :created }
     end
   end
@@ -48,7 +63,7 @@ class Guide::SchedulesController < ApplicationController
     @schedule.update!(schedules_params)
 
     respond_to do |format|
-      format.html { redirect_to guide_schedules_path }
+      format.html { redirect_to guide_bus_path(@bus) }
       format.json { render json: @schedule, message: "Schedule updated.", status: :ok }
     end
   end
@@ -57,20 +72,24 @@ class Guide::SchedulesController < ApplicationController
     @schedule.destroy
 
     respond_to do |format|
-      format.html { redirect_to guide_schedules_path }
+      format.html { redirect_to guide_bus_path(@bus) }
       format.json { render json: { message: "Schedule deleted." }, status: :ok }
     end
   end
 
   private
 
-  def require_guide
-    render json: { message: "Access denied." }, status: :forbidden unless current_user&.guide?
+  def set_bus
+    @bus = current_user.buses.find_by(id: params[:bus_id])
+
+    unless @bus
+      render json: { message: "Bus not found." }, status: :not_found
+    end
   end
 
-  def schedules_params
-    params.require(:schedule).permit(:arrival, :departure, :available_seats)
-  end
+  # def set_schedule
+  #   @schedule = Schedule.find_by(id: params[:id])
+  # end
 
   def set_schedule
     @schedule = Schedule.joins(:bus)
@@ -81,4 +100,12 @@ class Guide::SchedulesController < ApplicationController
       render json: { message: "Schedule not found." }, status: :not_found
     end
   end
+
+  def schedules_params
+    params.require(:schedule).permit(:arrival, :departure, :available_seats)
+  end
+
+  def require_guide
+    render json: { message: "Access denied." }, status: :forbidden unless current_user&.guide?
+  end  
 end

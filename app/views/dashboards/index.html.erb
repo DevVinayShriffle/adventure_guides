@@ -7,6 +7,14 @@
     <h2 class="text-xl font-bold mb-6">Dashboard</h2>
 
     <ul class="space-y-4">
+      <li>
+        <div class="mb-4">
+          <% if @user.avatar.attached? %>
+          <%= image_tag @user.avatar,
+          class: "w-24 h-24 rounded-full object-cover mb-2" %>
+          <% end %>
+        </div>
+      </li>
       <% @options.each do |option| %>
       <li>
         <%= link_to option[:name],

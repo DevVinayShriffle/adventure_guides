@@ -4,6 +4,6 @@ class ScheduleSerializer < ActiveModel::Serializer
   belongs_to :bus
 
   def destination
-    object.destination.name
+    object&.destination&.name
   end
 end

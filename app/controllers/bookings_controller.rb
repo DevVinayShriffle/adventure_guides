@@ -76,7 +76,6 @@ class BookingsController < ApplicationController
   end
 
   def cancel
-    # byebug
     if @booking.cancelled?
       return render json: { message: "Booking already cancelled." }, status: :unprocessable_entity
     end
@@ -89,7 +88,7 @@ class BookingsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
+      format.html { redirect_to upcoming_bookings_path }
       format.json do
         render json: {
           booking: BookingSerializer.new(@booking),

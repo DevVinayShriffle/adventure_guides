@@ -1,83 +1,58 @@
-<div>
-  <%= form_with(model: [:guide, @bus, @schedule],
-    data: { turbo_frame: "dashboard_content" },
-    class: "space-y-4") do |f| %>
+<turbo-frame id="dashboard_content">
+  <div class="flex justify-center mt-10"
+  data-controller="schedule-validation">
+  <div class="bg-white shadow-xl rounded-2xl p-8 w-[420px]">
+    <h2 class="text-xl font-semibold mb-6 text-center">
+      <%= @schedule.new_record? ? "Create Schedule" : "Edit Schedule" %>
+    </h2>
 
-    <div class="flex items-center gap-2">
-      <%= f.label :departure, class: "block font-medium" %>
-      <%= f.datetime_field :departure, 
-      class: "mt-1 block w-40% pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm" 
-      %>
+    <%= form_with(model: [:guide, @schedule],
+      data: { action: "submit->schedule-validation#validateForm" },
+      class: "space-y-5") do |f| %>
+
+    <!-- Select Bus -->
+    <div>
+      <%= f.collection_select :bus_id, Bus.pluck(:name, :id), :last, :first,
+      { include_blank: 'Select Bus' }, 
+      data: { schedule_validation_target: "bus" },
+      class: 'w-full border p-2 rounded-lg focus:ring-2 focus:ring-black outline-none'%>
+
+      <p class="error-message"
+        data-schedule-validation-target="busError"></p>
     </div>
 
-    <div class="flex items-center gap-2">
-      <%= f.label :arrival, class: "block font-medium" %>
-      <%= f.datetime_field :arrival, 
-      class: "mt-1 block w-40% pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md shadow-sm" 
-      %>
-    </div>
+    <!-- Departure -->
+    <div>
+      <%= f.label :departure, class: "block font-medium mb-1" %>
+      <%= f.datetime_field :departure,
+      class: "w-full border p-2 rounded-lg focus:ring-2 focus:ring-black outline-none",
+        data: { schedule_validation_target: "departure" } %>
 
-    <div class="flex gap-5">
-      <%= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
+        <p class="error-message"
+        data-schedule-validation-target="departureError"></p>
+      </div>
+
+      <!-- Arrival -->
+      <div>
+        <%= f.label :arrival, class: "block font-medium mb-1" %>
+        <%= f.datetime_field :arrival,
+        class: "w-full border p-2 rounded-lg focus:ring-2 focus:ring-black outline-none",
+          data: { schedule_validation_target: "arrival" } %>
+
+          <p class="error-message"
+          data-schedule-validation-target="arrivalError"></p>
+        </div>
+
+        <div class="flex gap-5">
+          <%= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
 
       <%= link_to "Back",
-      guide_bus_path(@bus),
+      guide_schedules_path,
       data: { turbo_frame: "dashboard_content" },
       class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
 
     </div>
-
-  <% end %>
-</div>
-
-<turbo-frame id="dashboard_content">
-  <div class="flex justify-center mt-10"
-       data-controller="schedule-validation">
-
-    <div class="bg-white shadow-xl rounded-2xl p-8 w-[420px]">
-
-      <h2 class="text-xl font-semibold mb-6 text-center">
-        <%= @schedule.new_record? ? "Create Schedule" : "Edit Schedule" %>
-      </h2>
-
-      <%= form_with(model: [:guide, @bus, @schedule],
-            data: { action: "submit->schedule-validation#validateForm" },
-            class: "space-y-5") do |f| %>
-
-        <!-- Departure -->
-        <div>
-          <%= f.label :departure, class: "block font-medium mb-1" %>
-          <%= f.datetime_field :departure,
-                class: "w-full border p-2 rounded-lg focus:ring-2 focus:ring-black outline-none",
-                data: { schedule_validation_target: "departure" } %>
-
-          <p class="error-message"
-             data-schedule-validation-target="departureError"></p>
-        </div>
-
-        <!-- Arrival -->
-        <div>
-          <%= f.label :arrival, class: "block font-medium mb-1" %>
-          <%= f.datetime_field :arrival,
-                class: "w-full border p-2 rounded-lg focus:ring-2 focus:ring-black outline-none",
-                data: { schedule_validation_target: "arrival" } %>
-
-          <p class="error-message"
-             data-schedule-validation-target="arrivalError"></p>
-        </div>
-
-        <!-- Buttons -->
-        <div class="flex justify-between pt-4">
-          <%= f.submit "Save",
-                class: "px-5 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition" %>
-
-          <%= link_to "Back",
-                guide_bus_path(@bus),
-                data: { turbo_frame: "dashboard_content" },
-                class: "px-5 py-2 bg-gray-200 rounded-full hover:bg-gray-300 transition" %>
-        </div>
-
-      <% end %>
-    </div>
+    <% end %>
   </div>
+</div>
 </turbo-frame>

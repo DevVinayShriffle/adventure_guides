@@ -32,11 +32,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def update_resource(resource, params)
     if params[:password].blank? && params[:password_confirmation].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation)
-      resource.update_without_password(params.except(:current_password))
+      resource.update_without_password(params.except(:current_password, :password, :password_confirmation))
     else
-      resource.update_with_password(params)
+      resource.update(params.except("current_password"))
     end
   end
 end

@@ -1,5 +1,4 @@
 <div class="flex justify-center items-center h-screen">
-
   <div class="w-96 border p-6 rounded shadow">
 
     <h2 class="text-xl font-semibold mb-4">Sign Up</h2>
@@ -11,8 +10,8 @@
       <div class="mb-4">
         <%= f.label :name %>
         <%= f.text_field :name,
-              class: "w-full border p-2 rounded",
-              data: { form_validation_target: "input", field: "name" } %>
+        class: "w-full border p-2 rounded",
+          data: { form_validation_target: "input", field: "name" } %>
         <p class="text-red-500 text-sm mt-1"
           data-form-validation-target="error"
           data-field="name"></p>
@@ -21,8 +20,8 @@
       <div class="mb-4">
         <%= f.label :email %>
         <%= f.email_field :email,
-              class: "w-full border p-2 rounded",
-              data: { form_validation_target: "input", field: "email" } %>
+        class: "w-full border p-2 rounded",
+          data: { form_validation_target: "input", field: "email" } %>
         <p class="text-red-500 text-sm mt-1"
           data-form-validation-target="error"
           data-field="email"></p>
@@ -31,26 +30,24 @@
       <div class="mb-4">
         <%= f.label :role %>
         <%= f.select :role,
-              User.roles.keys.reject { |r| r == "admin" }.map { |r| [r.capitalize, r] },
-              { selected: "tourist" },
-              class: "w-full border p-2 rounded" %>
+        User.roles.keys.reject { |r| r == "admin" }.map { |r| [r.capitalize, r] },
+        { selected: "tourist" },
+        class: "w-full border p-2 rounded" %>
       </div>
 
       <div class="mb-4">
         <%= f.label :password %>
         <%= f.password_field :password,
-              class: "w-full border p-2 rounded",
-              data: { form_validation_target: "input", field: "password" } %>
+        class: "w-full border p-2 rounded",
+          data: { form_validation_target: "input", field: "password" } %>
         <p class="text-red-500 text-sm mt-1"
           data-form-validation-target="error"
           data-field="password"></p>
       </div>
 
       <%= f.submit "Sign Up",
-            class: "w-full bg-black text-white py-2 rounded" %>
+      class: "w-full bg-black text-white py-2 rounded" %>
 
     <% end %>
-
   </div>
-
 </div>

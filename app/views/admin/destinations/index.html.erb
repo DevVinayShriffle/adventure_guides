@@ -8,40 +8,6 @@
     class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
   </div>
 
-  <% if false %>
-  <% if @destinations.present? %>
-  <div class="space-y-4">
-    <% @destinations.each do |destination| %>
-    <div class="p-4 border rounded flex justify-between items-center">
-      <div>
-        <p class="font-semibold text-lg"><%= destination.name %></p>
-        <p class="text-gray-500 text-sm"><%= destination.location %></p>
-      </div>
-
-      <div class="space-x-3">
-        <%= link_to "View",
-        admin_destination_path(destination),
-        data: { turbo_frame: "dashboard_content" },
-        class: "text-blue-600" %>
-
-        <%= link_to "Edit",
-        edit_admin_destination_path(destination),
-        data: { turbo_frame: "dashboard_content" },
-        class: "text-green-600" %>
-
-        <%= link_to "Delete",
-        admin_destination_path(destination),
-        data: { confirm: "Are you sure?", turbo_method: :delete },
-        class: "text-red-600" %>
-      </div>
-    </div>
-    <% end %>
-  </div>
-  <% else %>
-  <p class="text-gray-500">No destinations found.</p>
-  <% end %>
-  <% end %>
-
   <div id="destinations" class="grid grid-cols-3 gap-6">
     <% if @destinations.present? %>
     <%= render @destinations %>

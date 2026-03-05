@@ -20,12 +20,14 @@ class DashboardsController < ApplicationController
     when "guide"
       [
         { name: "Buses", path: guide_buses_path },
-        { name: "Schedules", path: guide_buses_path }
+        { name: "Schedules", path: guide_schedules_path },
+        { name: "My Profile", path: edit_user_registration_path }
       ]
     when "admin"
       [
         { name: "Destinations", path: admin_destinations_path },
-        { name: "Users", path: admin_users_path }
+        { name: "Users", path: admin_users_path },
+        { name: "My Profile", path: edit_user_registration_path }
       ]
     else
       []

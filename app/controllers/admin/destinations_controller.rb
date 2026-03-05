@@ -5,7 +5,6 @@ module Admin
     before_action :set_destination, only: [:show, :update, :destroy, :edit]
 
     def index
-      # @destinations = Destination.all.with_attached_images.order(created_at: :desc)
       @destinations = Destination.order(created_at: :desc)
       respond_to do |format|
         format.html
