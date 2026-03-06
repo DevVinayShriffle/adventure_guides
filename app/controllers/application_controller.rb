@@ -12,6 +12,16 @@ class ApplicationController < ActionController::Base
 
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :phone, :avatar])
   end
+  
+  def authenticate_user!
+    if user_signed_in?
+      super
+    else
+      flash.now[:notice] = "You need to login or sign up before continuing. Redirecting in 3 seconds..."
+      # Render a layout-less view or directly inline
+      render inline: "<script>setTimeout(function(){ Turbo.visit('#{new_user_session_path}') }, 3000);</script>", layout: true
+    end
+  end
 
   private
 

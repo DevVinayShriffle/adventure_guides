@@ -23,14 +23,19 @@
 <body class="hide-scrollbar">
 
   <%= render "shared/hero" %>
-
+  <!--
   <p class="notice"><%= notice %></p>
+  -->
   <p class="alert"><%= alert %></p>
 
-
+  <% if false %>
   <div id="flash-messages" class="fixed top-5 left-[40%] bg-green-100 text-green-800 border-green-400 rounded-full">
+  
+  <div id="flash-messages" class="bg-green-100 text-green-800 border-green-400 rounded-full">
     <%= render "shared/flash_messages" %>
   </div>
+  <% end %>
+  
 
   <%= yield %>
  
