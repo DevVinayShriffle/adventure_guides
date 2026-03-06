@@ -7,7 +7,7 @@
       url: user_session_path,
       html: { data: { controller: "form-validation", action: "submit->form-validation#validate" } }) do |f| %>
 
-      <div class="mb-4">
+      <div class="required-field mb-4">
         <%= f.label :email %>
         <%= f.email_field :email,
         class: "w-full border p-2 rounded",
@@ -17,7 +17,7 @@
           data-field="email"></p>
       </div>
 
-      <div>
+      <div class="required-field">
         <%= f.label :password %>
         <%= f.password_field :password,
         class: "w-full border p-2 rounded",

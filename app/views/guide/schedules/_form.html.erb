@@ -22,7 +22,7 @@
     </div>
 
     <!-- Departure -->
-    <div>
+    <div class="required-field">
       <%= f.label :departure, class: "block font-medium mb-1" %>
       <%= f.datetime_field :departure,
       class: "w-full border p-2 rounded-lg focus:ring-2 focus:ring-black outline-none",
@@ -33,7 +33,7 @@
       </div>
 
       <!-- Arrival -->
-      <div>
+      <div class="required-field">
         <%= f.label :arrival, class: "block font-medium mb-1" %>
         <%= f.datetime_field :arrival,
         class: "w-full border p-2 rounded-lg focus:ring-2 focus:ring-black outline-none",

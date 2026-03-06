@@ -6,7 +6,7 @@
   },
   class: "space-y-4") do |f| %>
 
-  <div>
+  <div class="required-field">
     <%= f.label :name, class: "block font-medium" %>
     <%= f.text_field :name,
           class: "w-full border p-2 rounded",
@@ -17,7 +17,7 @@
       data-field="name"></p>
   </div>
 
-  <div>
+  <div class="required-field">
     <%= f.label :bus_type, class: "block font-medium" %>
     <%= f.select :bus_type,
           options_for_select(['sitter', 'sleeper', 'ac'], f.object.bus_type),
@@ -30,7 +30,7 @@
   </div>
 
 
-  <div>
+  <div class="required-field">
     <%= f.label :capacity, class: "block font-medium" %>
     <%= f.number_field :capacity,
           class: "w-full border p-2 rounded",
@@ -41,7 +41,7 @@
       data-field="capacity"></p>
   </div>
 
-  <div>
+  <div class="required-field">
     <%= f.label :price, class: "block font-medium" %>
     <%= f.number_field :price,
           class: "w-full border p-2 rounded",

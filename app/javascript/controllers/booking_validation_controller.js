@@ -7,7 +7,6 @@ export default class extends Controller {
 
   validate(event) {
     let hasError = false
-    console.log(this.availableSeatsValue)
 
     this.inputTargets.forEach((input) => {
       const field = input.dataset.field

@@ -1,14 +1,14 @@
 <% content_for :hide_footer, true %>
 
-<div class="flex h-[90vh]">
+<div class="flex h-[88vh]">
 
   <!-- LEFT SIDEBAR -->
   <div class="w-1/5 bg-gray-100 border-r p-6">
-    <h2 class="text-xl font-bold mb-6">Dashboard</h2>
+    <h2 class="text-xl font-bold ml-[10%] mb-6">Dashboard</h2>
 
     <ul class="space-y-4">
       <li>
-        <div class="mb-4">
+        <div class="mb-4 ml-[10%]">
           <% if @user.avatar.attached? %>
           <%= image_tag @user.avatar,
           class: "w-24 h-24 rounded-full object-cover mb-2" %>

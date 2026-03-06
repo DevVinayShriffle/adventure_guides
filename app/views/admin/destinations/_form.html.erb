@@ -7,7 +7,7 @@
   },
   class: "space-y-4") do |f| %>
 
-  <div>
+  <div class="required-field">
     <%= f.label :name, class: "block font-medium" %>
     <%= f.text_field :name,
           class: "w-full border p-2 rounded",
@@ -17,7 +17,7 @@
       data-field="name"></p>
   </div>
 
-  <div>
+  <div class="required-field">
     <%= f.label :location, class: "block font-medium" %>
     <%= f.text_field :location,
           class: "w-full border p-2 rounded",

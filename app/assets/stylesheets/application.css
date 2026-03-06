@@ -25,3 +25,9 @@
   font-size: 14px;
   margin-top: 4px;
 }
+
+.required-field label:after {
+  content: " *";
+  color: red;
+}
+
