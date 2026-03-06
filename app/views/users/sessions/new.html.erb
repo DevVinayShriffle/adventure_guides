@@ -3,6 +3,18 @@
 
     <h2 class="text-xl font-semibold mb-4">Login</h2>
 
+    <% if flash[:alert] %>
+      <p class="text-red-500 text-sm mb-2">
+        <%= flash[:alert] %>
+      </p>
+    <% end %>
+
+    <% if resource.errors.any? %>
+      <div class="text-red-500 text-sm mb-2">
+        <%= resource.errors.full_messages.first %>
+      </div>
+    <% end %>
+
     <%= form_for(resource, as: resource_name, 
       url: user_session_path,
       html: { data: { controller: "form-validation", action: "submit->form-validation#validate" } }) do |f| %>

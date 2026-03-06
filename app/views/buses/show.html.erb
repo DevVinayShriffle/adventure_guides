@@ -56,6 +56,31 @@
 
     </div>
 
+    <div class="border p-5 rounded mb-6 relative">
+
+      <% if schedule.available_seats == 0 %>
+        <span class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">
+          Sold Out
+        </span>
+      <% end %>
+
+      <p>Destination: <%= schedule.destination.name %></p>
+      <p>Departure: <%= schedule.departure %></p>
+      <p>Arrival: <%= schedule.arrival %></p>
+      <p>Available Seats: <%= schedule.available_seats %></p>
+
+      <% if schedule.available_seats == 0 %>
+        <button class="inline-block mt-3 bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed" disabled>
+          Book This Schedule
+        </button>
+      <% else %>
+        <%= link_to "Book This Schedule",
+          new_booking_path(schedule_id: schedule.id),
+          class: "inline-block mt-3 bg-black text-white px-4 py-2 rounded" %>
+      <% end %>
+
+    </div>
+
     <% end %>
     <% else %>
     <p>No schedules available.</p>

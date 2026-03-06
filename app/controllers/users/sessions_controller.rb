@@ -2,6 +2,18 @@ require_dependency 'user_serializer'
 class Users::SessionsController < Devise::SessionsController
   respond_to :json
 
+  def create
+    self.resource = warden.authenticate(auth_options)
+
+    if resource
+      respond_with(resource)
+    else
+      self.resource = resource_class.new(sign_in_params)
+      resource.errors.add(:base, "Invalid email or password")
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def respond_with(resource, _opt = {})
