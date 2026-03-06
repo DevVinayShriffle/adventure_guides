@@ -1,3 +1,4 @@
+<div class="m-auto w-80">
 <%= form_with(model: [:admin, @destination],
   data: { 
     controller: "destination-validation",
@@ -10,7 +11,7 @@
     <%= f.label :name, class: "block font-medium" %>
     <%= f.text_field :name,
           class: "w-full border p-2 rounded",
-          data: { destination_validation_target: "input", field: "name" } %>
+          data: { destination_validation_target: "input", field: "name" }, autofocus: true %>
     <p class="error-message"
       data-destination-validation-target="error"
       data-field="name"></p>
@@ -28,7 +29,7 @@
 
   <div>
     <%= f.label :description, class: "block font-medium" %>
-    <%= f.text_area :description, class: "w-full border p-2 rounded" %>
+    <%= f.text_area :description, class: "w-full border p-2 rounded h-18 resize-none" %>
   </div>
 
   <div>
@@ -49,7 +50,7 @@
   </div>
   <% end %>
 
-  <div class="flex gap-5">
+  <div class="flex justify-between gap-5">
     <%= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
 
     <%= link_to "Back",
@@ -60,3 +61,4 @@
   </div>
 
 <% end %>
+</div>

@@ -11,7 +11,7 @@
         <%= f.label :name %>
         <%= f.text_field :name,
         class: "w-full border p-2 rounded",
-          data: { form_validation_target: "input", field: "name" } %>
+          data: { form_validation_target: "input", field: "name" }, autofocus: true %>
         <p class="text-red-500 text-sm mt-1"
           data-form-validation-target="error"
           data-field="name"></p>

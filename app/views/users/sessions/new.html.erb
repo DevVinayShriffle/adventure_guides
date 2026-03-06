@@ -11,7 +11,7 @@
         <%= f.label :email %>
         <%= f.email_field :email,
         class: "w-full border p-2 rounded",
-          data: { form_validation_target: "input", field: "email" } %>
+          data: { form_validation_target: "input", field: "email" }, autofocus: true %>
           <p class="text-red-500 text-sm mt-1"
           data-form-validation-target="error"
           data-field="email"></p>

@@ -15,7 +15,7 @@
       <%= f.collection_select :bus_id, Bus.pluck(:name, :id), :last, :first,
       { include_blank: 'Select Bus' }, 
       data: { schedule_validation_target: "bus" },
-      class: 'w-full border p-2 rounded-lg focus:ring-2 focus:ring-black outline-none'%>
+      class: 'w-full border p-2 rounded-lg focus:ring-2 focus:ring-black outline-none', autofocus: true%>
 
       <p class="error-message"
         data-schedule-validation-target="busError"></p>
