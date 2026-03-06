@@ -3,18 +3,6 @@
 
     <h2 class="text-xl font-semibold mb-4">Login</h2>
 
-    <% if flash[:alert] %>
-      <p class="text-red-500 text-sm mb-2">
-        <%= flash[:alert] %>
-      </p>
-    <% end %>
-
-    <% if resource.errors.any? %>
-      <div class="text-red-500 text-sm mb-2">
-        <%= resource.errors.full_messages.first %>
-      </div>
-    <% end %>
-
     <%= form_for(resource, as: resource_name, 
       url: user_session_path,
       html: { data: { controller: "form-validation", action: "submit->form-validation#validate" } }) do |f| %>
@@ -29,7 +17,7 @@
           data-field="email"></p>
       </div>
 
-      <div class="mb-4">
+      <div>
         <%= f.label :password %>
         <%= f.password_field :password,
         class: "w-full border p-2 rounded",
@@ -39,8 +27,14 @@
           data-field="password"></p>
       </div>
 
+      <% if resource.errors.any? %>
+        <div class="text-red-500 text-sm mb-2">
+          <%= resource.errors.full_messages.first %>
+        </div>
+      <% end %>
+
       <%= f.submit "Login",
-      class: "w-full bg-black text-white py-2 rounded" %>
+      class: "w-full mt-4 bg-black text-white py-2 rounded" %>
     <% end %>
   </div>
 </div>

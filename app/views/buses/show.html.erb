@@ -1,5 +1,15 @@
 <div class="px-20 py-10">
 
+  <!-- Modern Back Button
+    <div class="fixed top-25 right-[5%]">
+      <%= link_to :back,
+      data: { turbo_frame: "dashboard_content" },
+      class: "flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full shadow-sm transition z-10" do %>
+      ← Back
+      <% end %>
+    </div>
+     -->
+
   <div class="grid grid-cols-2 gap-10">
 
     <div>
@@ -43,6 +53,7 @@
     <% if @bus.schedules.present? %>
     <% @bus.schedules.each do |schedule| %>
 
+    <!--
     <div class="border p-5 rounded mb-6">
 
       <p>Destination: <%= schedule.destination.name %></p>
@@ -55,11 +66,12 @@
       class: "inline-block mt-3 bg-black text-white px-4 py-2 rounded" %>
 
     </div>
+    -->
 
-    <div class="border p-5 rounded mb-6 relative">
+    <div class="border p-5 rounded mb-6 relative z-10">
 
       <% if schedule.available_seats == 0 %>
-        <span class="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">
+        <span class="absolute top-0 left-0 bg-red-600 text-white text-xs px-2 py-1 rounded">
           Sold Out
         </span>
       <% end %>

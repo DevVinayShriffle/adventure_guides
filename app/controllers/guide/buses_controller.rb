@@ -36,8 +36,9 @@ module Guide
       @bus[:user_id] = current_user.id
       @bus = Bus.create!(@bus)
 
+      flash.now[:notice] = "Bus created."
       respond_to do |format|
-        format.html { redirect_to guide_buses_path, notice: "Bus created." }
+        format.html { redirect_to guide_buses_path }
         format.json { render json: @bus, message: "Bus created.", status: :created }
       end
     end

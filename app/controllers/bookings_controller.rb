@@ -65,7 +65,7 @@ class BookingsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html {redirect_to destinations_path}
+      format.html {redirect_to destinations_path, notice: "Booking confirmed." }
       format.json do
         render json: {
           booking: BookingSerializer.new(booking),
@@ -86,9 +86,11 @@ class BookingsController < ApplicationController
         )
       @booking.update!(status: :cancelled)
     end
-
+    # flash[:notice]= "Booking cancelled successfully."
+    flash.now[:notice] = "Booking Cancelled successfully."
     respond_to do |format|
       format.html { redirect_to upcoming_bookings_path }
+      format.turbo_stream { render_flash_stream }
       format.json do
         render json: {
           booking: BookingSerializer.new(@booking),

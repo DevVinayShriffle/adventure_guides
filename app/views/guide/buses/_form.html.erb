@@ -10,7 +10,8 @@
     <%= f.label :name, class: "block font-medium" %>
     <%= f.text_field :name,
           class: "w-full border p-2 rounded",
-          data: { bus_validation_target: "input", field: "name" } %>
+          data: { bus_validation_target: "input", field: "name" }, 
+          autofocus: true %>
     <p class="error-message"
       data-bus-validation-target="error"
       data-field="name"></p>

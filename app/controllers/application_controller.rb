@@ -18,4 +18,11 @@ class ApplicationController < ActionController::Base
   def set_active_storage_current_host
     ActiveStorage::Current
   end
+
+  def render_flash_stream
+    respond_to do |format|
+      format.turbo_stream { render "shared/_flash_stream" }
+    end
+    # render turbo_stream: turbo_stream.replace("flash", partial: "shared/flash_stream")
+  end
 end
