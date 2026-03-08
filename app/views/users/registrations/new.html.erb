@@ -5,7 +5,7 @@
 
     <%= form_for(resource, as: resource_name, 
       url: registration_path(resource_name),
-      html: { data: { controller: "form-validation", action: "submit->form-validation#validate" } }) do |f| %>
+      html: { multipart: true, data: { controller: "form-validation", action: "submit->form-validation#validate" } }) do |f| %>
 
       <div class="required-field mb-4">
         <%= f.label :name %>

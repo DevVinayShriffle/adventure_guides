@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :phone, :avatar])
   end
   
-  def authenticate_user!
+  def authenticate_user!(*args)
     if user_signed_in?
       super
     else

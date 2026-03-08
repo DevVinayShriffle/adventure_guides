@@ -8,12 +8,18 @@
 
     <ul class="space-y-4">
       <li>
-        <div class="mb-4 ml-[10%]">
-          <% if @user.avatar.attached? %>
-          <%= image_tag @user.avatar,
-          class: "w-24 h-24 rounded-full object-cover mb-2" %>
-          <% end %>
-        </div>
+        <% if false %>
+        <turbo-frame id="sidebar_avatar">
+          <div class="mb-4 ml-[10%]">
+            <% if @user.avatar.attached? %>
+            <%= image_tag @user.avatar,
+            class: "w-24 h-24 rounded-full object-cover mb-2" %>
+            <% end %>
+          </div>
+        </turbo-frame>
+        <% end %>
+
+        <%= render "dashboards/sidebar_avatar", user: @user %>
       </li>
       <% @options.each do |option| %>
       <li>

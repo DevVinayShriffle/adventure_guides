@@ -1,6 +1,6 @@
 require_dependency 'user_serializer'
 class Users::RegistrationsController < Devise::RegistrationsController
-  respond_to :json
+  respond_to :json, :html, :turbo_stream
 
   def destroy
     if current_user.destroy
@@ -15,17 +15,61 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def respond_with(resource, _opts = {})
     return if request.get?
+
     if resource.persisted?
       @token = request.env['warden-jwt_auth.token']
       headers['Authorization'] = @token
 
       respond_to do |format|
-        format.html { redirect_to dashboard_path, notice: 'User Registered successfully.' }
-        format.json { render json: {status: { code: 200, message: 'Signed up successfully.', token: "Bearer #{@token}", data: {user: UserSerializer.new(resource)} }}, status: :ok }
+
+        # SIGNUP → REDIRECT
+        if action_name == "create"
+          format.html { redirect_to dashboard_path, notice: "User Registered successfully." }
+          format.turbo_stream { redirect_to dashboard_path }
+        end
+
+        # UPDATE → TURBO STREAM
+        if action_name == "update"
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.replace(
+                "sidebar_avatar",
+                partial: "dashboards/sidebar_avatar",
+                locals: { user: current_user }
+              ),
+              turbo_stream.update(
+                "dashboard_content",
+                render_to_string(
+                  inline: %{
+                    <h2 class="text-2xl font-semibold text-gray-600">
+                      Welcome #{current_user.name}
+                    </h2>
+                    <p class="mt-2 text-gray-500">
+                      Profile updated successfully.
+                    </p>
+                  }
+                )
+              )
+            ]
+          end
+
+          format.html { redirect_to dashboard_path }
+        end
+
+        format.json do
+          render json: {
+            status: {
+              code: 200,
+              message: "Success",
+              token: "Bearer #{@token}",
+              data: { user: UserSerializer.new(resource) }
+            }
+          }
+        end
       end
     else
       render json: {
-        status: { message: "User couldn't be created successfully. #{resource.errors.full_messages.to_sentence}" }
+        status: { message: resource.errors.full_messages.to_sentence }
       }, status: :unprocessable_entity
     end
   end
