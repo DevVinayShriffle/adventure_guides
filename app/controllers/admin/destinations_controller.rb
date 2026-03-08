@@ -63,7 +63,6 @@ module Admin
     end
 
     def all_users
-      byebug
       return if request.get?
       @users = User.order(created_at: :desc)
 

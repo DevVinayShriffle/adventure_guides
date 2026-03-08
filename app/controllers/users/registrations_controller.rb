@@ -81,4 +81,38 @@ class Users::RegistrationsController < Devise::RegistrationsController
       resource.update(params.except("current_password"))
     end
   end
+
+  # def update_resource(resource, params)
+  #   if params[:password].present?
+  #     unless resource.valid_password?(params[:current_password])
+  #       resource.errors.add(:current_password, "is incorrect")
+  #       return false
+  #     end
+  #   end
+
+  #   if params[:password].blank? && params[:password_confirmation].blank?
+  #     resource.update_without_password(params.except(:current_password))
+  #   else
+  #     resource.update(params.except(:current_password))
+  #   end
+  # end
 end
+
+# else
+#   respond_to do |format|
+#     format.turbo_stream do
+#       flash.now[:alert] = resource.errors.full_messages.to_sentence
+
+#       render turbo_stream: turbo_stream.replace(
+#         "dashboard_content",
+#         partial: "users/registrations/edit",
+#         locals: { resource: resource }
+#       )
+#     end
+
+#     format.html do
+#       flash[:alert] = resource.errors.full_messages.to_sentence
+#       redirect_to edit_user_registration_path
+#     end
+#   end
+# end

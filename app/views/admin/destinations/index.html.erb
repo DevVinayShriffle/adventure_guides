@@ -1,5 +1,11 @@
 <turbo-frame id="dashboard_content">
   <div class="flex justify-between items-center mb-6">
+    <!-- Flash container -->
+    <div id="dashboard_flash"
+        class="fixed top-16 right-10 z-50 w-96">
+      <%= render "shared/flash_messages" %>
+    </div>
+    
     <h1 class="text-2xl font-bold">Destinations</h1>
 
     <%= link_to "Add Destination",

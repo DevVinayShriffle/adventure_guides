@@ -34,6 +34,12 @@
 
   <!-- RIGHT CONTENT AREA -->
   <div class="w-4/5 p-8 overflow-y-auto">
+    <!-- Flash container -->
+    <div id="dashboard_flash"
+        class="fixed top-16 right-10 z-50 w-96">
+      <%= render "shared/flash_messages" %>
+    </div>
+
     <turbo-frame id="dashboard_content">
 
       <h2 class="text-2xl font-semibold text-gray-600">

@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "flash-messages" do %>
+  <%= render "shared/flash_messages" %>
+<% end %>
+
+<%= turbo_stream.replace "dashboard_content" do %>
+  <%= render "admin/destinations/index.html.erb", destinations: Destination.order(created_at: :desc) %>
+<% end %>
