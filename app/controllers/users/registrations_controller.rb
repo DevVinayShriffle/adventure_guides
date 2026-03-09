@@ -30,6 +30,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
         # UPDATE → TURBO STREAM
         if action_name == "update"
+          flash.now[:notice] = "Profile updated successfully."
           format.turbo_stream do
             render turbo_stream: [
               turbo_stream.replace(
@@ -37,6 +38,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
                 partial: "dashboards/sidebar_avatar",
                 locals: { user: current_user }
               ),
+              turbo_stream.replace("flash-messages", partial: "shared/flash_messages"),
               turbo_stream.update(
                 "dashboard_content",
                 render_to_string(
@@ -82,37 +84,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  # def update_resource(resource, params)
-  #   if params[:password].present?
-  #     unless resource.valid_password?(params[:current_password])
-  #       resource.errors.add(:current_password, "is incorrect")
-  #       return false
-  #     end
-  #   end
-
-  #   if params[:password].blank? && params[:password_confirmation].blank?
-  #     resource.update_without_password(params.except(:current_password))
-  #   else
-  #     resource.update(params.except(:current_password))
-  #   end
-  # end
+  def sign_up_params
+    params.require(:user).permit(:name, :email, :phone, :avatar, :role, :password, :password_confirmation)
+  end
 end
-
-# else
-#   respond_to do |format|
-#     format.turbo_stream do
-#       flash.now[:alert] = resource.errors.full_messages.to_sentence
-
-#       render turbo_stream: turbo_stream.replace(
-#         "dashboard_content",
-#         partial: "users/registrations/edit",
-#         locals: { resource: resource }
-#       )
-#     end
-
-#     format.html do
-#       flash[:alert] = resource.errors.full_messages.to_sentence
-#       redirect_to edit_user_registration_path
-#     end
-#   end
-# end

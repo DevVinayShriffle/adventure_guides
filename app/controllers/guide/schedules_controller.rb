@@ -35,7 +35,7 @@ class Guide::SchedulesController < ApplicationController
     schedule = @bus.schedules.create!(@schedule)
 
     respond_to do |format|
-      format.html { redirect_to guide_schedules_path }
+      format.html { redirect_to guide_schedules_path, notice: "Bus schedule created." }
       format.json { render json: schedule, message: "Bus schedule created.", status: :created }
     end
   end
@@ -48,7 +48,7 @@ class Guide::SchedulesController < ApplicationController
     @schedule.update!(schedules_params)
 
     respond_to do |format|
-      format.html { redirect_to guide_schedules_path }
+      format.html { redirect_to guide_schedules_path, notice: "Bus schedule updated." }
       format.json { render json: @schedule, message: "Schedule updated.", status: :ok }
     end
   end
@@ -57,7 +57,7 @@ class Guide::SchedulesController < ApplicationController
     @schedule.destroy
 
     respond_to do |format|
-      format.html { redirect_to guide_schedules_path }
+      format.html { redirect_to guide_schedules_path, notice: "Bus schedule deleted." }
       format.json { render json: { message: "Schedule deleted." }, status: :ok }
     end
   end

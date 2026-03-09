@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
       super
     else
       flash.now[:notice] = "You need to login or sign up before continuing. Redirecting in 3 seconds..."
-      # Render a layout-less view or directly inline
+      
       render inline: "<script>setTimeout(function(){ Turbo.visit('#{new_user_session_path}') }, 3000);</script>", layout: true
     end
   end

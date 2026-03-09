@@ -1,4 +1,12 @@
 <turbo-frame id="dashboard_content">
+
+  <!-- Flash container -->
+  <div class="fixed left-0 top-5 w-full flex justify-center items-center">
+    <div id="dashboard_flash" class="bg-green-100 text-green-800 border-green-400 rounded-full">
+      <%= render "shared/flash_messages" %>
+    </div>
+  </div>
+    
   <div class="flex items-center gap-3 mb-3">
   <h1 class="text-2xl font-bold">Your Buses</h1>
   <%= link_to "Create Bus",

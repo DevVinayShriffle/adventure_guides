@@ -1,9 +1,10 @@
 <turbo-frame id="dashboard_content">
   <div class="flex justify-between items-center mb-6">
     <!-- Flash container -->
-    <div id="dashboard_flash"
-        class="fixed top-16 right-10 z-50 w-96">
-      <%= render "shared/flash_messages" %>
+    <div class="fixed left-0 top-5 w-full flex justify-center items-center">
+      <div id="dashboard_flash" class="bg-green-100 text-green-800 border-green-400 rounded-full">
+        <%= render "shared/flash_messages" %>
+      </div>
     </div>
     
     <h1 class="text-2xl font-bold">Destinations</h1>

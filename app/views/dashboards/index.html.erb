@@ -34,11 +34,13 @@
 
   <!-- RIGHT CONTENT AREA -->
   <div class="w-4/5 p-8 overflow-y-auto">
+    <% if false %>
     <!-- Flash container -->
     <div id="dashboard_flash"
         class="fixed top-16 right-10 z-50 w-96">
       <%= render "shared/flash_messages" %>
     </div>
+    <% end %>
 
     <turbo-frame id="dashboard_content">
 

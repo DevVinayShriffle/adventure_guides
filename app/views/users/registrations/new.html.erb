@@ -57,6 +57,12 @@
           data-field="password"></p>
       </div>
 
+      <% if resource.errors.any? %>
+        <div class="text-red-500 text-sm mb-2">
+          <%= resource.errors.full_messages.first %>
+        </div>
+      <% end %>
+
       <%= f.submit "Sign Up",
       class: "w-full bg-black text-white py-2 rounded" %>
 
