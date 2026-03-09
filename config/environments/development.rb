@@ -90,13 +90,14 @@ Rails.application.configure do
     authentication:       'plain',
     enable_starttls_auto: true
   }
-  # Use Redis for caching
-  # config.active_job.queue_adapter = :async
 
-  # config.cache_store = :redis_cache_store, {
-  #   url: "redis://localhost:6379/1", # /1 specifies the database number
-  #   namespace: "my_app_cache"
-  # }
+  # Use Redis for caching
+  config.active_job.queue_adapter = :async
+
+  config.cache_store = :redis_cache_store, {
+    url: "redis://localhost:6379/2", # /1 specifies the database number
+    namespace: "my_app_cache"
+  }
 end
 
 Rails.application.routes.default_url_options[:host] = 'localhost:3000'
