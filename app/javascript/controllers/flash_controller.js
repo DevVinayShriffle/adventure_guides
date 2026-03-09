@@ -7,7 +7,7 @@ export default class extends Controller {
     // Automatically dismiss after 5 seconds
     setTimeout(() => {
       this.dismiss()
-    }, 5000)
+    }, 2000)
   }
 
   dismiss() {

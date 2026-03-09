@@ -55,13 +55,13 @@
         <p class="text-red-500 text-sm mt-1"
           data-form-validation-target="error"
           data-field="password"></p>
-      </div>
 
-      <% if resource.errors.any? %>
-        <div class="text-red-500 text-sm mb-2">
-          <%= resource.errors.full_messages.first %>
-        </div>
-      <% end %>
+        <% if resource.errors.any? %>
+          <div class="text-red-500 text-sm mb-2">
+            <%= resource.errors.full_messages.first %>
+          </div>
+        <% end %>
+      </div>
 
       <%= f.submit "Sign Up",
       class: "w-full bg-black text-white py-2 rounded" %>
