@@ -1,4 +1,7 @@
-<div class="border p-3 rounded shadow bg-white w-65 h-[420px] flex flex-col justify-between">
+<div class="border p-3 rounded shadow bg-white w-65 h-[420px] flex flex-col justify-between cursor-pointer"
+data-controller="redirect" 
+data-action="dblclick->redirect#redirectToUrl" 
+data-redirect-url-value="<%= destination_buses_path(destination) %>">
 
   <!-- IMAGE SECTION -->
   <div>

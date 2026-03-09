@@ -1,14 +1,12 @@
 <div class="px-20 py-10">
 
-  <!-- Modern Back Button
+  <!-- Modern Back Button -->
     <div class="fixed top-25 right-[5%]">
       <%= link_to :back,
-      data: { turbo_frame: "dashboard_content" },
       class: "flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full shadow-sm transition z-10" do %>
       ← Back
       <% end %>
     </div>
-     -->
 
   <div class="grid grid-cols-2 gap-10">
 
@@ -68,7 +66,12 @@
     </div>
     -->
 
-    <div class="border p-5 rounded mb-6 relative z-10">
+    <div class="border p-5 rounded mb-6 relative z-10 cursor-pointer"
+    <% if schedule.available_seats != 0 %>
+    data-controller="redirect" 
+    data-action="dblclick->redirect#redirectToUrl" 
+    data-redirect-url-value="<%= new_booking_path(schedule_id: schedule.id) %>"
+    <% end %>>
 
       <% if schedule.available_seats == 0 %>
         <span class="absolute top-0 left-0 bg-red-600 text-white text-xs px-2 py-1 rounded">
