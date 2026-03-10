@@ -34,7 +34,7 @@ class User < ApplicationRecord
 
   before_validation :normalize_name, :normalize_email
 
-  after_create :send_welcome_email
+  # after_create :send_welcome_email
 
   private
 

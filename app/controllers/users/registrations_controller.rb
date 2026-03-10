@@ -24,7 +24,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
         # SIGNUP → REDIRECT
         if action_name == "create"
-          format.html { redirect_to dashboard_path, notice: "User Registered successfully." }
+          flash[:notice] = "User Registered successfully."
+          format.html { redirect_to dashboard_path }
           format.turbo_stream { redirect_to dashboard_path }
         end
 
