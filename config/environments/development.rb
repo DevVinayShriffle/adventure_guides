@@ -92,7 +92,7 @@ Rails.application.configure do
   }
 
   # Use Redis for caching
-  config.active_job.queue_adapter = :async
+  config.active_job.queue_adapter = :sidekiq
 
   config.cache_store = :redis_cache_store, {
     url: "redis://localhost:6379/2", # /1 specifies the database number

@@ -34,7 +34,7 @@ class User < ApplicationRecord
 
   before_validation :normalize_name, :normalize_email
 
-  # after_create :send_welcome_email
+  after_create :send_welcome_email
 
   private
 
@@ -46,7 +46,7 @@ class User < ApplicationRecord
     self.email = email.strip.downcase if email.present?
   end
 
-  # def send_welcome_email
-  #   SendEmailsJob.set(wait: 2.minute).perform_later(self)
-  # end
+  def send_welcome_email
+    SendEmailsJob.set(wait: 2.minute).perform_later(self)
+  end
 end

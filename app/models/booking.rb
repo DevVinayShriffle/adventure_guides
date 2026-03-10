@@ -9,7 +9,7 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :schedule
 
-  after_create :schedule_reminder_email
+  # after_create :schedule_reminder_email
 
   private
 

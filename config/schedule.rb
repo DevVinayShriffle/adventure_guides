@@ -25,3 +25,7 @@ set :output, "log/cron_log.log"
 every 1.minute do
   rake "email:send_welcome_emails"
 end
+
+every 1.minute do
+  rake "booking:send_reminders_emails"
+end
