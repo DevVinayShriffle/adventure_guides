@@ -75,11 +75,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  # def update_resource(resource, params)
+  #   if params[:password].blank? && params[:password_confirmation].blank?
+  #     resource.update_without_password(params.except(:current_password, :password, :password_confirmation))
+  #   else
+  #     resource.update(params.except("current_password"))
+  #   end
+  # end
+
   def update_resource(resource, params)
+    # byebug
+    if params[:password].present?
+      unless resource.valid_password?(params[:current_password])
+        resource.errors.add(:current_password, "is incorrect")
+        return false
+      end
+    end
+
     if params[:password].blank? && params[:password_confirmation].blank?
-      resource.update_without_password(params.except(:current_password, :password, :password_confirmation))
+      resource.update_without_password(params.except(:current_password))
     else
-      resource.update(params.except("current_password"))
+      resource.update(params.except(:current_password))
     end
   end
 

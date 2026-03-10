@@ -47,10 +47,15 @@
       <% end %>
 
       <div class="field">
-        <p><%= f.label :password, class: "block font-medium mb-2" %> <i class="block font-medium mb-2">(leave blank if you don't want to change it)</i></p>
+        <p><%= f.label :current_password, class: "block font-medium" %><i class="text-xs">(we need your current password to confirm your changes)</i></p>
+        <p><%= f.password_field :current_password, autocomplete: "current-password", class: "w-full border p-2 rounded" %></p>
+      </div>
+
+      <div class="field">
+        <p><%= f.label :password, class: "block font-medium mt-2" %> <i class="block font-medium text-xs">(leave blank if you don't want to change it)</i></p>
         <p><%= f.password_field :password, autocomplete: "new-password", class: "w-full border p-2 rounded" %></p>
         <% if @minimum_password_length %>
-        <p><em><%= @minimum_password_length %> characters minimum</em></p>
+        <p class="text-xs"><em><%= @minimum_password_length %> characters minimum</em></p>
         <% end %>
       </div>
 
@@ -59,10 +64,7 @@
         <p><%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full border p-2 rounded" %></p>
       </div>
 
-      <div class="field">
-        <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i></p>
-        <p><%= f.password_field :current_password, autocomplete: "current-password" %></p>
-      </div>
+      
 
       <!-- Submit -->
       <div class="mt-6 flex justify-between">
