@@ -7,5 +7,15 @@ class Booking < ApplicationRecord
   validates :drop, presence:true
 
   belongs_to :user
-  belongs_to :schedule  
+  belongs_to :schedule
+
+  after_create :schedule_reminder_email
+
+  private
+
+  def schedule_reminder_email
+    reminder_time = booking_datetime - 4.hours
+
+    BookingReminderJob.set(wait_until: reminder_time).perform_later(self.id)
+  end
 end
