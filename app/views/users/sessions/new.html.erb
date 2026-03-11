@@ -17,14 +17,19 @@
           data-field="email"></p>
       </div>
 
-      <div class="required-field">
+      <div class="required-field" data-controller="password-visibility">
         <%= f.label :password %>
-        <%= f.password_field :password,
-        class: "w-full border p-2 rounded",
-          data: { form_validation_target: "input", field: "password" } %>
-          <p class="text-red-500 text-sm mt-1"
-          data-form-validation-target="error"
-          data-field="password"></p>
+        <div class="relative">
+          <%= f.password_field :password,
+          class: "w-full p-2 pr-9 border rounded",
+            data: { form_validation_target: "input", field: "password", "password-visibility-target": "passwordInput" } %>
+
+            <i class="ri-eye-line absolute right-3 top-2" data-action="click->password-visibility#toggle"
+              data-password-visibility-target="toggleIcon"></i>
+        </div>
+        <p class="text-red-500 text-sm mt-1"
+        data-form-validation-target="error"
+        data-field="password"></p>
       </div>
 
       <% if resource.errors.any? %>
