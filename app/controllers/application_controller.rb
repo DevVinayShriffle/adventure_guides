@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     if user_signed_in?
       super
     else
-      flash.now[:notice] = "You need to login or sign up before continuing. Redirecting in 3 seconds..."
+      flash[:notice] = "You need to login or sign up before continuing"
       
       render inline: "<script>setTimeout(function(){ Turbo.visit('#{new_user_session_path}') }, 3000);</script>", layout: true
     end
@@ -33,6 +33,5 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.turbo_stream { render "shared/_flash_stream" }
     end
-    # render turbo_stream: turbo_stream.replace("flash", partial: "shared/flash_stream")
   end
 end
