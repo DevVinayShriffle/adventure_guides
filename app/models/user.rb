@@ -34,7 +34,7 @@ class User < ApplicationRecord
 
   before_validation :normalize_name, :normalize_email
 
-  # after_create :send_welcome_email
+  after_create :send_welcome_email
 
   private
 
@@ -48,5 +48,6 @@ class User < ApplicationRecord
 
   def send_welcome_email
     SendEmailsJob.set(wait: 2.minute).perform_later(self)
+    # SendEmailsJob.perform_now(self)
   end
 end
