@@ -15,11 +15,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def respond_with(resource, _opts = {})
     return if request.get?
-
+    # byebug
+    return if resource.errors.any?
     if resource.persisted?
       @token = request.env['warden-jwt_auth.token']
       headers['Authorization'] = @token
-
+      
+      # if resource[:updated_at] == Time.now
       respond_to do |format|
 
         # SIGNUP → REDIRECT
@@ -88,7 +90,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if params[:password].present?
       unless resource.valid_password?(params[:current_password])
         resource.errors.add(:current_password, "is incorrect")
-        return false
+        render :edit
+        return
       end
     end
 
