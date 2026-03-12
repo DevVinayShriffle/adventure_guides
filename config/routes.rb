@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     registration: 'signup'
   }, controllers: {
     registrations: 'users/registrations',
-    sessions: 'users/sessions'
+    sessions: 'users/sessions',
+    passwords: 'users/passwords'
   }
 
   resources :destinations, only: [:index, :show] do
