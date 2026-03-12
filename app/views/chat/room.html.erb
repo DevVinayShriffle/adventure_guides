@@ -1,0 +1,7 @@
+<h1>Chat Room</h1>
+<p>Let's talk</p>
+<%= text_area_tag :message_area, nil, id: "message_area", class: "bg-red-400" %>
+<br>
+<%= form_with url: send_message_path do |f| %>
+ <%= f.text_field :message_box, id: "message_box", class: "bg-red-400" %>
+<% end %>

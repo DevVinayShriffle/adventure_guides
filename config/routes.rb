@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "chat/room"
+  post 'chat/send_message', as: :send_message
+
+  mount ActionCable.server => '/cable'
 
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'

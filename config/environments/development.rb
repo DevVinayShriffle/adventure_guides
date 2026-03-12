@@ -98,6 +98,9 @@ Rails.application.configure do
     url: "redis://localhost:6379/2", # /1 specifies the database number
     namespace: "my_app_cache"
   }
+
+  # config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.allowed_request_origins = '/http://127.0.0.1:3000/'
 end
 
 # Rails.application.routes.default_url_options[:host] = 'localhost:3000'
