@@ -1,7 +1,8 @@
 <h1>Chat Room</h1>
 <p>Let's talk</p>
-<%= text_area_tag :message_area, nil, id: "message_area", class: "bg-red-400" %>
-<br>
+<div id="messages" style="max-height: 400px; overflow-y: auto;">
+<%= text_area_tag :message_area, nil, id: "message_area", class: "bg-red-400 h-20 resize-none" %>
+</div>
 <%= form_with url: send_message_path do |f| %>
  <%= f.text_field :message_box, id: "message_box", class: "bg-red-400" %>
 <% end %>

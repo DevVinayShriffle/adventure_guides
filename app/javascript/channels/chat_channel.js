@@ -16,5 +16,12 @@ consumer.subscriptions.create({ channel: "ChatChannel", room_id: 1 }, {
     console.log("Received data:", data);
     message_area.value = message_area.value + "\n" + data;
     message_box.value = ""
+
+    const messagesContainer = document.getElementById('message_area');
+    if (messagesContainer) {
+      messagesContainer.insertAdjacentHTML('beforeend', data.message); // Assuming data has a message field with HTML
+      // Scroll to the bottom
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
   }
 });
