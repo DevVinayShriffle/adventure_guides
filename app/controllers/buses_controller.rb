@@ -7,7 +7,7 @@ class BusesController < ApplicationController
 
       if @destination.present?
         @buses = Bus.joins(:schedules)
-        .where(schedules: { destination_id: @destination.id })
+        .where(schedules: { destination_id: @destination.id }).distinct
 
       else
         @buses = []
