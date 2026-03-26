@@ -34,6 +34,18 @@ class User < ApplicationRecord
 
   before_validation :normalize_name, :normalize_email
 
+  # def is_tourist?
+  #   self.role == 'tourist'
+  # end
+
+  # def is_guide?
+  #   self.role == 'guide'
+  # end
+
+  # def is_admin?
+  #   self.role == 'admin'
+  # end
+
   private
 
   def normalize_name

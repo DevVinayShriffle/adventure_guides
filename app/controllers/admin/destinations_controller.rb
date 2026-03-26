@@ -1,7 +1,7 @@
 module Admin
   class DestinationsController < ApplicationController
     before_action :authenticate_user!
-    before_action :require_admin
+    # before_action :require_admin
     before_action :set_destination, only: [:show, :update, :destroy]
 
     def index
@@ -20,16 +20,38 @@ module Admin
       end
     end
 
-    def create
-      @destination = Destination.create!(destination_params)
+    # def create
+    #   byebug
+    #   @destination = Destination.new(destination_params)
+    #   authorize @destination
+    #   # @destination = Destination.create!(@destination)
+    #   return unless @destination.save?
+    #   respond_to do |format|
+    #     format.html { redirect_to admin_destinations_path, notice: "Destination created." }
+    #     format.json { render json: @destination, message: "Destination created." , status: :created }
+    #   end
+    # end
 
-      respond_to do |format|
-        format.html { redirect_to admin_destinations_path, notice: "Destination created." }
-        format.json { render json: @destination, message: "Destination created." , status: :created }
+    def create
+      byebug
+      @destination = Destination.new(destination_params.merge(user: current_user))
+      # @destination.user = current_user
+      authorize @destination
+      # authorize Destination, :create?
+      # @destination = Destination.create!(@destination)
+      
+      if @destination.save?
+        respond_to do |format|
+          format.html { redirect_to admin_destinations_path, notice: "Destination created." }
+          format.json { render json: @destination, message: "Destination created." , status: :created }
+        end
+      else
+        render json: {message: "Some error occurred.", status: :unprocessable_entity}
       end
     end
 
     def update
+      authorize @destination
       @destination.update!(destination_params)
 
       respond_to do |format|
@@ -39,6 +61,7 @@ module Admin
     end
 
     def destroy
+      authorize @destination
       @destination.destroy
 
       respond_to do |format|
