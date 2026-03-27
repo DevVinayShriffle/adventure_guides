@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :set_paper_trail_whodunnit
   protect_from_forgery with: :null_session, if: -> { request.format.json? }
 
   before_action :set_active_storage_current_host
