@@ -51,8 +51,11 @@
   <% end %>
 
   <div class="flex justify-between gap-5">
-    <%= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
-
+    <%#= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
+    <div class="actions">
+      <%= f.submit "Save Draft", class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800", name: "save_draft" %>
+      <%= f.submit "Publish", class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800", name: "publish" %>
+    </div>
     <%= link_to "Back",
     admin_destinations_path,
     data: { turbo_frame: "dashboard_content" },

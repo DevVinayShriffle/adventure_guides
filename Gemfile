@@ -26,6 +26,8 @@ gem 'active_model_serializers'
 gem 'sidekiq'
 gem "redis", ">= 4.0.1"
 gem 'whenever', require: false
+gem 'paper_trail', '~> 17.0', '>= 17.0.0'
+gem 'has_draft'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

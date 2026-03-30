@@ -5,6 +5,7 @@ module Admin
     before_action :set_destination, only: [:show, :update, :destroy, :edit]
 
     def index
+      # @destinations = Destination.order(created_at: :desc)
       @destinations = Destination.order(created_at: :desc)
       respond_to do |format|
         format.html
@@ -34,23 +35,55 @@ module Admin
     end
 
     def create
-      @destination = Destination.create!(destination_params)
+      # @destination = Destination.create!(destination_params)
+      byebug
+      @destination = Destination.new(destination_params)
 
-      respond_to do |format|
-        format.html { redirect_to admin_destinations_path, notice: "Destination created." }
-        format.json { render json: @destination, message: "Destination created." , status: :created }
+      if(params[:publish])
+        if @destination.save
+          respond_to do |format|
+            format.html { redirect_to admin_destinations_path, notice: "Destination published." }
+            format.json { render json: @destination, message: "Destination published." , status: :created }
+          end
+        end
+      else
+        @destination.save_draft(current_user)
+        respond_to do |format|
+          format.html { redirect_to admin_destinations_path, notice: "Destination Drafted." }
+          format.json { render json: @destination, message: "Destination Drafted." , status: :created }
+        end
       end
+
+      # respond_to do |format|
+      #   format.html { redirect_to admin_destinations_path, notice: "Destination created." }
+      #   format.json { render json: @destination, message: "Destination created." , status: :created }
+      # end
     end
 
     def update
       params[:destination].delete("images") if params[:destination][:images]==[""]
       
-      @destination.update!(destination_params)
-
-      respond_to do |format|
-        format.html { redirect_to admin_destinations_path, notice: "Destination updated." }
-        format.json { render json: @destination, message: "Destination updated.", status: :ok }
+      if(!params[:publish])
+        if @destination.update!(destination_params)
+          respond_to do |format|
+            format.html { redirect_to admin_destinations_path, notice: "Destination published." }
+            format.json { render json: @destination, message: "Destination published." , status: :created }
+          end
+        end
+      else
+        @destination.save_draft(current_user, destination_params)
+        respond_to do |format|
+          format.html { redirect_to admin_destinations_path, notice: "Destination Draft updated." }
+          format.json { render json: @destination, message: "Destination Draft updated." , status: :created }
+        end
       end
+
+      # @destination.update!(destination_params)
+
+      # respond_to do |format|
+      #   format.html { redirect_to admin_destinations_path, notice: "Destination updated." }
+      #   format.json { render json: @destination, message: "Destination updated.", status: :ok }
+      # end
     end
 
     def destroy

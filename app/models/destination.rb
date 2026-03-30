@@ -1,4 +1,6 @@
 class Destination < ApplicationRecord
+  has_draft
+
   has_many_attached :images
 
   validates :name, presence: true
@@ -9,6 +11,9 @@ class Destination < ApplicationRecord
   before_validation :normalize_name, :normalize_description, :normalize_location
 
   broadcasts_to ->(destination) { "destinations" }
+
+  # Optional: Define scope for published records
+  scope :published, -> { where(draft: false) } 
 
   private
   def normalize_name
