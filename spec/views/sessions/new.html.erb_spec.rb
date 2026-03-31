@@ -1,31 +1,44 @@
 require 'rails_helper'
 
 RSpec.describe "users/sessions/new.html.erb", type: :view do
-  # before(:each) do
-  #   @user = User.new
-  #   view.controller.class.helper :all
+  before do
+    @user = User.new
+    
+    # Define the Devise methods directly on the view object
+    view.extend(Module.new do
+      def resource
+        @user
+      end
 
-  #   # Assign the required Devise instance variables directly
-  #   assign(:resource, @user)
-  #   assign(:resource_name, :user)
-  #   assign(:devise_mapping, Devise.mappings[:user])
+      def resource_name
+        :user
+      end
 
-  #   allow(view).to receive(:new_user_session_path).and_return('/users/sign_in')
-  # end
+      def devise_mapping
+        Devise.mappings[:user]
+      end
+
+      def resource_class
+        User
+      end
+    end)
+
+    # Explicitly stub the path helper used in the form
+    allow(view).to receive(:user_session_path).and_return('/users/sign_in')
+    # Stub this too, as it is used for the "Forgot password" link in your HTML
+    allow(view).to receive(:new_user_password_path).and_return('/users/password/new')
+  end
 
   it 'renders login form' do
-    # assign(:user, User.new)
-    # allow(view).to receive(:resource).and_return(User.new)
-    # allow(view).to receive(:resource_name).and_return(:user)
-    # allow(view).to receive(:devise_mapping).and_return(Devise.mappings[:user])
-
     render
 
     expect(rendered).to include("Login")
-    # expect(rendered).to have_selector("form#login-form")
-    expect(rendered).to have_selector("form[action='#{user_session_path}']")
-    expect(rendered).to have_selector("input#email")
-    expect(rendered).to have_selector("input#password")
-    expect(rendered).to have_selector("button", text: "Login")
+    expect(rendered).to have_selector("form[action='/users/sign_in']")
+    expect(rendered).to have_field("user[email]")
+    expect(rendered).to have_field("user[password]")
+    
+    # Ensure this matches the button text in your .erb (case-sensitive)
+    expect(rendered).to have_button("Login")
+    
   end
 end
