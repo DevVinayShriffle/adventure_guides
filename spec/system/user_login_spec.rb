@@ -27,4 +27,38 @@ RSpec.describe "User Login", type: :view do
     expect(page).to have_content("Invalid email or password")
     expect(page).to have_current_path('/login')
   end
+
+  it "shows error on empty field", js: true do
+    visit '/login'
+
+    fill_in 'Email', with: ""
+    fill_in 'Password', with: ""
+    click_button 'Login'
+
+    expect(page).to have_content("email can't be blank")
+    expect(page).to have_content("password can't be blank")
+    expect(page).to have_current_path('/login')
+  end
+
+  it "shows error on empty email field", js: true do
+    visit '/login'
+
+    fill_in 'Email', with: ""
+    fill_in 'Password', with: user.password
+    click_button 'Login'
+
+    expect(page).to have_content("email can't be blank")
+    expect(page).to have_current_path('/login')
+  end
+
+  it "shows error on empty password field", js: true do
+    visit '/login'
+
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: ""
+    click_button 'Login'
+
+    expect(page).to have_content("password can't be blank")
+    expect(page).to have_current_path('/login')
+  end
 end
