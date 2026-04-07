@@ -5,16 +5,16 @@ class BookingsController < ApplicationController
   def index
     @bookings = current_user.bookings.includes(schedule: [:bus, :destination]).order(created_at: :desc)
 
-    respond_to do |format|
-      format.html
-      format.json do
-        if @bookings.present?
-          render json: { bookings: @bookings.map { |booking| BookingSerializer.new(booking) }}, status: :ok
-        else
-          render json: { message: "No bookings found." }, status: :ok
-        end
-      end
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.json do
+    #     if @bookings.present?
+    #       render json: { bookings: @bookings.map { |booking| BookingSerializer.new(booking) }}, status: :ok
+    #     else
+    #       render json: { message: "No bookings found." }, status: :ok
+    #     end
+    #   end
+    # end
   end
 
   def new
@@ -28,16 +28,16 @@ class BookingsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.json do
-        if @booking.present?
-          render json: @booking, status: :ok
-        else
-          render json: { message: "Booking not found." }, status: :not_found
-        end
-      end
-    end
+    # respond_to do |format|
+    #   format.html
+    #   format.json do
+    #     if @booking.present?
+    #       render json: @booking, status: :ok
+    #     else
+    #       render json: { message: "Booking not found." }, status: :not_found
+    #     end
+    #   end
+    # end
   end
 
   def create
