@@ -10,25 +10,25 @@ class BusPolicy < ApplicationPolicy
     def resolve
       scope.all
     end
+  end
 
-    def index?
-      true
-    end
+  def index?
+    true
+  end
 
-    def show?
-      true
-    end
+  def show?
+    true
+  end
 
-    def create?
-      user.guide?
-    end
+  def create?
+    user.guide?
+  end
 
-    def update?
-      user.guide?
-    end
+  def update?
+    user.guide?
+  end
 
-    def destroy?
-      user.guide?
-    end
+  def destroy?
+    user.guide?
   end
 end
