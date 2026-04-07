@@ -20,33 +20,17 @@ module Admin
       end
     end
 
-    # def create
-    #   byebug
-    #   @destination = Destination.new(destination_params)
-    #   authorize @destination
-    #   # @destination = Destination.create!(@destination)
-    #   return unless @destination.save?
-    #   respond_to do |format|
-    #     format.html { redirect_to admin_destinations_path, notice: "Destination created." }
-    #     format.json { render json: @destination, message: "Destination created." , status: :created }
-    #   end
-    # end
-
     def create
-      byebug
-      @destination = Destination.new(destination_params.merge(user: current_user))
-      # @destination.user = current_user
+      @destination = Destination.new(destination_params)
       authorize @destination
-      # authorize Destination, :create?
       # @destination = Destination.create!(@destination)
-      
-      if @destination.save?
+      if @destination.save
         respond_to do |format|
           format.html { redirect_to admin_destinations_path, notice: "Destination created." }
           format.json { render json: @destination, message: "Destination created." , status: :created }
         end
       else
-        render json: {message: "Some error occurred.", status: :unprocessable_entity}
+        render json: {message: "Something wrong, error come."}, status: :unprocessable_entity
       end
     end
 
