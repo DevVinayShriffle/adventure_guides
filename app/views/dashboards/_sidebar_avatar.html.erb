@@ -1,0 +1,8 @@
+<turbo-frame id="sidebar_avatar">
+  <div class="mb-4 ml-[10%]">
+    <% if user.avatar.attached? %>
+      <%= image_tag user.avatar,
+      class: "w-24 h-24 rounded-full object-cover mb-2" %>
+    <% end %>
+  </div>
+</turbo-frame>

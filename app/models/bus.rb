@@ -4,14 +4,15 @@ class Bus < ApplicationRecord
   enum :bus_type, {sitter: 0, sleeper: 1, ac: 2}
 
   validates :name, presence: true
-  validates :bus_type, presence: true #inclusion: {in: bus_types.keys, message: "is not a valid bus type."}
   validates :capacity, numericality:{ greater_than: 0 }, presence: true
   validates :price, numericality:{ greater_than_or_equal_to: 0 }, presence: true
 
+  belongs_to :user  #here user is guide role
   has_many :schedules, dependent: :destroy
   has_many :bus_stops, dependent: :destroy
 
   before_validation :normalize_name
+  broadcasts_to ->(bus) { "buses" }
 
   private
 

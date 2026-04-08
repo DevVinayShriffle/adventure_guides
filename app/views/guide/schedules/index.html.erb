@@ -1,0 +1,54 @@
+<turbo-frame id="dashboard_content">
+  <!-- Flash container -->
+  <div class="fixed left-0 top-5 w-full flex justify-center items-center">
+    <div id="dashboard_flash" class="bg-green-100 text-green-800 border-green-400 rounded-full">
+      <%= render "shared/flash_messages" %>
+    </div>
+  </div>
+  
+  <div class=" bg-white shadow-lg rounded-2xl p-8">
+
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-semibold">Schedules</h3>
+
+      <%= link_to "Create Schedule",
+      new_guide_schedule_path(@bus),
+      data: { turbo_frame: "dashboard_content" },
+      class: "px-5 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition" %>
+    </div>
+
+    <% if @schedules.present? %>
+    <div class="grid grid-cols-2 gap-6">
+      <% @schedules.each do |schedule| %>
+      <div class="border rounded-xl p-6 hover:shadow-md transition">
+
+        <p class="font-semibold text-lg mb-2">
+          <%= schedule.destination.name %>
+        </p>
+
+        <div class="text-gray-600 space-y-1 text-sm">
+          <p>Departure: <%= schedule.departure.strftime('%Y-%m-%d %H:%M:%S') %></p>
+          <p>Arrival: <%= schedule.arrival.strftime('%Y-%m-%d %H:%M:%S') %></p>
+          <p>Available Seats: <%= schedule.available_seats %></p>
+        </div>
+
+        <div class="mt-4 flex gap-4">
+          <%= link_to "Edit",
+          edit_guide_schedule_path(schedule),
+          data: { turbo_frame: "dashboard_content" },
+          class: "px-3 py-1.5 rounded-md bg-amber-50 text-amber-700 hover:bg-amber-100 text-sm" %>
+
+          <%= link_to "Delete",
+          guide_schedule_path(schedule),
+          data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+          class: "px-3 py-1.5 rounded-md bg-rose-50 text-rose-700 hover:bg-rose-100 text-sm" %>
+        </div>
+
+      </div>
+      <% end %>
+    </div>
+    <% else %>
+    <p class="text-gray-500">No schedules available.</p>
+    <% end %>
+  </div>
+</turbo-frame>

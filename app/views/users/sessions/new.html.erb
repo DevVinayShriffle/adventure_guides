@@ -1,0 +1,47 @@
+<div class="flex justify-center items-center h-[80vh]">
+  <div class="w-96 border p-6 rounded shadow">
+
+    <h2 class="text-xl font-semibold mb-4">Login</h2>
+
+    <%= form_for(resource, as: resource_name, 
+      url: user_session_path,
+      html: { data: { controller: "form-validation", action: "submit->form-validation#validate" } }) do |f| %>
+
+      <div class="required-field mb-4">
+        <%= f.label :email %>
+        <%= f.email_field :email,
+        class: "w-full border p-2 rounded",
+          data: { form_validation_target: "input", field: "email" }, autofocus: true %>
+          <p class="text-red-500 text-sm mt-1"
+          data-form-validation-target="error"
+          data-field="email"></p>
+      </div>
+
+      <div class="required-field" data-controller="password-visibility">
+        <%= f.label :password %>
+        <div class="relative">
+          <%= f.password_field :password,
+          class: "w-full p-2 pr-9 border rounded",
+            data: { form_validation_target: "input", field: "password", "password-visibility-target": "passwordInput" } %>
+
+            <i class="ri-eye-line absolute right-3 top-2" data-action="click->password-visibility#toggle"
+              data-password-visibility-target="toggleIcon"></i>
+        </div>
+        <p class="text-red-500 text-sm mt-1"
+        data-form-validation-target="error"
+        data-field="password"></p>
+
+        <%= link_to "Forgot your password?", new_user_password_path, class: "text-xs hover:text-blue-900" %>
+      </div>
+
+      <% if resource.errors.any? %>
+        <div class="text-red-500 text-sm">
+          <%= resource.errors.full_messages.first %>
+        </div>
+      <% end %>
+
+      <%= f.submit "Login",
+      class: "w-full mt-4 bg-black text-white py-2 rounded" %>
+    <% end %>
+  </div>
+</div>

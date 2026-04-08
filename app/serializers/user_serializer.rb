@@ -6,7 +6,7 @@ class UserSerializer < ActiveModel::Serializer
   def avatar_url
     # return unless object.avatar.attached?
     if object.avatar.attached?
-      rails_blob_url(object.avatar, host: Rails.application.routes.default_url_options[:host])
+      rails_blob_url(object.avatar)
     else
       "http://localhost:3000/default_avatar.png"
     end

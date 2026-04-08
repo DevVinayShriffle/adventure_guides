@@ -1,0 +1,69 @@
+<%= form_with(model: [:guide, @bus],
+  data: {
+    controller: "bus-validation",
+    action: "submit->bus-validation#validate",
+    turbo_frame: "dashboard_content"
+  },
+  class: "space-y-4") do |f| %>
+
+  <div class="required-field">
+    <%= f.label :name, class: "block font-medium" %>
+    <%= f.text_field :name,
+          class: "w-full border p-2 rounded",
+          data: { bus_validation_target: "input", field: "name" }, 
+          autofocus: true %>
+    <p class="error-message"
+      data-bus-validation-target="error"
+      data-field="name"></p>
+  </div>
+
+  <div class="required-field">
+    <%= f.label :bus_type, class: "block font-medium" %>
+    <%= f.select :bus_type,
+          options_for_select(['sitter', 'sleeper', 'ac'], f.object.bus_type),
+          { include_blank: "Select Bus Type" },
+          class: "w-full border p-2 rounded",
+          data: { bus_validation_target: "input", field: "bus_type" } %>
+    <p class="error-message"
+      data-bus-validation-target="error"
+      data-field="bus_type"></p>
+  </div>
+
+
+  <div class="required-field">
+    <%= f.label :capacity, class: "block font-medium" %>
+    <%= f.number_field :capacity,
+          class: "w-full border p-2 rounded",
+          step: 1,
+          data: { bus_validation_target: "input", field: "capacity" } %>
+    <p class="error-message"
+      data-bus-validation-target="error"
+      data-field="capacity"></p>
+  </div>
+
+  <div class="required-field">
+    <%= f.label :price, class: "block font-medium" %>
+    <%= f.number_field :price,
+          class: "w-full border p-2 rounded",
+          step: 1,
+          data: { bus_validation_target: "input", field: "price" } %>
+    <p class="error-message"
+      data-bus-validation-target="error"
+      data-field="price"></p>
+  </div>
+
+  <div>
+    <%= f.label :images, class: "block font-medium" %>
+    <%= f.file_field :images, multiple: true, class: "w-full border p-2 rounded" %>
+  </div>
+
+  <div class="flex gap-5">
+    <%= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
+
+    <%= link_to "Back",
+    guide_buses_path,
+    data: { turbo_frame: "dashboard_content" },
+    class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
+    
+  </div>
+<% end %>

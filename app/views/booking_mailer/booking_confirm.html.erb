@@ -1,0 +1,13 @@
+<h1>Booking Confirmed</h>
+ <p>
+   Hi, user: <%= @user.name %> <br>
+   Your Booking has been confirmed. <br>
+   Booking Details <br>
+   Seats: <%= @booking.seats %> <br>
+   Total Price: <%= @booking.total_price %> <br>
+   Pickup: <%= @booking.pickup %> <br>
+   Drop: <%= @booking.drop %> <br>
+   Departure: <%= @booking.schedule.departure %> <br>
+   <b>Remember: Please, come to the pickup destination before 15 minutes.</b> <br>
+ </p>
+ <p>Thanks for joining and have a great day!</p>

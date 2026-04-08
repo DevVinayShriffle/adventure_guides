@@ -1,0 +1,13 @@
+<turbo-frame id="dashboard_content">
+  <h1 class="text-2xl font-bold mb-4">All Users : <%= @users.count %></h1>
+
+  <% @users.each do |users| %>
+  <div class="p-4 border rounded mb-3">
+    <p><strong>User id:</strong> <%= users.id %></p>
+    <p><strong>Name:</strong> <%= users.name %></p>
+    <p><strong>Phone:</strong> <%= users.phone %></p>
+    <p><strong>Role:</strong> <%= users.role %></p>
+    <p><strong>Email:</strong> <%= users.email %></p>
+  </div>
+  <% end %>
+</turbo-frame>

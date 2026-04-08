@@ -1,0 +1,24 @@
+<div class="border p-5 rounded-lg shadow-sm flex flex-col gap-3 cursor-pointer"
+data-controller="redirect" 
+data-action="click->redirect#redirectToUrl" 
+data-redirect-url-value="<%= bus_path(bus) %>">
+
+  <% if bus.images.attached? %>
+  <%= image_tag bus.images.first, class: "w-full h-40 object-cover rounded" %>
+  <% else %>
+  <div class="w-full h-40 bg-gray-200 flex items-center justify-center">
+    No Image
+  </div>
+  <% end %>
+
+  <p class="text-lg font-semibold"><%= bus.name %></p>
+
+  <p>Type: <%= bus.bus_type %></p>
+  <p>Capacity: <%= bus.capacity %></p>
+  <p class="font-medium text-green-600">₹ <%= bus.price %></p>
+
+  <%= link_to "See Details",
+  bus_path(bus),
+  class: "mt-3 bg-black text-white text-center py-2 rounded" %>
+
+</div>

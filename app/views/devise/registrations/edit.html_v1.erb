@@ -1,0 +1,78 @@
+<turbo-frame id="dashboard_content">
+  <div class="bg-white p-8 rounded-xl m-auto shadow-xl/30 w-1/2">
+
+    <h2 class="text-2xl font-semibold mb-6">My Profile</h2>
+    
+    <%= form_for(resource,
+      as: resource_name,
+      url: registration_path(resource_name),
+      html: { method: :put, multipart: true }) do |f| %>
+
+      <!-- Avatar -->
+      <div class="mb-4">
+        <%= f.label :avatar, class: "block font-medium mb-2" %>
+
+        <% if current_user.avatar.attached? %>
+        <%= image_tag current_user.avatar,
+        class: "w-24 h-24 m-auto rounded-full object-cover mb-2" %>
+        <% end %>
+
+        <%= f.file_field :avatar,
+        class: "w-full border p-2 rounded" %>
+      </div>
+
+      <!-- Name -->
+      <div class="mb-4">
+        <%= f.label :name, class: "block font-medium mb-2" %>
+        <%= f.text_field :name,
+        class: "w-full border p-2 rounded" %>
+      </div>
+
+      <!-- Phone -->
+      <div class="mb-4">
+        <%= f.label :phone, class: "block font-medium mb-2" %>
+        <%= f.text_field :phone,
+        class: "w-full border p-2 rounded" %>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <%= f.label :email, class: "block font-medium mb-2" %>
+        <%= f.email_field :email,
+        class: "w-full border p-2 rounded", disabled: true %>
+      </div>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <div class="field">
+        <p><%= f.label :current_password, class: "block font-medium" %><i class="text-xs">(we need your current password to confirm your changes)</i></p>
+        <p><%= f.password_field :current_password, autocomplete: "current-password", class: "w-full border p-2 rounded" %></p>
+      </div>
+
+      <div class="field">
+        <p><%= f.label :password, class: "block font-medium mt-2" %> <i class="block font-medium text-xs">(leave blank if you don't want to change it)</i></p>
+        <p><%= f.password_field :password, autocomplete: "new-password", class: "w-full border p-2 rounded" %></p>
+        <% if @minimum_password_length %>
+        <p class="text-xs"><em><%= @minimum_password_length %> characters minimum</em></p>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <p><%= f.label :password_confirmation, class: "block font-medium mb-2" %></p>
+        <p><%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full border p-2 rounded" %></p>
+      </div>
+
+      
+
+      <!-- Submit -->
+      <div class="mt-6 flex justify-between">
+        <%= f.submit "Update Profile",
+        class: "px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700" %>
+        <%= link_to "Back", :back, class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
+      </div>
+
+    <% end %>
+  </div>
+</turbo-frame>

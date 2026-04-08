@@ -1,0 +1,2 @@
+module Guide::SchedulesHelper
+end

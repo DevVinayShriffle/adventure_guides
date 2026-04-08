@@ -1,0 +1,64 @@
+<div class="m-auto w-80">
+<%= form_with(model: [:admin, @destination],
+  data: { 
+    controller: "destination-validation",
+    action: "submit->destination-validation#validate",
+    turbo_frame: "dashboard_content"
+  },
+  class: "space-y-4") do |f| %>
+
+  <div class="required-field">
+    <%= f.label :name, class: "block font-medium" %>
+    <%= f.text_field :name,
+          class: "w-full border p-2 rounded",
+          data: { destination_validation_target: "input", field: "name" }, autofocus: true %>
+    <p class="error-message"
+      data-destination-validation-target="error"
+      data-field="name"></p>
+  </div>
+
+  <div class="required-field">
+    <%= f.label :location, class: "block font-medium" %>
+    <%= f.text_field :location,
+          class: "w-full border p-2 rounded",
+          data: { destination_validation_target: "input", field: "location" } %>
+    <p class="error-message"
+      data-destination-validation-target="error"
+      data-field="location"></p>
+  </div>
+
+  <div>
+    <%= f.label :description, class: "block font-medium" %>
+    <%= f.text_area :description, class: "w-full border p-2 rounded h-18 resize-none" %>
+  </div>
+
+  <div>
+    <%= f.label :images, class: "block font-medium" %>
+    <%= f.file_field :images, multiple: true, class: "w-full border p-2 rounded" %>
+  </div>
+
+  <% if false %>
+  <div>
+    <%= f.label :images, class: "block font-medium" %>
+    <%= f.file_field :images,
+          multiple: true,
+          class: "w-full border p-2 rounded",
+          data: { destination_validation_target: "input", field: "images" } %>
+    <p class="error-message"
+      data-destination-validation-target="error"
+      data-field="images"></p>
+  </div>
+  <% end %>
+
+  <div class="flex justify-between gap-5">
+    <%= f.submit class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
+
+    <%= link_to "Back",
+    admin_destinations_path,
+    data: { turbo_frame: "dashboard_content" },
+    class: "bg-black text-white px-4 py-2 rounded hover:bg-gray-800" %>
+    
+  </div>
+
+<% end %>
+</div>

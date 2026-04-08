@@ -8,7 +8,7 @@ class SchedulesController < ApplicationController
       format.html
       format.json do
         if @schedules.present?
-          render json: { schedules: @schedules }, status: :ok
+          render json: @schedules, status: :ok
         else
           render json: { message: "No schedules found." }, status: :ok
         end
@@ -19,13 +19,20 @@ class SchedulesController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json { render json: { schedule: @schedule }, status: :ok }
+      
+      format.json do
+        if @schedule.present?
+          render json: @schedule, status: :ok
+        else
+          render json: { message: "No schedules found." }, status: :ok
+        end
+      end
     end
   end
 
   private
 
   def set_schedule
-    @schedule = Schedule.find(params[:id])
+    @schedule = Schedule.find_by(id: params[:id])
   end
 end

@@ -2,15 +2,28 @@ module Admin
   class DestinationsController < ApplicationController
     before_action :authenticate_user!
     before_action :require_admin
-    before_action :set_destination, only: [:show, :update, :destroy]
+    before_action :set_destination, only: [:show, :update, :destroy, :edit]
 
     def index
-      destinations = Destination.all.with_attached_images.order(created_at: :desc)
-
+      @destinations = Destination.order(created_at: :desc)
       respond_to do |format|
         format.html
-        format.json { render json: destinations, status: :ok }
+        format.json do
+          if @destinations.present?
+            render json: @destinations, status: :ok
+          else
+            render json: { message: "No destinations found." }, status: :ok
+          end
+        end
       end
+    end
+
+    def new
+      @destination = Destination.new
+    end
+
+    def edit
+      @destination
     end
 
     def show
@@ -30,6 +43,8 @@ module Admin
     end
 
     def update
+      params[:destination].delete("images") if params[:destination][:images]==[""]
+      
       @destination.update!(destination_params)
 
       respond_to do |format|
@@ -47,6 +62,16 @@ module Admin
       end
     end
 
+    def all_users
+      return if request.get?
+      @users = User.order(created_at: :desc)
+
+      respond_to do |format|
+        format.html
+        format.json { render json: { users: @users }, status: :ok }
+      end
+    end
+
     private
 
     def set_destination
@@ -59,7 +84,6 @@ module Admin
     end
 
     def require_admin
-      # byebug
       render json: { message: "Access denied." }, status: :forbidden unless current_user&.admin?
     end
   end

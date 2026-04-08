@@ -8,3 +8,26 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+* {
+  /*margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  /*overflow-y: auto;*/
+  scrollbar-width: none;
+}
+
+.border-red {
+  border: 2px solid red !important;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.required-field label:after {
+  content: " *";
+  color: red;
+}
+

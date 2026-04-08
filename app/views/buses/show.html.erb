@@ -1,0 +1,107 @@
+<div class="px-20 py-10">
+
+  <!-- Modern Back Button
+    <div class="fixed top-25 right-[5%]">
+      <%= link_to :back,
+      class: "flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-full shadow-sm transition z-10" do %>
+      ← Back
+      <% end %>
+    </div>
+     -->
+
+  <div class="grid grid-cols-2 gap-10">
+
+    <div>
+      <% if @bus.images.attached? %>
+      <%= image_tag @bus.images.first, class: "w-full rounded" %>
+      <% else %>
+      <div class="w-full h-64 bg-gray-200 flex items-center justify-center">
+        No Image
+      </div>
+      <% end %>
+    </div>
+
+    <div class="flex flex-col gap-4">
+
+      <h2 class="text-2xl font-semibold"><%= @bus.name %></h2>
+
+      <p>Type: <%= @bus.bus_type %></p>
+      <p>Capacity: <%= @bus.capacity %></p>
+      <p class="text-green-600 font-medium">₹ <%= @bus.price %></p>
+
+      <div class="mt-6">
+        <h3 class="font-semibold">Pickup Points</h3>
+        <% @bus.bus_stops.where(stop_type: "pickup").each do |stop| %>
+        <p class="text-gray-600">• <%= stop.name %></p>
+        <% end %>
+      </div>
+
+      <div class="mt-4">
+        <h3 class="font-semibold">Drop Points</h3>
+        <% @bus.bus_stops.where(stop_type: "drop").each do |stop| %>
+        <p class="text-gray-600">• <%= stop.name %></p>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mt-16">
+    <h2 class="text-xl font-semibold mb-6">Available Schedules</h2>
+
+    <% if @bus.schedules.present? %>
+    <% @bus.schedules.each do |schedule| %>
+
+    <!--
+    <div class="border p-5 rounded mb-6">
+
+      <p>Destination: <%= schedule.destination.name %></p>
+      <p>Departure: <%= schedule.departure %></p>
+      <p>Arrival: <%= schedule.arrival %></p>
+      <p>Available Seats: <%= schedule.available_seats %></p>
+
+      <%= link_to "Book This Schedule",
+      new_booking_path(schedule_id: schedule.id),
+      class: "inline-block mt-3 bg-black text-white px-4 py-2 rounded" %>
+
+    </div>
+    -->
+
+    <div class="border p-5 rounded mb-6 relative z-10 cursor-pointer"
+    <% if schedule.available_seats != 0 %>
+    data-controller="redirect" 
+    data-action="dblclick->redirect#redirectToUrl" 
+    data-redirect-url-value="<%= new_booking_path(schedule_id: schedule.id) %>"
+    <% end %>>
+
+      <% if schedule.available_seats == 0 %>
+        <span class="absolute top-0 left-0 bg-red-600 text-white text-xs px-2 py-1 rounded">
+          Sold Out
+        </span>
+      <% end %>
+
+      <p>Destination: <%= schedule.destination.name %></p>
+      <p>Departure: <%= schedule.departure %></p>
+      <p>Arrival: <%= schedule.arrival %></p>
+      <p>Available Seats: <%= schedule.available_seats %></p>
+
+      <% if schedule.available_seats == 0 %>
+        <button class="inline-block mt-3 bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed" disabled>
+          Book This Schedule
+        </button>
+      <% else %>
+        <%= link_to "Book This Schedule",
+          new_booking_path(schedule_id: schedule.id),
+          class: "inline-block mt-3 bg-black text-white px-4 py-2 rounded" %>
+      <% end %>
+
+    </div>
+
+    <% end %>
+    <% else %>
+    <p>No schedules available.</p>
+    <% end %>
+
+  </div>
+
+</div>
