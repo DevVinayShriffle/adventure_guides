@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :destinations
     get :users
+    post :clone_destination
   end
 
   namespace :guide do

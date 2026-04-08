@@ -5,6 +5,20 @@ class Destination < ApplicationRecord
   validates :location, presence: true
 
   has_many :schedules, dependent: :destroy
+
+  amoeba do
+    enable
+    include_association :schedules
+
+    customize(lambda { |original_destination, new_destination|
+      original_destination.images.each do |image|
+        new_destination.images.attach(image.blob)
+      end
+    })
+
+    # Optional: Prepend text to a field in the copy
+    # prepend :title => "Copy of "
+  end
   
   before_validation :normalize_name, :normalize_description, :normalize_location
 
