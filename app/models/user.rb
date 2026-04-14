@@ -29,6 +29,11 @@ class User < ApplicationRecord
     with: URI::MailTo::EMAIL_REGEXP,
     message: "must be a valid email address"
   }
+
+  # validates :phone, phone: { countries: [:in] }, allow_blank: true
+
+  validate :validate_indian_phone
+
   has_many :buses
   has_many :bookings, dependent: :destroy
 
@@ -49,5 +54,17 @@ class User < ApplicationRecord
   def send_welcome_email
     SendEmailsJob.set(wait: 2.minute).perform_later(self)
     # SendEmailsJob.perform_now(self)
+  end
+
+  def validate_indian_phone
+    # byebug
+    return if phone.blank?
+
+    parsed = Phonelib.parse(phone)
+    indian_mobile_regex = /\A(\+91[\-\s]?)?[6-9]\d{9}\z/
+
+    unless parsed.valid? && parsed.country == 'IN' && phone.match?(indian_mobile_regex) #&& parsed.type == 'mobile'
+      errors.add(:phone, "must be a valid phone no.")
+    end
   end
 end

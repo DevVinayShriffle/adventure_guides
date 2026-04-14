@@ -240,6 +240,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.6.3-x86_64-linux)
+    phonelib (0.10.18)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -457,6 +458,7 @@ DEPENDENCIES
   kamal
   nokogiri
   pg
+  phonelib
   propshaft
   pry
   pry-byebug

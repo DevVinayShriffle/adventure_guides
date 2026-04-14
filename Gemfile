@@ -30,6 +30,7 @@ gem 'amoeba', '3.2.0'
 gem 'nokogiri'
 gem 'pry'
 gem 'pry-byebug'
+gem 'phonelib'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
