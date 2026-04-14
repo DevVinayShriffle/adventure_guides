@@ -233,6 +233,9 @@ GEM
     net-ssh (7.3.0)
     newrelic_rpm (10.3.0)
       logger
+    nilify_blanks (1.4.0)
+      activerecord (>= 4.0.0)
+      activesupport (>= 4.0.0)
     nio4r (2.7.5)
     nokogiri (1.19.1-x86_64-linux-gnu)
       racc (~> 1.4)
@@ -464,6 +467,7 @@ DEPENDENCIES
   jbuilder
   kamal
   newrelic_rpm
+  nilify_blanks
   nokogiri
   pg
   phonelib

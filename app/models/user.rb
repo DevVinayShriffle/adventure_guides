@@ -41,6 +41,8 @@ class User < ApplicationRecord
 
   after_create :send_welcome_email
 
+  nilify_blanks only: [:phone]
+
   private
 
   def normalize_name
