@@ -1,0 +1,12 @@
+<h2>Booking Details</h2>
+
+<p><strong>Destination:</strong> <%= @booking.schedule.destination.name %></p>
+<p><strong>Bus:</strong> <%= @booking.schedule.bus.name %></p>
+<p><strong>Seats:</strong> <%= @booking.seats %></p>
+<p><strong>Total:</strong> ₹<%= @booking.total_price %></p>
+<p><strong>Pickup:</strong> <%= @booking.pickup %></p>
+<p><strong>Departure:</strong> <%= @booking.schedule.departure %></p>
+<p><strong>Drop:</strong> <%= @booking.drop %></p>
+<p><strong>Arrival:</strong> <%= @booking.schedule.arrival %></p>
+
+<p class="text-red-600 font-semibold">Cancelled</p>
