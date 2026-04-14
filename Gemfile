@@ -32,6 +32,7 @@ gem 'pry'
 gem 'pry-byebug'
 gem 'phonelib'
 gem 'rqrcode'
+gem 'newrelic_rpm'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
