@@ -27,6 +27,9 @@ gem 'sidekiq'
 gem "redis", ">= 4.0.1"
 gem 'whenever', require: false
 gem 'amoeba', '3.2.0'
+gem 'nokogiri'
+gem 'pry'
+gem 'pry-byebug'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
