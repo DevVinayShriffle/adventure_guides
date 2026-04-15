@@ -62,6 +62,16 @@ class BookingsController < ApplicationController
     ActiveRecord::Base.transaction do
       schedule.update!(available_seats: schedule.available_seats - booking.seats)
       booking.save!
+
+      Rails.configuration.event_store.publish(
+        BookingCreated.new(
+          data: {
+            booking_id: booking.id,
+            user_id: current_user.id,
+            seats: booking.seats
+          }
+        )
+      )
     end
 
     respond_to do |format|

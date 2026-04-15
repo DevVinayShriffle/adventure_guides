@@ -26,6 +26,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
         # SIGNUP → REDIRECT
         if action_name == "create"
+          event = UserRegistered.new(
+            data: {
+              user_id: resource.id,
+              email: resource.email,
+              name: resource.name
+            }
+          )
+
+          Rails.configuration.event_store.publish(event, stream_name: "user-#{resource.id}")
+
+
           flash[:notice] = "User Registered successfully."
           format.html { redirect_to dashboard_path }
           format.turbo_stream { redirect_to dashboard_path }

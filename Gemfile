@@ -26,6 +26,7 @@ gem 'active_model_serializers'
 gem 'sidekiq'
 gem "redis", ">= 4.0.1"
 gem 'whenever', require: false
+gem "rails_event_store"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
