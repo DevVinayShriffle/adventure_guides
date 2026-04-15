@@ -15,7 +15,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def respond_with(resource, _opts = {})
     return if request.get?
-    # byebug
     return if (resource.errors.any? && action_name == "update")
     if resource.persisted?
       @token = request.env['warden-jwt_auth.token']

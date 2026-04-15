@@ -34,6 +34,8 @@ gem 'phonelib'
 gem 'rqrcode'
 gem 'newrelic_rpm'
 gem "nilify_blanks"
+gem 'cloudinary'
+gem 'activestorage-cloudinary-service'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

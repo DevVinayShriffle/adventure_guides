@@ -4,11 +4,8 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id, :name, :phone, :role, :email, :jti, :avatar_url
 
   def avatar_url
-    # return unless object.avatar.attached?
-    if object.avatar.attached?
-      rails_blob_url(object.avatar)
-    else
-      "http://localhost:3000/default_avatar.png"
-    end
+    return unless object.avatar.attached?
+
+    Cloudinary::Utils.cloudinary_url(object.avatar.key)
   end
 end
