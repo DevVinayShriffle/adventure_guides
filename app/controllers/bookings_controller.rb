@@ -41,21 +41,37 @@ class BookingsController < ApplicationController
   end
 
   def create
-    schedule = Schedule.find_by(id: booking_params[:schedule_id])
+    byebug
+    schema_result = BookingSchema.call(booking_params.to_h)
+
+    unless schema_result.success?
+      return render json: { errors: schema_result.errors.to_h }, status: :unprocessable_entity
+    end
+
+    contract = BookingContract.new
+    result = contract.call(schema_result.to_h)
+
+    unless result.success?
+      return render json: { errors: result.errors.to_h }, status: :unprocessable_entity
+    end
+
+    data = BookingStruct.new(result.to_h)
+
+    schedule = Schedule.find_by(id: data.schedule_id)
 
     unless schedule.present?
       return render json: { message: "Schedule not found." }, status: :not_found
     end
 
-    if schedule.available_seats < booking_params[:seats].to_i
+    if schedule.available_seats < data[:seats]
       return render json: { message: "Not enough seats available." }, status: :unprocessable_entity
     end
 
     # raise CustomError.new("Not enough seats available.", :unprocessable_entity) if schedule.available_seats < booking_params[:seats].to_i
 
-    total_price = schedule.bus.price * booking_params[:seats].to_i
+    total_price = schedule.bus.price * data[:seats]
 
-    booking = current_user.bookings.new(booking_params)
+    booking = current_user.bookings.new(data)
     booking.total_price = total_price
     booking.status = :confirmed
 
