@@ -41,6 +41,7 @@ class BookingsController < ApplicationController
   end
 
   def create
+    binding.pry
     schedule = Schedule.find_by(id: booking_params[:schedule_id])
 
     unless schedule.present?

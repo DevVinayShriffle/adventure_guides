@@ -26,6 +26,7 @@ gem 'active_model_serializers'
 gem 'sidekiq'
 gem "redis", ">= 4.0.1"
 gem 'whenever', require: false
+gem 'arel-helpers'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -59,6 +60,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :development do

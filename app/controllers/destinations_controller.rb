@@ -4,6 +4,9 @@ class DestinationsController < ApplicationController
   def index
     @destinations = Destination.all.order(created_at: :desc)
     
+    # @destinations = Destination.all
+    # @destinations = @destinations.order(Destination.arel_table[:created_at].desc)
+
     respond_to do |format|
       format.html
       format.json do

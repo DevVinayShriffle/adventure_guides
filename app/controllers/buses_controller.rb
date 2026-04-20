@@ -2,18 +2,28 @@ class BusesController < ApplicationController
   before_action :set_bus, only: [:show]
 
   def index
+    schedule_table = Schedule.arel_table
     if params[:destination_id].present?
-      @destination = Destination.find_by(id: params[:destination_id])
+      # @destination = Destination.find_by(id: params[:destination_id])
 
-      if @destination.present?
+      # if @destination.present?
+      #   @buses = Bus.joins(:schedules)
+      #   .where(schedules: { destination_id: @destination.id }).distinct
+
+      #   @buses = Bus.joins(:schedules)
+      #   .where(schedule_table[:destination_id].eq(@destination.id)).distinct
+
+      # else
+      #   @buses = []
+      # end
+
+      # Filter dynamically by destination_id if present
+      if params[:destination_id].present?
         @buses = Bus.joins(:schedules)
-        .where(schedules: { destination_id: @destination.id }).distinct
-
-      else
-        @buses = []
+        .where(schedule_table[:destination_id].eq(params[:destination_id])).distinct
       end
     else
-      @buses = Bus.all.order(created_at: :desc)
+      @buses = Bus.order(created_at: :desc)
     end
 
     respond_to do |format|
